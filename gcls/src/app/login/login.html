@@ -1,0 +1,69 @@
+<!-- <div class="container-fluid login-wrapper">
+  <div class="row justify-content-center align-items-center min-vh-100">
+    <div class="col-11 col-sm-8 col-md-5 col-lg-4">
+      <div class="card shadow-sm border-0">
+        <div class="card-header bg-primary text-white p-3 border-0">
+          <h4 class="mb-0">Welcome Back - DORCAS-GCLS ✋</h4>
+        </div>
+        <div class="card-body p-4">
+          <form>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email or Username</label>
+              <input type="text" class="form-control" id="email" placeholder="Username or Email" />
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input type="password" class="form-control" id="password" placeholder="Password" />
+            </div>
+            <div class="d-flex justify-content-between mb-4">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="remember" />
+                <label class="form-check-label" for="remember">Remember Me</label>
+              </div>
+              <a href="#" class="text-decoration-none">Forgot Password?</a>
+            </div>
+            <button type="submit" class="btn btn-primary w-100 py-2">Log In</button>
+          </form>
+        </div>
+      </div>
+      <p class="text-center mt-3 text-muted small">&copy; 2026 Dorcas Learning Management System</p>
+    </div>
+  </div>
+</div> -->
+
+<div class="container-fluid bg-light p-2" style="height: 100vh">
+  <div class="row w-100 mt-md-5 mx-auto">
+    <div class="col-12 col-md-4 mx-auto p-1 mt-5 mb-5 mb-md-0 p-md-5">
+      <div class="bg-white mx-auto shadow-sm" style="height: 60vh">
+        <p class="display-4 text-center pt-3">DGCLS</p>
+        <p class="h5 initialism text-center">Login</p>
+        <form class="form-group p-5 p-md-5">
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Email</mat-label>
+            <input
+              type="text"
+              name="email"
+              matInput
+              placeholder="your registerd email"
+              [(ngModel)]="email"
+            />
+          </mat-form-field>
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Password</mat-label>
+            <input
+              type="password"
+              name="password"
+              matInput
+              placeholder="password"
+              [(ngModel)]="password"
+            />
+          </mat-form-field>
+          <!-- <p class="text-danger text-center">{{ incorrect }}</p> -->
+          <div class="row mx-auto justify-content-center mb-3">
+            <button mat-raised-button color="primary" (click)="login()">Login</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

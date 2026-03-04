@@ -1,0 +1,26 @@
+.login-wrapper {
+  background-color: #f8f9fa; /* Subtle light grey background */
+}
+
+.card {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.card-header {
+  background-color: #3b71ca !important; /* Adjust to your brand color */
+}
+
+.btn-primary {
+  background-color: #3b71ca;
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: #2b55a0;
+}
+
+.form-control:focus {
+  border-color: #3b71ca;
+  box-shadow: 0 0 0 0.2rem rgba(59, 113, 202, 0.25);
+}
