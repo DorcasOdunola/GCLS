@@ -1,28 +1,40 @@
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #drawer class="sidenav" fixedInViewport
-      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-      [mode]="(isHandset$ | async) ? 'over' : 'side'"
-      [opened]="(isHandset$ | async) === false">
-    <mat-toolbar>Menu</mat-toolbar>
-    <mat-nav-list>
-      <a mat-list-item href="#">Link 1</a>
-      <a mat-list-item href="#">Link 2</a>
-      <a mat-list-item href="#">Link 3</a>
+  <mat-sidenav
+    #drawer
+    class="sidenav rounded-0 shadow-lg px-5 py-5"
+    fixedInViewport
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="(isHandset$ | async) === false"
+  >
+    <!-- width: 16%; -->
+    <mat-toolbar>Dorcas GLCS</mat-toolbar>
+    <mat-nav-list class="pt-5">
+      <a
+        mat-list-item
+        routerLink="{{ navItem.route }}"
+        routerLinkActive="active"
+        class="list-item rounded-2 mb-3"
+        *ngFor="let navItem of navItems"
+      >
+        <!-- <span><i class="fa-solid fa-grip fs-4"></i></span> -->
+        <span
+          ><mat-icon>{{ navItem.icon }}</mat-icon></span
+        >
+        <span class="mx-3">{{ navItem.name }}</span>
+      </a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <mat-toolbar color="primary">
+    <mat-toolbar color="primary" class="bg-light shadow-sm">
       @if (isHandset$ | async) {
-        <button
-          type="button"
-          aria-label="Toggle sidenav"
-          matIconButton
-          (click)="drawer.toggle()">
+        <button type="button" aria-label="Toggle sidenav" matIconButton (click)="drawer.toggle()">
           <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
         </button>
       }
-      <span>gcls</span>
+      <!-- <span class="text-white">gcls</span> -->
     </mat-toolbar>
+    <router-outlet></router-outlet>
     <!-- Add Content Here -->
   </mat-sidenav-content>
 </mat-sidenav-container>

@@ -1,0 +1,45 @@
+<div class="container-fluid p-5 lessons-container">
+  <div class="row">
+    <div class="col-9 mx-auto">
+      <div class="card header-card border-0 shadow-sm mb-5 p-4 rounded-4">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <h2 class="fw-bold text-secondary mb-3">COMPUTER SCIENCE, SSS 2</h2>
+            <button class="btn btn-primary btn-lg rounded-3 px-4 py-2">
+              <i class="bi bi-plus"></i> CREATE NEW LESSON
+            </button>
+          </div>
+          <div class="hand-icon">
+            <span class="fs-1">👋</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-12 col-md-6 col-lg-4" *ngFor="let lesson of [1, 2, 3, 4, 5, 6]">
+          <div class="card lesson-card border-0 shadow-sm h-100 rounded-4 overflow-hidden">
+            <div class="card-img-top bg-pink d-flex align-items-center justify-content-center p-4">
+              <img src="assets/white-book.png" alt="Lesson Icon" class="img-fluid lesson-icon" />
+            </div>
+
+            <div class="card-body p-4">
+              <p class="text-muted small mb-1">Lesson {{ lesson }}</p>
+              <h5 class="fw-bold mb-3">Computer Fundamentals</h5>
+
+              <div class="d-flex gap-2 mb-3">
+                <span class="badge bg-light text-primary border px-3 py-2 fw-normal"
+                  >5 Students</span
+                >
+                <span class="badge bg-light text-danger border px-3 py-2 fw-normal"
+                  >3 Quiz written</span
+                >
+              </div>
+
+              <p class="text-muted extra-small mb-0">Created on: 05/11/2025</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

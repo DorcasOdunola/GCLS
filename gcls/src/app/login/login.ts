@@ -24,18 +24,19 @@ export class Login {
       email: this.email,
       password: this.password,
     };
-    this.authService.login(obj).subscribe((response) => {
-      console.log('Login response:', response);
-      localStorage.setItem('userData', JSON.stringify(response.data));
-      // user-type: 0 - admin 1 - student
-      if (response.status === 'success' && response.data.user_type === 1) {
-        this.router.navigate(['/admin/dashboard']);
-      } else if (response.status === 'success' && response.data.user_type === 1) {
-        this.router.navigate(['/student/dashboard']);
-      } else {
-        this.incorrect = 'Incorrect email or password.';
-      }
-      // Handle successful login.
-    });
+    // this.authService.login(obj).subscribe((response) => {
+    //   console.log('Login response:', response);
+    //   localStorage.setItem('userData', JSON.stringify(response.data));
+    //   // user-type: 0 - admin 1 - student
+    //   if (response.status === 'success' && response.data.user_type === 1) {
+    //     this.router.navigate(['/admin/dashboard']);
+    //   } else if (response.status === 'success' && response.data.user_type === 1) {
+    //     this.router.navigate(['/student/dashboard']);
+    //   } else {
+    //     this.incorrect = 'Incorrect email or password.';
+    //   }
+    //   // Handle successful login.
+    // });
+    this.router.navigate(['/admin/lesson']);
   }
 }
