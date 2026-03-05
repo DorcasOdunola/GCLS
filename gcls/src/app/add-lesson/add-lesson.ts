@@ -62,7 +62,6 @@ export class AddLesson {
     };
     this.allSectionsArray.push(sectionObject);
     this.lessonForm.value.sections = this.allSectionsArray;
-    console.log(this.lessonForm.value);
     this.lessonService.addLesson(this.lessonForm.value).subscribe(
       (response: any) => {
         if (response.status === 'success') {
@@ -88,5 +87,11 @@ export class AddLesson {
     this.allSectionsArray.push(sectionObject);
     console.log(this.allSectionsArray);
     this.sectionForm.reset();
+  }
+
+  reset() {
+    this.lessonForm.reset();
+    this.sectionForm.reset();
+    this.allSectionsArray = [];
   }
 }

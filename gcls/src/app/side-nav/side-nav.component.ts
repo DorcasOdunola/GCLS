@@ -43,12 +43,6 @@ export class SideNavComponent {
     //     this.navItems = this.adminNavItems;
     //   }
     // }
-
-    const user = 1;
-    if (user === 1) {
-      this.navItems = this.studentNavItems;
-    } else if (user === 0) {
-      this.navItems = this.adminNavItems;
-    }
+    this.navItems = this.adminNavItems;
   }
 }

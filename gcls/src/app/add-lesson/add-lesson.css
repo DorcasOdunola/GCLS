@@ -21,42 +21,6 @@ mat-form-field {
   border-radius: 12px !important;
 }
 
-/* Quill Editor Mockup Styling */
-.quill-mock-container {
-  border: 1px solid #dee2e6;
-  border-radius: 12px;
-  background-color: #fff;
-  overflow: hidden;
-}
-
-.quill-mock-container.large .ql-editor-mock {
-  min-height: 200px;
-}
-
-.ql-toolbar-mock {
-  background-color: #f8f9fa;
-  border-bottom: 1px solid #dee2e6;
-}
-
-.toolbar-btn {
-  width: 30px;
-  height: 30px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  background: white;
-  font-weight: bold;
-  font-size: 0.8rem;
-  cursor: default;
-}
-
-.ql-editor-mock {
-  min-height: 120px;
-  font-size: 0.95rem;
-}
-
 /* Divider styling */
 .dashed-divider {
   border-top: 2px dashed #e0e0e0;
@@ -85,10 +49,76 @@ mat-form-field {
 }
 
 .btn-add-more:hover {
-  background-color: #5d9cec10;
+  background-color: rgba(93, 156, 236, 0.1);
+  transform: translateY(-1px);
 }
 
 .btn-light {
   background-color: #eee;
   border-radius: 12px;
+}
+
+/* Container Wrapper */
+.quill-wrapper {
+  margin-top: 10px;
+  background: #fff;
+}
+
+/* Quill Toolbar Styling */
+:host ::ng-deep .ql-toolbar.ql-snow {
+  border: 1px solid #dee2e6 !important;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  background-color: #f8f9fa; /* Light grey header */
+  padding: 8px 15px;
+}
+
+/* Quill Content Area Styling */
+:host ::ng-deep .ql-container.ql-snow {
+  border: 1px solid #dee2e6 !important;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  min-height: 150px;
+  font-family: 'Segoe UI', Roboto, sans-serif;
+  font-size: 15px;
+  background-color: #ffffff;
+}
+
+/* Hover & Focus States */
+:host ::ng-deep .quill-wrapper:hover .ql-toolbar,
+:host ::ng-deep .quill-wrapper:hover .ql-container {
+  border-color: #ced4da !important;
+}
+
+:host ::ng-deep .ql-container.ql-snow.ql-focus {
+  border-color: #5d9cec !important; /* Your brand blue */
+  box-shadow: 0 0 0 0.2rem rgba(93, 156, 236, 0.1);
+}
+
+/* Styling the Buttons inside Toolbar */
+:host ::ng-deep .ql-snow .ql-stroke {
+  stroke: #6c757d;
+}
+
+:host ::ng-deep .ql-snow .ql-fill {
+  fill: #6c757d;
+}
+
+:host ::ng-deep .ql-snow.ql-toolbar button:hover .ql-stroke {
+  stroke: #5d9cec;
+}
+
+/* Align mat-icon vertically with h5 text */
+/* h5.d-flex.align-items-center mat-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px; /* Default h5 icon size */
+/* width: 24px; */
+/* font-size: 24px; */
+/* } */
+
+/* Optional: match the exact blue from your dashboard */
+.text-primary {
+  color: #5d9cec !important;
 }
