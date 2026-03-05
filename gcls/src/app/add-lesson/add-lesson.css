@@ -1,0 +1,94 @@
+/* Page Background matching your screenshot */
+.lesson-builder-page {
+  background-color: #f4f7f6;
+  min-height: 100vh;
+}
+
+/* Rounded Cards */
+.rounded-4 {
+  border-radius: 20px !important;
+}
+
+/* Material Field Custom Mockup */
+mat-form-field {
+  display: block;
+  margin-bottom: 10px;
+}
+
+/* This targets the wrapper in Angular Material */
+:host ::ng-deep .mat-mdc-text-field-wrapper {
+  background-color: #f8f9fa !important;
+  border-radius: 12px !important;
+}
+
+/* Quill Editor Mockup Styling */
+.quill-mock-container {
+  border: 1px solid #dee2e6;
+  border-radius: 12px;
+  background-color: #fff;
+  overflow: hidden;
+}
+
+.quill-mock-container.large .ql-editor-mock {
+  min-height: 200px;
+}
+
+.ql-toolbar-mock {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.toolbar-btn {
+  width: 30px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: white;
+  font-weight: bold;
+  font-size: 0.8rem;
+  cursor: default;
+}
+
+.ql-editor-mock {
+  min-height: 120px;
+  font-size: 0.95rem;
+}
+
+/* Divider styling */
+.dashed-divider {
+  border-top: 2px dashed #e0e0e0;
+  opacity: 1;
+}
+
+/* Section Card Styling */
+.section-card {
+  background-color: #ffffff;
+  border-left-width: 6px !important;
+}
+
+/* Button Custom Styles */
+.btn-finish {
+  background-color: #5d9cec; /* Brand Blue */
+  border: none;
+  border-radius: 12px;
+}
+
+.btn-add-more {
+  background-color: transparent;
+  color: #5d9cec;
+  border: 2px dashed #5d9cec;
+  border-radius: 12px;
+  transition: all 0.3s;
+}
+
+.btn-add-more:hover {
+  background-color: #5d9cec10;
+}
+
+.btn-light {
+  background-color: #eee;
+  border-radius: 12px;
+}

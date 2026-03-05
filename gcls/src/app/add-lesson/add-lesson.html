@@ -1,0 +1,119 @@
+<!-- <mat-stepper linear #stepper>
+  <mat-step [stepControl]="lessonForm">
+    <form [formGroup]="lessonForm">
+      <ng-template matStepLabel>Create Lesson</ng-template>
+      <div class="row">
+        <mat-form-field appearance="outline" class="col-12 col-md-6">
+          <input matInput formControlName="topic" placeholder="Topic" />
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="col-12 col-md-6">
+          <input matInput formControlName="sub_topic" placeholder="Sub Topic" />
+        </mat-form-field>
+      </div>
+      <label>Instructional Objective</label>
+      <quill-editor formControlName="instructional_obj" class="col-12"></quill-editor>
+      <div>
+        <button matButton matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="sectionForm">
+    <form [formGroup]="sectionForm">
+      <ng-template matStepLabel>Create Section</ng-template>
+      <label>Lesson Section</label>
+      <quill-editor formControlName="section" class="col-12"></quill-editor>
+      <div>
+        <button matButton matStepperPrevious>Back</button>
+        <button matButton (click)="addMoreSections()">Add More Section</button>
+        <button matButton (click)="stepper.reset()">Reset</button>
+        <button matButton (click)="createLesson()">Finish</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+    <p>You are now done.</p>
+    <div>
+      <button matButton matStepperPrevious>Back</button>
+    </div>
+  </mat-step>
+</mat-stepper> -->
+
+<div class="container py-5 lesson-builder-page">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h2 class="fw-bold text-dark mb-1">Create New Lesson</h2>
+      <p class="text-muted small">Design your curriculum and lesson sections</p>
+    </div>
+    <div class="hand-icon fs-2">👋</div>
+  </div>
+
+  <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 bg-white">
+    <div class="row g-4 mb-4">
+      <div class="col-md-6">
+        <mat-form-field appearance="outline" class="w-100 custom-mat-field">
+          <mat-label>Topic</mat-label>
+          <input matInput placeholder="e.g. Introduction to Computing" />
+        </mat-form-field>
+      </div>
+      <div class="col-md-6">
+        <mat-form-field appearance="outline" class="w-100 custom-mat-field">
+          <mat-label>Sub-topic</mat-label>
+          <input matInput placeholder="e.g. History of Hardware" />
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="mb-5">
+      <label class="form-label fw-bold small text-muted text-uppercase mb-2"
+        >Instructional Objective</label
+      >
+      <div class="quill-mock-container">
+        <div class="ql-toolbar-mock d-flex gap-2 p-2 border-bottom">
+          <span class="toolbar-btn">B</span><span class="toolbar-btn">I</span
+          ><span class="toolbar-btn">U</span>
+        </div>
+        <div class="ql-editor-mock p-3 text-muted">Enter the lesson goals here...</div>
+      </div>
+    </div>
+
+    <hr class="my-5 dashed-divider" />
+
+    <div class="section-builder">
+      <h5 class="fw-bold text-secondary mb-4 d-flex align-items-center">
+        <i class="bi bi-stack me-2 text-primary"></i> Lesson Sections
+      </h5>
+
+      <div class="section-card p-4 rounded-3 mb-4 shadow-sm border-start border-primary border-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h6 class="fw-bold text-primary mb-0">Section #1 Content</h6>
+          <button type="button" class="btn btn-sm btn-outline-danger border-0">
+            <i class="bi bi-trash"></i> Remove
+          </button>
+        </div>
+        <div class="quill-mock-container large">
+          <div class="ql-toolbar-mock d-flex gap-2 p-2 border-bottom">
+            <span class="toolbar-btn">B</span><span class="toolbar-btn">I</span
+            ><span class="toolbar-btn">U</span>
+          </div>
+          <div class="ql-editor-mock p-3 text-muted">
+            Type detailed lesson content for this section...
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex flex-column flex-md-row gap-3 mt-5 pt-3">
+        <button type="button" class="btn btn-add-more fw-bold px-4 py-3">
+          <i class="bi bi-plus-circle-fill me-2"></i> ADD MORE SECTION
+        </button>
+
+        <div class="ms-md-auto d-flex gap-2">
+          <button type="button" class="btn btn-light px-4 fw-bold text-muted">CANCEL</button>
+          <button type="button" class="btn btn-finish px-5 fw-bold text-white shadow-sm">
+            FINISH & SAVE LESSON
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

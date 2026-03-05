@@ -3,6 +3,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { SideNavComponent } from './side-nav/side-nav.component';
 import { Login } from './login/login';
 import { Lesson } from './lesson/lesson';
+import { AddLesson } from './add-lesson/add-lesson';
+import { LessonSection } from './lesson-section/lesson-section';
+import { Students } from './students/students';
+import { Quiz } from './quiz/quiz';
+import { QuizSetup } from './quiz-setup/quiz-setup';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -14,12 +19,12 @@ const routes: Routes = [
     children: [
       // { path: 'dashboard', component: DashboardComponent },
       { path: 'lesson', component: Lesson },
-      // { path: 'add-lesson', component: AddLesson },
-      // { path: 'lesson-section/:lesson.id', component: LessonSection },
-      // { path: 'students', component: Students },
-      // { path: 'quiz', component: Quiz },
-      // { path: 'quiz-setup', component: QuizSetup },
-      // { path: 'quiz-setup/:quiz_id', component: QuizSetup },
+      { path: 'add-lesson', component: AddLesson },
+      { path: 'lesson-section/:lesson.id', component: LessonSection },
+      { path: 'students', component: Students },
+      { path: 'quiz', component: Quiz },
+      { path: 'quiz-setup', component: QuizSetup },
+      { path: 'quiz-setup/:quiz_id', component: QuizSetup },
     ],
   },
   // {

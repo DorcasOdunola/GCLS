@@ -1,4 +1,32 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/* @import "~quill/dist/quill.core.css";
+@import "~quill/dist/quill.snow.css"; */
+
+@import 'quill/dist/quill.core.css';
+@import 'quill/dist/quill.snow.css';
+@import 'quill/dist/quill.bubble.css';
+
+html,
+/* body {
+} */
+body {
+  height: 100%;
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+  /* background-color: rgb(26, 87, 207) !important; */
+}
+
+.snackbar-success {
+  background-color: #2e7d32 !important; /* green */
+  color: #ffffff !important;
+}
+
+.snackbar-error {
+  background-color: #c62828 !important; /* red */
+  color: #ffffff !important;
+}
+.snackbar-info {
+  background-color: #1565c0 !important; /* blue */
+  color: #ffffff !important;
+}
