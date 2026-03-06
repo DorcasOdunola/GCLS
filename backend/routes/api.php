@@ -26,7 +26,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/test', [TestController::class, 'test']);
+Route::get('/test', function(){
+    return "Hello, World!";
+});
 Route::get('/get_class', [ClassController::class, 'getAllClass']);
 Route::get('/get_subjects', [SubjectController::class, 'getAllSubject']);
 Route::post('/add_lesson', [LessonController::class, 'addLesson']);
@@ -45,4 +47,4 @@ Route::post('/update_question', [QuizController::class, 'updateQuestion']);
 Route::post('/create_quiz_attempt', [QuizController::class, 'createQuizAttempt']);
 Route::post('/get_student_quiz_attempt', [QuizController::class, 'getStudentQuizAttempt']);
 Route::post('get_student_quiz_questions', [QuizController::class, 'getStudentQuizQuestion']);
-Route:post('/save_student_quiz_answers', [QuizController::class, 'saveStudentQuizAnswers ']);
+Route::post('/save_student_quiz_answers', [QuizController::class, 'saveStudentQuizAnswers ']);

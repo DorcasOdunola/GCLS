@@ -14,7 +14,7 @@ body {
   height: 100%;
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
-  background-color: rgb(26, 87, 207) !important;
+  /* background-color: rgb(26, 87, 207) !important; */
 }
 
 .snackbar-success {
