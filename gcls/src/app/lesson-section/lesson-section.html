@@ -1,1 +1,128 @@
-<p>lesson-section works!</p>
+<div class="container-fluid py-4 lesson-view-page">
+  <div class="row">
+    <div class="col-11 col-md-10 mx-auto">
+      <div class="card header-card border-0 shadow-sm mb-3 rounded-4 bg-white">
+        <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+        <div class="card-body p-4 d-flex justify-content-between align-items-center">
+          <div>
+            <h2 class="fw-bold text-dark mb-1">{{ lessonData.topic }}</h2>
+            <p class="text-muted mb-0 d-flex align-items-center">
+              <mat-icon class="me-1 small-icon">topic</mat-icon>
+              Sub-topic: {{ lessonData.sub_topic }}
+            </p>
+          </div>
+          <button class="btn btn-primary btn-lg rounded-3 shadow-sm d-flex align-items-center">
+            <mat-icon class="me-2">import_contacts</mat-icon> GO TO LESSON
+          </button>
+        </div>
+      </div>
+
+      <div class="card objective-card border-0 shadow-sm mb-4 rounded-4">
+        <div class="card-body p-4">
+          <h6 class="text-uppercase fw-bold text-primary small mb-3 d-flex align-items-center">
+            <mat-icon class="me-2">assignment</mat-icon> Instructional Objective
+          </h6>
+          <div class="objective-content text-secondary">
+            <p class="mb-0" [innerHTML]="lessonData.instructional_obj"></p>
+          </div>
+        </div>
+      </div>
+      <mat-accordion class="lesson-accordion" multi="false">
+        <mat-expansion-panel
+          [expanded]="step() === i"
+          (opened)="setStep(i)"
+          [disabled]="section.disabled"
+          class="shadow-sm mb-3 rounded-4 overflow-hidden border-0"
+          *ngFor="let section of lessonSections; let i = index"
+        >
+          <mat-expansion-panel-header class="py-4">
+            <mat-panel-title class="fw-bold text-primary">
+              <mat-icon class="me-3">segment</mat-icon> SECTION {{ i + 1 }}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <div class="section-content-area py-3">
+            <!-- <h3 class="fw-bold mb-3">What is a Database?</h3> -->
+            <div class="lesson-html-content" [innerHTML]="section.section"></div>
+
+            <div class="d-flex justify-content-end mt-4 gap-2">
+              <button
+                class="btn btn-outline-primary fw-bold px-4"
+                (click)="prevStep()"
+                *ngIf="i !== 0"
+              >
+                PREVIOUS
+              </button>
+              <button
+                class="btn btn-outline-primary fw-bold px-4"
+                (click)="nextStep()"
+                *ngIf="i !== lessonSections.length - 1"
+              >
+                NEXT SECTION
+              </button>
+              <button
+                class="btn btn-outline-primary fw-bold px-4"
+                (click)="nextStep()"
+                *ngIf="i === lessonSections.length - 1"
+              >
+                END
+              </button>
+            </div>
+          </div>
+        </mat-expansion-panel>
+
+        <!-- <mat-expansion-panel
+                [disabled]="true"
+                class="shadow-sm mb-3 rounded-4 overflow-hidden border-0 locked-panel"
+              >
+                <mat-expansion-panel-header class="py-4">
+                  <mat-panel-title class="text-muted">
+                    <mat-icon class="me-3 text-muted">lock</mat-icon> SECTION 2: DBMS Overview
+                  </mat-panel-title>
+                  <mat-panel-description class="justify-content-end text-muted small italic">
+                    Complete Section 1 to unlock
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+              </mat-expansion-panel> -->
+      </mat-accordion>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="container">
+  <div class="row">
+    <button matFab extended routerLink="/admin/quiz" color="primary">
+      <mat-icon>add</mat-icon>
+      Go to Quiz
+    </button>
+  </div>
+  <div class="row">
+    <mat-accordion class="example-headers-align">
+      <mat-expansion-panel
+        [expanded]="step() === i"
+        (opened)="setStep(i)"
+        [disabled]="section.disabled"
+        hideToggle
+        *ngFor="let section of lessonSections; let i = index"
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title> Section {{ i + 1 }} </mat-panel-title>
+          <mat-panel-description>
+            Type your name and age
+            <mat-icon>account_circle</mat-icon>
+          </mat-panel-description> </mat-expansion-panel-header
+        >s
+        <div [innerHTML]="section.section"></div>
+        <mat-action-row>
+          <button matButton (click)="prevStep()" *ngIf="i !== 0">Previous</button>
+          <button matButton (click)="nextStep()" *ngIf="i !== lessonSections.length - 1">
+            Next
+          </button>
+          <button matButton (click)="nextStep()" *ngIf="i === lessonSections.length - 1">
+            End
+          </button>
+        </mat-action-row>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</div> -->

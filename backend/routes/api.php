@@ -34,6 +34,7 @@ Route::get('/get_subjects', [SubjectController::class, 'getAllSubject']);
 Route::post('/add_lesson', [LessonController::class, 'addLesson']);
 Route::get('/get_all_lessons', [LessonController::class, 'getAllLesson']);
 Route::post('/lesson_section', [LessonController::class, 'getLessonSection']);
+Route::post('get_lesson', [LessonController::class, 'getLesson']);
 Route::post('/add_student', [StudentController::class, 'addStudent']);
 Route::get('/students', [StudentController::class, 'getStudents']);
 Route::post('/login', [AuthController::class, 'login']);

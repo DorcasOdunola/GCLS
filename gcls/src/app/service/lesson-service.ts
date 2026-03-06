@@ -21,4 +21,8 @@ export class LessonService {
   public getLessonSection(obj: any) {
     return this.httpClient.post<any>(`${this.baseUrl}lesson_section`, obj);
   }
+
+  public getLesson(obj: any) {
+    return this.httpClient.post<any>(`${this.baseUrl}get_lesson`, obj);
+  }
 }

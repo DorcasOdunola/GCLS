@@ -1,0 +1,88 @@
+/* Page Setup */
+.lesson-view-page {
+  background-color: #f1f1f1; /* Matching dashboard grey */
+  min-height: 100vh;
+}
+
+.rounded-4 {
+  border-radius: 15px !important;
+}
+
+/* Header & Objective Cards */
+.header-card h2 {
+  color: #333;
+}
+
+.objective-card {
+  border-left: 5px solid #5d9cec !important; /* Brand Blue accent */
+  background-color: #ffffff;
+}
+
+/* Accordion Customization */
+:host ::ng-deep .mat-expansion-panel {
+  background: white !important;
+  border-radius: 15px !important;
+}
+
+:host ::ng-deep .mat-expansion-panel-header {
+  height: 70px !important;
+}
+
+:host ::ng-deep .mat-content {
+  align-items: center;
+}
+
+/* Locked State Styling */
+.locked-panel {
+  background-color: #f9f9f9 !important;
+  opacity: 0.7;
+}
+
+/* Icons */
+.small-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+.text-primary {
+  color: #5d9cec !important;
+}
+
+.btn-primary {
+  background-color: #5d9cec;
+  border: none;
+}
+
+.btn-outline-primary {
+  border-color: #5d9cec;
+  color: #5d9cec;
+}
+
+.lesson-html-content {
+  line-height: 1.7;
+  font-size: 16px;
+}
+
+.lesson-html-content p {
+  margin-bottom: 12px;
+}
+
+.lesson-html-content ul,
+.lesson-html-content ol {
+  padding-left: 20px;
+  margin-bottom: 12px;
+}
+
+.lesson-html-content li {
+  margin-bottom: 6px;
+}
+
+.lesson-html-content h1,
+.lesson-html-content h2,
+.lesson-html-content h3,
+.lesson-html-content h4 {
+  margin-top: 16px;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
