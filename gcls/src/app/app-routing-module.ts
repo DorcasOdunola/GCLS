@@ -8,6 +8,7 @@ import { LessonSection } from './lesson-section/lesson-section';
 import { Students } from './students/students';
 import { Quiz } from './quiz/quiz';
 import { QuizSetup } from './quiz-setup/quiz-setup';
+import { StudentLesson } from './student-lesson/student-lesson';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -27,18 +28,18 @@ const routes: Routes = [
       { path: 'quiz-setup/:quiz_id', component: QuizSetup },
     ],
   },
-  // {
-  //   path: 'student',
-  //   component: SideNavComponent,
-  //   // canActivate: [adminGuard],
-  //   children: [
-  //     { path: 'dashboard', component: DashboardComponent },
-  //     { path: 'lesson', component: StudentLesson },
-  //     { path: 'lesson/:lesson.id', component: StudentTakeLesson },
-  //     { path: 'quiz', component: StudentQuiz },
-  //     { path: 'quiz/:quiz_id', component: StudentTakeQuiz },
-  //   ],
-  // },
+  {
+    path: 'student',
+    component: SideNavComponent,
+    // canActivate: [adminGuard],
+    children: [
+      // { path: 'dashboard', component: DashboardComponent },
+      { path: 'lesson', component: StudentLesson },
+      // { path: 'lesson/:lesson.id', component: StudentTakeLesson },
+      // { path: 'quiz', component: StudentQuiz },
+      // { path: 'quiz/:quiz_id', component: StudentTakeQuiz },
+    ],
+  },
 
   // {path: 'login', component: LoginComponent, canActivate: [UnitGuard]},
   // {path: 'registerunit', component: RegisterUnitComponent},

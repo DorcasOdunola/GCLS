@@ -34,15 +34,15 @@ export class SideNavComponent {
   public navItems: any = [];
 
   ngOnInit() {
-    // const userData = localStorage.getItem('userData');
-    // if (userData) {
-    //   const user = JSON.parse(userData);
-    //   if (user.user_type === 1) {
-    //     this.navItems = this.studentNavItems;
-    //   } else if (user.user_type === 0) {
-    //     this.navItems = this.adminNavItems;
-    //   }
-    // }
-    this.navItems = this.adminNavItems;
+    const userData = localStorage.getItem('userData');
+    if (userData) {
+      const user = JSON.parse(userData);
+      if (user.user_type === 1) {
+        this.navItems = this.studentNavItems;
+      } else if (user.user_type === 0) {
+        this.navItems = this.adminNavItems;
+      }
+    }
+    // this.navItems = this.adminNavItems;
   }
 }

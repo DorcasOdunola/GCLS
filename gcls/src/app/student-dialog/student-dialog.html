@@ -1,0 +1,36 @@
+<div class="container-fluid p-5">
+  <div>
+    <h3 class="text-muted">Add Student</h3>
+  </div>
+  <form [formGroup]="userForm">
+    <div class="row">
+      <mat-form-field appearance="outline" class="col-12 col-md-6">
+        <input matInput formControlName="first_name" placeholder="First Name" />
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="col-12 col-md-6">
+        <input matInput formControlName="last_name" placeholder="Last Name" />
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="outline" class="col-12 col-md-6">
+        <input matInput formControlName="phone" placeholder="Phone Number" />
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="col-12 col-md-6">
+        <input matInput formControlName="address" placeholder="Address" />
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="outline" class="col-12 col-md-6">
+        <input matInput formControlName="email" placeholder="Email" />
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="col-12 col-md-6">
+        <input matInput formControlName="password" placeholder="Password" type="password" />
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <div class="col-12 text-end">
+        <button matButton color="primary" (click)="saveStudent()">Save Student</button>
+      </div>
+    </div>
+  </form>
+</div>

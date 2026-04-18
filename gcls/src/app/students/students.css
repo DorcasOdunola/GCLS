@@ -1,0 +1,53 @@
+/* Page Background */
+.students-list-page {
+  background-color: #f4f7f6; /* Matching existing dashboard grey */
+  min-height: 100vh;
+}
+
+.rounded-4 {
+  border-radius: 18px !important;
+}
+
+/* Header Styling */
+.btn-primary {
+  background-color: #5d9cec; /* Brand Blue from your design */
+  border: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* Table Refinement */
+.table thead {
+  border-bottom: 2px solid #f1f1f1;
+}
+
+.table th {
+  letter-spacing: 0.5px;
+  color: #888;
+}
+
+.student-row {
+  transition: background-color 0.3s ease;
+}
+
+.student-row:hover {
+  background-color: #fcfcfc;
+}
+
+.text-primary {
+  color: #5d9cec !important;
+}
+
+/* Mat Icon sizing inside small buttons */
+.small-icon {
+  font-size: 18px;
+  height: 18px;
+  width: 18px;
+}
+
+/* Text Truncation for Addresses */
+.text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

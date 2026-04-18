@@ -1,1 +1,319 @@
-<p>quiz-setup works!</p>
+<div
+  class="container-fluid mt-4 p-4 quiz-container bg-secondary-subtle text-secondary-emphasis"
+  style="min-height: 90vh"
+>
+  <div class="row">
+    <div
+      class="col-11 col-md-9 mx-auto header-card d-flex justify-content-between align-items-center p-4 mb-4"
+    >
+      <div class="">
+        <h2 class="mb-0 me-4">QUIZ: {{ quizTitle }}</h2>
+        <!-- <button matFab extended routerLink="/admin/add-lesson" color="primary">
+          <mat-icon>add</mat-icon>
+          Create New Lesson
+        </button> -->
+      </div>
+      <div class="hand-icon">
+        <mat-icon style="transform: scale(2)">front_hand</mat-icon>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-11 col-md-9 mx-auto">
+      <mat-tab-group animationDuration="0ms">
+        <mat-tab label="SETTINGS">
+          <div class="row w-100 bg-light mt-5">
+            <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+            <div class="col-12 p-5">
+              <form [formGroup]="quizForm">
+                <div class="row w-100">
+                  <mat-form-field appearance="outline" class="col-12 col-md-3">
+                    <mat-label>Select Lesson</mat-label>
+                    <mat-select
+                      formControlName="lesson_id"
+                      (selectionChange)="formQuizTitle($event)"
+                    >
+                      <mat-option *ngFor="let lesson of lessonsArray" [value]="lesson.lesson_id">{{
+                        lesson.topic
+                      }}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" class="col-12 col-md-5">
+                    <input matInput formControlName="quiz_title" placeholder="Title" />
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" class="col-12 col-md-4">
+                    <input
+                      matInput
+                      type="number"
+                      formControlName="duration"
+                      placeholder="Duration (in minutes)"
+                    />
+                  </mat-form-field>
+                </div>
+                <label>Quiz instruction</label>
+                <quill-editor
+                  formControlName="instructions"
+                  class="col-12"
+                  style="height: 150px"
+                ></quill-editor>
+                <div>
+                  <button
+                    mat-raised-button
+                    color="primary"
+                    (click)="createQuiz()"
+                    color="primary"
+                    *ngIf="!quiz_id"
+                  >
+                    Submit Quiz
+                  </button>
+                  <button
+                    mat-raised-button
+                    color="primary"
+                    (click)="editQuiz()"
+                    color="primary"
+                    *ngIf="quiz_id && !isEditMode"
+                  >
+                    Edit Quiz
+                  </button>
+                  <button
+                    mat-raised-button
+                    color="primary"
+                    (click)="updateQuiz()"
+                    color="primary"
+                    *ngIf="quiz_id && isEditMode"
+                  >
+                    Update Quiz
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab label="QUESTIONS">
+          <div class="row mt-4 w-100">
+            <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+            <div class="col-md-3">
+              <div class="card p-3 question-nav-card">
+                <div class="d-flex flex-wrap gap-2">
+                  <button
+                    *ngFor="let question of questionArray; let i = index"
+                    class="btn-nav"
+                    [class.active]="question.quiz_question_id === activeQuestionId"
+                    (click)="viewQuestion(question.quiz_question_id)"
+                  >
+                    {{ i + 1 }}
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-9">
+              <div class="card p-4 question-detail-card">
+                <div class="d-flex justify-content-between mb-4">
+                  <div class="info-text mb-3">
+                    <mat-icon class="vertical-align-middle">info_outline</mat-icon>
+                    <small>Any piece of information shows up here </small>
+                  </div>
+                  <div>
+                    <button
+                      *ngIf="activeQuestionId"
+                      mat-flat-button
+                      color="primary"
+                      class="open-btn"
+                      (click)="addMoreQuestion()"
+                    >
+                      <mat-icon class="me-2">add</mat-icon> QUESTIONS
+                    </button>
+                  </div>
+                </div>
+
+                <form [formGroup]="quizQuestionsForm">
+                  <h5>QUESTION 1</h5>
+                  <input
+                    type="text"
+                    class="form-control mb-4"
+                    placeholder="Which of the following is not an input device?"
+                    formControlName="question"
+                  />
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="options-list">
+                        <div class="option-item d-flex align-items-center mb-2">
+                          <span class="badge rounded-circle me-2">A</span>
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Keyboard"
+                            formControlName="option_a"
+                          />
+                        </div>
+                        <div class="option-item d-flex align-items-center mb-2">
+                          <span class="badge rounded-circle me-2">B</span>
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Monitor"
+                            formControlName="option_b"
+                          />
+                        </div>
+                        <div class="option-item d-flex align-items-center mb-2">
+                          <span class="badge rounded-circle me-2">C</span>
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Mouse"
+                            formControlName="option_c"
+                          />
+                        </div>
+                        <div class="option-item d-flex align-items-center mb-2">
+                          <span class="badge rounded-circle me-2">D</span>
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Microphone"
+                            formControlName="option_d"
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- d-flex justify-content-end -->
+                    <div class="col-md-6 d-flex justify-content-end">
+                      <div class="image-placeholder p-2">
+                        <label class="text-center">Feedback</label>
+                        <textarea
+                          name=""
+                          id=""
+                          class="form-control"
+                          style="width: 100%; height: 93%"
+                          placeholder="A keyboard, mouse, and microphone are input devices because they are used to enter data into the computer, while a monitor is an output device because it displays information from the computer."
+                          formControlName="feedback"
+                        ></textarea>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-5"></div>
+                    <div class="col-md-7">
+                      <div
+                        class="mt-4 pt-3 border-top d-flex align-items-end justify-content-between"
+                      >
+                        <div class="flex-grow-1 me-3" style="max-width: 300px">
+                          <label class="form-label fw-bold text-muted small"
+                            >SELECT THE CORRECT OPTION</label
+                          >
+                          <select
+                            class="form-select"
+                            id="floatingSelectGrid"
+                            formControlName="correct_option"
+                          >
+                            <option value="a">Option A</option>
+                            <option value="b">Option B</option>
+                            <option value="c">Option C</option>
+                            <option value="d">Option D</option>
+                          </select>
+                        </div>
+
+                        <button
+                          *ngIf="!activeQuestionId"
+                          mat-flat-button
+                          color="primary"
+                          class="open-btn"
+                          (click)="addQuestion()"
+                        >
+                          ADD
+                        </button>
+                        <button
+                          *ngIf="activeQuestionId"
+                          mat-flat-button
+                          color="primary"
+                          class="open-btn"
+                          (click)="updateQuestion()"
+                        >
+                          UPDATE
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="container py-4 quiz-settings-page">
+  <div class="card header-card border-0 shadow-sm mb-4 rounded-4 bg-white">
+    <div class="card-body p-4 d-flex justify-content-between align-items-center">
+      <div>
+        <h2 class="fw-bold text-dark mb-1">QUIZ: Database 1 - Quiz</h2>
+        <p class="text-muted small mb-0">Configure quiz parameters and instructions</p>
+      </div>
+      <div class="hand-icon fs-2">👋</div>
+    </div>
+  </div>
+
+  <div class="quiz-tabs d-flex mb-4 border-bottom">
+    <button class="btn tab-btn active px-4 py-2 fw-bold">SETTINGS</button>
+    <button class="btn tab-btn px-4 py-2 fw-bold text-muted">QUESTIONS</button>
+  </div>
+
+  <div class="card border-0 shadow-sm rounded-4 bg-white p-4 p-md-5">
+    <form>
+      <div class="row g-4 mb-5">
+        <div class="col-md-4">
+          <mat-form-field appearance="outline" class="w-100 custom-mat-field">
+            <mat-label>Select Lesson</mat-label>
+            <mat-select placeholder="Database">
+              <mat-option value="database">Database</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-4">
+          <mat-form-field appearance="outline" class="w-100 custom-mat-field">
+            <mat-label>Quiz Name</mat-label>
+            <input matInput value="Database 1 - Quiz" />
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-4">
+          <mat-form-field appearance="outline" class="w-100 custom-mat-field">
+            <mat-label>Duration (Minutes)</mat-label>
+            <input matInput type="number" value="30" />
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="mb-5">
+        <label
+          class="form-label fw-bold small text-muted text-uppercase mb-3 d-flex align-items-center"
+        >
+          <mat-icon class="me-2 text-primary">description</mat-icon> Quiz Instruction
+        </label>
+        <div class="quill-wrapper">
+          <quill-editor
+            [styles]="{ height: '250px' }"
+            placeholder="Enter instructions for students..."
+          ></quill-editor>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-end gap-3 pt-4 border-top">
+        <button type="button" class="btn btn-light px-4 fw-bold text-muted rounded-3">
+          CANCEL
+        </button>
+        <button
+          type="submit"
+          class="btn btn-primary px-5 fw-bold text-white shadow-sm rounded-3 d-flex align-items-center"
+        >
+          <mat-icon class="me-2">edit</mat-icon> UPDATE QUIZ
+        </button>
+      </div>
+    </form>
+  </div>
+</div> -->

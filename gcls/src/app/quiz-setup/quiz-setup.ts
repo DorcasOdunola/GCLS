@@ -64,11 +64,11 @@ export class QuizSetup {
       return lesson.lesson_id === parseInt(this.quizForm.get('lesson_id').value);
     });
     this.quizTitle = lesson.topic + ' - ' + 'Quiz';
-    this.quizForm.get('title').setValue(this.quizTitle);
+    this.quizForm.get('quiz_title').setValue(this.quizTitle);
   }
 
   createQuiz() {
-    this.quizTitle = this.quizForm.get('title').value;
+    this.quizTitle = this.quizForm.get('quiz_title').value;
     this.isLoading = true;
     this.quizService.createQuiz(this.quizForm.value).subscribe((response) => {
       this.quizForm.disable();
@@ -85,27 +85,27 @@ export class QuizSetup {
         panelClass: ['snackbar-success'],
       });
       this.isLoading = false;
-      this.quizService.quiz_id.next(response.data.quiz_id);
+      // this.quizService.quiz_id.next(response.data.quiz_id);
     });
   }
 
   getQuizDetails(quiz_id: any) {
-    // this.isLoading = true;
-    // // Fetch and populate quiz details for editing
-    // this.quizService.getQuiz({ quiz_id: 1 }).subscribe((response) => {
-    //   if (response.status !== 'success') {
-    //     this.snackBar.open('Error fetching quiz details.', 'Close', {
-    //       duration: 3000,
-    //       panelClass: ['snackbar-error'],
-    //     });
-    //     return;
-    //   }
-    //   this.quizForm.patchValue(response.data);
-    //   this.quizTitle = response.data.quiz_title;
-    //   this.questionArray = response.data.questions;
-    //   this.quizForm.disable();
-    //   this.isLoading = false;
-    // });
+    this.isLoading = true;
+    // Fetch and populate quiz details for editing
+    this.quizService.getQuizById({ quiz_id: quiz_id }).subscribe((response) => {
+      if (response.status !== 'success') {
+        this.snackBar.open('Error fetching quiz details.', 'Close', {
+          duration: 3000,
+          panelClass: ['snackbar-error'],
+        });
+        return;
+      }
+      this.quizForm.patchValue(response.data);
+      this.quizTitle = response.data.quiz_title;
+      this.questionArray = response.data.questions;
+      this.quizForm.disable();
+      this.isLoading = false;
+    });
   }
 
   editQuiz() {
@@ -195,5 +195,10 @@ export class QuizSetup {
       this.isLoading = false;
       this.getQuizDetails(this.quiz_id);
     });
+  }
+
+  addMoreQuestion() {
+    this.quizQuestionsForm.reset();
+    this.activeQuestionId = null;
   }
 }

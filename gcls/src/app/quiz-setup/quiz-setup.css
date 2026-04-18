@@ -1,0 +1,171 @@
+/* Background and Container */
+.quiz-container {
+  background-color: #f8f9fa;
+  /* min-height: 100vh; */
+}
+
+/* Header Card */
+.header-card {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Custom Nav Buttons */
+.question-nav-card {
+  border: none;
+  min-height: 300px;
+}
+
+.btn-nav {
+  width: 35px;
+  height: 35px;
+  border: none;
+  background-color: #e0e0e0;
+  color: #333;
+  font-weight: bold;
+  font-size: 0.8rem;
+  border-radius: 4px;
+  transition: 0.3s;
+}
+
+.btn-nav.active {
+  background-color: #7e69d4;
+  color: white;
+}
+
+/* Question Content Area */
+.question-detail-card {
+  border: none;
+  min-height: 400px;
+}
+
+.info-text {
+  color: #6c757d;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.badge {
+  background-color: #e9ecef;
+  color: #495057;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Image Placeholder (The grey box) */
+.image-placeholder {
+  width: 250px;
+  height: 250px;
+  background-color: #d9d9d9;
+  border-radius: 8px;
+}
+
+/* Overriding Angular Material Tab Styles to match UI */
+::ng-deep .mat-mdc-tab-group {
+  --mdc-tab-indicator-active-indicator-color: #7e69d4;
+  --mdc-tab-indicator-active-indicator-height: 4px;
+}
+
+::ng-deep .mat-mdc-tab .mdc-tab__text-label {
+  font-weight: bold;
+  color: #333;
+}
+/* Remove the blue glow/outline on focus */
+.form-control:focus,
+.btn:focus,
+.form-select:focus,
+[type='text']:focus {
+  border-color: #dee2e6; /* Match your preferred border color */
+  outline: 0;
+  box-shadow: none !important;
+}
+
+.option-wrapper {
+  display: flex;
+  align-items: center;
+  padding: 14px 20px;
+  margin-bottom: 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  background-color: #fff;
+
+  &:hover {
+    background-color: #f8f9fa;
+    border-color: #d0d0d0;
+  }
+
+  /* The 'Selected' State */
+  &.selected {
+    border-color: #6f42c1; /* Match your sidebar purple */
+    background-color: #f3f0ff;
+
+    .badge-letter {
+      background-color: #6f42c1;
+      color: white;
+    }
+
+    .check-icon {
+      color: #6f42c1;
+      opacity: 1;
+    }
+  }
+}
+
+.badge-letter {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f1f3f5;
+  border-radius: 6px;
+  font-weight: 700;
+  margin-right: 15px;
+  transition: 0.2s;
+}
+
+.check-icon {
+  opacity: 0; /* Hidden until selected */
+  font-size: 1.2rem;
+}
+
+/* .badge-letter {
+  background: #f1f5f9;
+  color: #64748b;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  font-weight: bold;
+  margin-right: 15px;
+} */
+
+/* Target the label when the hidden radio is checked */
+.hidden-radio:checked + .option-label {
+  background-color: #eff6ff; /* Light blue background */
+  border-color: #3b82f6; /* Solid blue border */
+
+  /* .badge-letter {
+    background-color: #3b82f6;
+    color: white;
+  } */
+  /* 
+  .selected-icon {
+    display: block;
+    color: #3b82f6;
+    margin-left: auto;
+  } */
+}
+
+.selected-icon {
+  display: none; /* Hidden by default */
+}
