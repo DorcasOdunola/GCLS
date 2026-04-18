@@ -1,0 +1,62 @@
+.lessons-container {
+  background-color: #f1f1f1; /* Light grey background from your design */
+  min-height: 100vh;
+}
+
+/* Header Styling */
+.header-card {
+  background-color: #ffffff;
+}
+
+.btn-primary {
+  background-color: #5d9cec; /* Matching your blue theme */
+  border: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* Lesson Card Styling */
+.lesson-card {
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.lesson-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08) !important;
+}
+
+.bg-pink {
+  background-color: #ff9aa2; /* The coral/pink color from your screenshot */
+  height: 180px;
+}
+
+.lesson-icon {
+  max-height: 120px;
+  filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.1));
+}
+
+/* Badges and Typography */
+.badge {
+  border-radius: 4px;
+  font-size: 0.75rem;
+}
+
+.extra-small {
+  font-size: 0.65rem;
+}
+
+.text-secondary {
+  color: #555 !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .header-card h2 {
+    font-size: 1.5rem;
+  }
+  .bg-pink {
+    height: 150px;
+  }
+}

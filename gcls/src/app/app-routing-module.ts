@@ -9,6 +9,9 @@ import { Students } from './students/students';
 import { Quiz } from './quiz/quiz';
 import { QuizSetup } from './quiz-setup/quiz-setup';
 import { StudentLesson } from './student-lesson/student-lesson';
+import { StudentTakeLesson } from './student-take-lesson/student-take-lesson';
+import { StudentQuiz } from './student-quiz/student-quiz';
+import { StudentTakeQuiz } from './student-take-quiz/student-take-quiz';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -35,9 +38,9 @@ const routes: Routes = [
     children: [
       // { path: 'dashboard', component: DashboardComponent },
       { path: 'lesson', component: StudentLesson },
-      // { path: 'lesson/:lesson.id', component: StudentTakeLesson },
-      // { path: 'quiz', component: StudentQuiz },
-      // { path: 'quiz/:quiz_id', component: StudentTakeQuiz },
+      { path: 'lesson/:lesson.id', component: StudentTakeLesson },
+      { path: 'quiz', component: StudentQuiz },
+      { path: 'quiz/:quiz_id', component: StudentTakeQuiz },
     ],
   },
 
