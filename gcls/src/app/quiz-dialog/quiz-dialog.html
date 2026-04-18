@@ -1,0 +1,44 @@
+<div class="modal-card">
+  <div class="mb-3">
+    <span class="badge rounded-pill bg-primary px-3 py-2">
+      Lesson: {{ quizData?.lesson_topic }}
+    </span>
+  </div>
+
+  <h1 class="modal-title">{{ quizData?.quiz_title }}</h1>
+
+  <div class="info-bar mb-4">
+    <small class="text-muted">Details</small>
+  </div>
+
+  <div class="row g-3 mb-4">
+    <div class="col-6 col-md-4">
+      <div class="detail-item">
+        <i class="fas fa-question-circle"></i>
+        <span><strong>Questions:</strong> {{ quizData.questions_count }}</span>
+      </div>
+    </div>
+    <div class="col-6 col-md-4">
+      <div class="detail-item">
+        <i class="fas fa-clock"></i>
+        <span><strong>Time Limit:</strong> {{ quizData.duration }} mins</span>
+      </div>
+    </div>
+    <div class="col-6 col-md-4">
+      <div class="detail-item">
+        <i class="fas fa-clipboard-list"></i>
+        <span><strong>Attempts:</strong> 1 of 2</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="instructions-box">
+    <h6>Instructions:</h6>
+    <p [innerHTML]="quizData?.instructions" class="text-break"></p>
+  </div>
+
+  <div class="modal-footer-custom mt-4">
+    <button class="btn btn-primary start-btn px-4 py-2" (click)="startQuiz()">Start Quiz</button>
+    <button class="btn btn-light cancel-btn px-4 py-2 mx-2">Cancel</button>
+  </div>
+</div>

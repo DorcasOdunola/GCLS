@@ -1,0 +1,78 @@
+.main-content-wrapper {
+  background-color: #f1f3f5; /* The grey background */
+  min-height: 100vh;
+}
+
+.header-card {
+  background-color: #fff;
+  border-radius: 15px;
+}
+
+.page-title {
+  font-weight: 700;
+  color: #444;
+  letter-spacing: -0.5px;
+}
+
+.create-btn {
+  background-color: #5da1e6 !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+}
+
+/* Quiz Card Styling */
+.quiz-card {
+  border-radius: 15px;
+  overflow: hidden;
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: translateY(-5px);
+  }
+}
+
+.pink-header {
+  background-color: #ff9999; /* Adjust to match your specific pink */
+  height: 180px;
+  position: relative;
+}
+
+.quiz-thumb {
+  width: 140px;
+  height: auto;
+}
+
+.open-btn {
+  background-color: #5da1e6 !important;
+  border-radius: 6px !important;
+  min-width: 80px !important;
+  height: 35px !important;
+  line-height: 35px !important;
+}
+
+/* Stat Badges (Purple and Red) */
+.stat-badge {
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.purple-badge {
+  background-color: #f3f0ff;
+  color: #7e69d4;
+  .count {
+    font-weight: 800;
+  }
+}
+
+.red-badge {
+  background-color: #fff5f5;
+  color: #fa5252;
+  .count {
+    font-weight: 800;
+  }
+}
