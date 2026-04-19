@@ -1,1 +1,158 @@
-<p>student-take-quiz works!</p>
+<div
+  class="container-fluid mt-4 p-4 quiz-container bg-secondary-subtle text-secondary-emphasis"
+  style="min-height: 90vh"
+>
+  <div class="row">
+    <div
+      class="col-11 col-md-9 mx-auto header-card d-flex justify-content-between align-items-center p-3 mb-4"
+    >
+      <div class="">
+        <h2 class="mb-0 me-4" *ngIf="quizDetails">
+          <!-- QUIZ: {{ quizDetails.quiz_title }} <small class="text-muted"></small> -->
+        </h2>
+      </div>
+      <div class="hand-icon">
+        <mat-icon style="transform: scale(2)">front_hand</mat-icon>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-11 col-md-9 mx-auto">
+      <div class="row mt-4 w-100">
+        <div class="col-md-3">
+          <div class="card p-3 question-nav-card">
+            <div class="d-flex flex-wrap gap-2">
+              <button
+                *ngFor="let question of quizQuestionsArray; let i = index"
+                (click)="setActive(question.quiz_question_id)"
+                class="btn-nav"
+                [class.active]="question.quiz_question_id === activeQuestionId"
+              >
+                {{ i + 1 }}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-9">
+          <div class="card p-4 question-detail-card">
+            <div class="info-text mb-3">
+              <mat-icon class="vertical-align-middle">info_outline</mat-icon>
+              <small>Any piece of information shows up here</small>
+            </div>
+            <div *ngFor="let question of quizQuestionsArray; let i = index">
+              <div *ngIf="question.quiz_question_id === activeQuestionId">
+                <h5>QUESTION {{ i + 1 }}</h5>
+                <p class="mb-4">{{ question.question }}</p>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="custom-options-list">
+                      <div
+                        class="option-wrapper"
+                        (click)="selectAnswer('a', question)"
+                        [class.selected]="studentChoice === 'a' || question.selected_option === 'a'"
+                      >
+                        <span class="badge-letter">A</span>
+                        <span class="option-text">{{ question.option_a }}</span>
+                        <i class="bi bi-check-circle-fill ms-auto check-icon"></i>
+                      </div>
+
+                      <div
+                        class="option-wrapper"
+                        (click)="selectAnswer('b', question)"
+                        [class.selected]="studentChoice === 'b' || question.selected_option === 'b'"
+                      >
+                        <span class="badge-letter">B</span>
+                        <span class="option-text">{{ question.option_b }}</span>
+                        <i class="bi bi-check-circle-fill ms-auto check-icon"></i>
+                      </div>
+
+                      <div
+                        class="option-wrapper"
+                        (click)="selectAnswer('c', question)"
+                        [class.selected]="studentChoice === 'c' || question.selected_option === 'c'"
+                      >
+                        <span class="badge-letter">C</span>
+                        <span class="option-text">{{ question.option_c }}</span>
+                        <i class="bi bi-check-circle-fill ms-auto check-icon"></i>
+                      </div>
+                      <div
+                        class="option-wrapper"
+                        (click)="selectAnswer('d', question)"
+                        [class.selected]="studentChoice === 'd' || question.selected_option === 'd'"
+                      >
+                        <span class="badge-letter">D</span>
+                        <span class="option-text">{{ question.option_d }}</span>
+                        <i class="bi bi-check-circle-fill ms-auto check-icon"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="quiz-footer">
+                    <div class="footer-left">
+                      <button type="button" class="btn btn-outline-secondary custom-btn prev-btn">
+                        <i class="fas fa-chevron-left"></i> Previous
+                      </button>
+                    </div>
+
+                    <div class="footer-right">
+                      <button type="button" class="btn btn-primary custom-btn next-btn">
+                        Next <i class="fas fa-chevron-right"></i>
+                      </button>
+
+                      <button type="button" class="btn btn-success custom-btn submit-btn">
+                        Submit <i class="fas fa-paper-plane"></i>
+                      </button>
+                    </div>
+                  </div> -->
+            </div>
+
+            <!-- Footer with navigation buttons -->
+            <div class="quiz-footer">
+              <div class="footer-left">
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary custom-btn prev-btn"
+                  (click)="previousQuestion()"
+                >
+                  <!-- *ngIf="activeQuestionId !== quizQuestionsArray[0].quiz_question_id" -->
+                  <mat-icon>chevron_left</mat-icon> Previous
+                </button>
+              </div>
+
+              <div class="footer-right">
+                <button
+                  type="button"
+                  class="btn btn-primary custom-btn next-btn"
+                  (click)="nextQuestion()"
+                  *ngIf="
+                    activeQuestionId !==
+                    quizQuestionsArray[quizQuestionsArray.length - 1]?.quiz_question_id
+                  "
+                >
+                  Next <mat-icon>chevron_right</mat-icon>
+                </button>
+                <!-- *ngIf="
+                        activeQuestionId ===
+                        quizQuestionsArray[quizQuestionsArray.length - 1].quiz_question_id
+                      " -->
+                <!-- disabled="activeQuestionId !==
+                            quizQuestionsArray[quizQuestionsArray.length - 1]?.quiz_question_id" -->
+                <button
+                  type="button"
+                  class="btn btn-success custom-btn submit-btn"
+                  (click)="submitQuiz()"
+                >
+                  Submit <mat-icon>done_all</mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

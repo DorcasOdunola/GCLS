@@ -29,12 +29,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/test', function(){
     return "Hello, World!";
 });
+Route::get('/test', [TestController::class, 'test']);
 Route::get('/get_class', [ClassController::class, 'getAllClass']);
 Route::get('/get_subjects', [SubjectController::class, 'getAllSubject']);
 Route::post('/add_lesson', [LessonController::class, 'addLesson']);
 Route::get('/get_all_lessons', [LessonController::class, 'getAllLesson']);
 Route::post('/lesson_section', [LessonController::class, 'getLessonSection']);
-Route::post('get_lesson', [LessonController::class, 'getLesson']);
 Route::post('/add_student', [StudentController::class, 'addStudent']);
 Route::get('/students', [StudentController::class, 'getStudents']);
 Route::post('/login', [AuthController::class, 'login']);
@@ -47,5 +47,6 @@ Route::post('/add_question', [QuizController::class, 'addQuestion']);
 Route::post('/update_question', [QuizController::class, 'updateQuestion']);
 Route::post('/create_quiz_attempt', [QuizController::class, 'createQuizAttempt']);
 Route::post('/get_student_quiz_attempt', [QuizController::class, 'getStudentQuizAttempt']);
-Route::post('get_student_quiz_questions', [QuizController::class, 'getStudentQuizQuestion']);
-Route::post('/save_student_quiz_answers', [QuizController::class, 'saveStudentQuizAnswers ']);
+Route::post('/get_student_quiz_questions', [QuizController::class, 'getStudentQuizQuestion']);
+Route::post('/save_student_question_answers', [QuizController::class, 'saveStudentQuestionAnswers']);
+Route::post('/submit_quiz', [QuizController::class, 'submitQuiz']);
