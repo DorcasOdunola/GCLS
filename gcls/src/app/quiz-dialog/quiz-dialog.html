@@ -1,4 +1,4 @@
-<div class="modal-card">
+<div class="modal-card" *ngIf="data.status == 'open_quiz'">
   <div class="mb-3">
     <span class="badge rounded-pill bg-primary px-3 py-2">
       Lesson: {{ quizData?.lesson_topic }}
@@ -40,5 +40,115 @@
   <div class="modal-footer-custom mt-4">
     <button class="btn btn-primary start-btn px-4 py-2" (click)="startQuiz()">Start Quiz</button>
     <button class="btn btn-light cancel-btn px-4 py-2 mx-2">Cancel</button>
+  </div>
+</div>
+
+<div *ngIf="data.status == 'view_result'">
+  <div class="modal-card result-container">
+    <div
+      [ngClass]="{
+        'bg-pass': quizState === 'pass',
+        'bg-retry': quizState === 'retry',
+        'bg-blocked': quizState === 'blocked',
+      }"
+      class="result-header p-4 text-center rounded-4 mb-4"
+    >
+      <div class="header-content">
+        <mat-icon class="status-icon" *ngIf="quizState === 'pass'">check_circle</mat-icon>
+        <mat-icon class="status-icon" *ngIf="quizState === 'retry'">report_problem</mat-icon>
+        <mat-icon class="status-icon" *ngIf="quizState === 'blocked'">cancel</mat-icon>
+
+        <h1 class="m-0 text-white fw-bold">
+          <span *ngIf="quizState === 'pass'">Quiz Passed 🎉</span>
+          <span *ngIf="quizState === 'retry'">Almost There!</span>
+          <span *ngIf="quizState === 'blocked'">Try Again</span>
+        </h1>
+      </div>
+    </div>
+
+    <div mat-dialog-content class="p-0">
+      <div class="instructions-box mb-4">
+        <div class="row align-items-center">
+          <div class="col-md-4 text-center border-end">
+            <div class="progress-wrapper">
+              <svg viewBox="0 0 36 36" class="circular-chart">
+                <path
+                  class="circle-bg"
+                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                />
+                <path
+                  class="circle"
+                  [ngClass]="{
+                    'stroke-pass': quizState === 'pass',
+                    'stroke-retry': quizState === 'retry',
+                    'stroke-blocked': quizState === 'blocked',
+                  }"
+                  [attr.stroke-dasharray]="quizResult.percentage + ', 100'"
+                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                />
+                <text x="18" y="20.35" class="percentage-inner">{{ quizResult.percentage }}%</text>
+              </svg>
+              <p class="text-muted text-uppercase small fw-bold mt-1">Total Score</p>
+            </div>
+          </div>
+
+          <div class="col-md-8 ps-md-4">
+            <div class="detail-item mb-2">
+              <i class="fas fa-poll"></i>
+              <span
+                >Points:
+                <strong>{{ quizResult.correct_count }} / {{ quizResult.total_questions }}</strong>
+              </span>
+            </div>
+            <div class="detail-item mb-2">
+              <i class="fas fa-redo"></i>
+              <span
+                >Attempt:
+                <strong>{{ quizResult.attempt_number }} of {{ quizResult.maxAttempts }}</strong>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-bar mb-4 d-flex align-items-center gap-3">
+        <span class="fs-4">💬</span>
+        <p class="mb-0 fw-medium" *ngIf="quizState === 'pass'">
+          Great job! You have a good understanding of this topic.
+        </p>
+        <p class="mb-0 fw-medium" *ngIf="quizState === 'retry'">
+          You’re close. Review the lesson and try again.
+        </p>
+        <p class="mb-0 fw-medium" *ngIf="quizState === 'blocked'">
+          You need to revisit the lesson before attempting again.
+        </p>
+      </div>
+    </div>
+
+    <div mat-dialog-actions class="modal-footer-custom p-0 border-0 justify-content-center">
+      <button
+        *ngIf="quizState === 'pass'"
+        class="start-btn btn text-white w-100 py-3 fs-5"
+        (click)="nextLesson()"
+      >
+        Go to Next Lesson <i class="fas fa-arrow-right ms-2"></i>
+      </button>
+
+      <button
+        *ngIf="quizState === 'retry'"
+        class="btn btn-warning w-100 py-3 fs-5 fw-bold"
+        (click)="retry()"
+      >
+        Retry Quiz <i class="fas fa-undo ms-2"></i>
+      </button>
+
+      <button
+        *ngIf="quizState === 'blocked'"
+        class="btn btn-secondary w-100 py-3 fs-5 fw-bold disabled"
+        disabled
+      >
+        <i class="fas fa-lock me-2"></i> Lesson Locked
+      </button>
+    </div>
   </div>
 </div>

@@ -33,7 +33,7 @@ export class StudentQuiz {
     // This involve navigating to the quiz-taking component or displaying the quiz questions
     console.log('Opening quiz:', quiz);
     this.dialog.open(QuizDialog, {
-      data: quiz,
+      data: { quiz, status: 'open_quiz' },
       // height: '400px',
       // width: '600px',
     });

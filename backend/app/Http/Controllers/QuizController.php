@@ -251,15 +251,15 @@ class QuizController extends Controller
             "status" => "success",
             "data" => $student_questions
         ]);$correctCount = $answers->filter(function ($answer) {
-    return $answer->selected_option == $answer->correct_option;
-})->count();
+            return $answer->selected_option == $answer->correct_option;
+        })->count();
 
-$totalQuestions = $answers->count();
-$incorrectCount = $totalQuestions - $correctCount;
+        // $totalQuestions = $answers->count();
+        // $incorrectCount = $totalQuestions - $correctCount;
 
-$percentage = $totalQuestions > 0 
-    ? round(($correctCount / $totalQuestions) * 100, 2)
-    : 0;
+        // $percentage = $totalQuestions > 0 
+        //     ? round(($correctCount / $totalQuestions) * 100, 2)
+        //     : 0;
     }
 
     public function saveStudentQuestionAnswers (Request $request) {
@@ -269,26 +269,26 @@ $percentage = $totalQuestions > 0
             ->update([
                 "selected_option" => $request->selected_option
             ]);
-        if (!$updated) {
+        if ($updated) {
             return response()->json ([
-                "status" => "error",
-                "message" => "Failed to update student answer"
-            ], 500);
+                "status" => "success",
+                "message" => "Student answer updated successfully"
+            ]);
+            // return response()->json ([
+            //     "status" => "error",
+            //     "message" => "Failed to update student answer"
+            // ], 500);
         }
-        return response()->json ([
-            "status" => "success",
-            "message" => "Student answer updated successfully"
-        ]);
     }
 
     public function submitQuiz (Request $request) {
         //
         $answers = DB::table('quiz_answer_tb')
-            ->join('quiz_question_tb', 'quiz_answer_tb.question_id', '=', 'quiz_question_tb.question_id')
+            ->join('quiz_question', 'quiz_answer_tb.quiz_question_id', '=', 'quiz_question.quiz_question_id')
             ->where('quiz_answer_tb.quiz_attempt_id', $request->quiz_attempt_id)
             ->select(
                 'quiz_answer_tb.selected_option',
-                'quiz_question_tb.correct_option'
+                'quiz_question.correct_option'
             )
         ->get();
         $correctCount = $answers->filter(function ($answer) {
@@ -299,13 +299,41 @@ $percentage = $totalQuestions > 0
         $incorrectCount = $totalQuestions - $correctCount;
 
         $percentage = $totalQuestions > 0 ? round(($correctCount / $totalQuestions) * 100, 2): 0;
+        $passMark = 50;
+
+        $result_status = $percentage >= $passMark ? 'passed' : 'failed';
+
+
+        DB::table('quiz_attempt_tb')
+        ->where('quiz_attempt_id', $request->quiz_attempt_id)
+        ->update([
+            'correct_count' => $correctCount,
+            'incorrect_count' => $incorrectCount,
+            'total_questions' => $totalQuestions,
+            'percentage' => $percentage,
+            'status' => 1, // Mark as completed
+            'result_status' => $result_status,
+            'submitted_at' => now()
+        ]);
+        $attempt = DB::table('quiz_attempt_tb')
+            ->where('quiz_attempt_id', $request->quiz_attempt_id)
+            ->first();
+
+        $attemptNumber = $attempt->attempt_number ?? 1;
+
+
         return response()->json([
             "status" => "success",
-            "correct_count" => $correctCount,
-            "total_questions" => $totalQuestions,
-            "incorrect_count" => $incorrectCount,
-            "percentage" => $percentage
+            "data" => [
+                "correct_count" => $correctCount,
+                "total_questions" => $totalQuestions,
+                "incorrect_count" => $incorrectCount,
+                "percentage" => $percentage,
+                "attempt_number" => $attemptNumber,
+                "result" => $result_status,
+                "maxAttempts" => 2
+            ]
         ]);
-    
-        }
+            
+    }
 }

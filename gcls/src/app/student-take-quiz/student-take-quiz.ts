@@ -3,6 +3,8 @@ import { QuizService } from '../service/quiz-service';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { QuizDialog } from '../quiz-dialog/quiz-dialog';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-student-take-quiz',
@@ -24,6 +26,7 @@ export class StudentTakeQuiz {
     public actRoute: ActivatedRoute,
     public formBuilder: FormBuilder,
     public snackBar: MatSnackBar,
+    public dialog: MatDialog,
   ) {}
 
   ngOnInit() {
@@ -92,6 +95,7 @@ export class StudentTakeQuiz {
       if (response.status == 'success') {
         this.quizQuestionsArray = response.data;
         this.activeQuestionId = this.quizQuestionsArray[0].quiz_question_id;
+        this.quizQuestionsArray.map((q) => {});
       }
       if (response.status !== 'success') {
         this.snackBar.open('Error fetching quiz questions.', 'Close', {
@@ -134,7 +138,11 @@ export class StudentTakeQuiz {
 
   // Function to handle the click
   selectAnswer(letter: string, question: any) {
-    this.studentChoice = letter;
+    if (question.selected_option == letter) return; // If the same option is clicked again, do nothing
+    let qIndex = this.quizQuestionsArray.findIndex(
+      (q) => q.quiz_question_id === question.quiz_question_id,
+    );
+    this.quizQuestionsArray[qIndex].selected_option = letter;
     this.quizService
       .saveStudentQuestionAnswers({
         quiz_answer_id: question.quiz_answer_id,
@@ -146,16 +154,20 @@ export class StudentTakeQuiz {
   submitQuiz() {
     console.log('Submitting quiz with attempt ID:', this.quizAttemptDetails);
     console.log('Submitting quiz with attempt ID:', this.quizAttemptDetails[0].quiz_attempt_id);
-    return;
     this.quizService
       .submitQuiz({ quiz_attempt_id: this.quizAttemptDetails[0].quiz_attempt_id })
       .subscribe((response) => {
         if (response.status === 'success') {
-          console.log('Quiz submitted successfully:', response);
-          this.snackBar.open('Quiz submitted successfully!', 'Close', {
-            duration: 3000,
-            panelClass: ['snackbar-success'],
+          this.dialog.open(QuizDialog, {
+            data: { quizResult: response.data, status: 'view_result' },
+            // height: '400px',
+            // width: '600px',
           });
+          console.log('Quiz submitted successfully:', response);
+          // this.snackBar.open('Quiz submitted successfully!', 'Close', {
+          //   duration: 3000,
+          //   panelClass: ['snackbar-success'],
+          // });
           // Logic to show quiz results can be added here
         } else {
           this.snackBar.open('Error submitting quiz.', 'Close', {

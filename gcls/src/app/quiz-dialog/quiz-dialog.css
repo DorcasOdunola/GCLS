@@ -1,11 +1,9 @@
-/* Main Modal Container */
+/* --- EXISTING MODAL STYLES (RETAINED) --- */
 .modal-card {
-  /* background: #ffffff; */
-  border-radius: 24px; /* Large rounded corners from image */
+  border-radius: 24px;
   padding: 40px;
   max-width: 1200px;
   margin: 20px auto;
-  /* box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05); */
   font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
@@ -16,14 +14,12 @@
   margin-bottom: 20px;
 }
 
-/* Gray Info Bar */
 .info-bar {
   background-color: #f1f3f5;
-  padding: 8px 15px;
-  border-radius: 6px;
+  padding: 12px 15px;
+  border-radius: 10px;
 }
 
-/* Detail Items (Icons + Text) */
 .detail-item {
   display: flex;
   align-items: center;
@@ -36,70 +32,123 @@
   font-size: 1.2rem;
 }
 
-/* Instructions Section */
 .instructions-box {
   background-color: #f8fafc;
   border-radius: 12px;
   padding: 20px;
   border: 1px solid #edf2f7;
-  /* overflow: hidden; */
-  /* white-space: nowrap; */
 }
 
-.instructions-box h6 {
-  font-weight: 700;
-  margin-bottom: 12px;
+/* --- RESULT HEADER STATES --- */
+.result-header {
+  transition: background-color 0.3s ease;
+  border-radius: 16px;
 }
 
-.instruction-list {
-  list-style: none;
-  padding-left: 0;
-  margin-bottom: 0;
+.bg-pass {
+  background-color: #28a745;
+} /* Success Green */
+.bg-retry {
+  background-color: #fd7e14;
+} /* Warning Orange */
+.bg-blocked {
+  background-color: #dc3545;
+} /* Danger Red */
+
+.status-icon {
+  font-size: 48px;
+  height: 48px;
+  width: 48px;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 10px;
 }
 
-.instruction-list li {
-  position: relative;
-  padding-left: 20px;
-  margin-bottom: 8px;
-  font-size: 0.95rem;
-  color: #4a5568;
+/* --- CIRCULAR PROGRESS BAR STYLES --- */
+.progress-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.instruction-list li::before {
-  content: '›'; /* Matching the arrow from the image */
-  position: absolute;
-  left: 0;
-  color: #3182ce;
-  font-weight: bold;
+.circular-chart {
+  display: block;
+  margin: 0 auto;
+  max-width: 110px;
+  max-height: 110px;
 }
 
-/* Footer Buttons */
+.circle-bg {
+  fill: none;
+  stroke: #eee;
+  stroke-width: 3;
+}
+
+.circle {
+  fill: none;
+  stroke-width: 3;
+  stroke-linecap: round;
+  transition: stroke-dasharray 0.8s ease-in-out;
+}
+
+/* Progress Stroke Colors */
+.stroke-pass {
+  stroke: #28a745;
+}
+.stroke-retry {
+  stroke: #fd7e14;
+}
+.stroke-blocked {
+  stroke: #dc3545;
+}
+
+.percentage-inner {
+  fill: #1a1e26;
+  font-size: 0.55rem;
+  font-weight: 800;
+  text-anchor: middle;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* --- BUTTONS & FOOTER --- */
 .modal-footer-custom {
   display: flex;
   align-items: center;
+  border-top: none !important;
 }
 
+/* Pass State Button (Your Blue Style) */
 .start-btn {
   background-color: #2b6cb0;
   border: none;
   border-radius: 8px;
   font-weight: 600;
+  transition: 0.2s;
 }
 
 .start-btn:hover {
   background-color: #2c5282;
 }
 
-.cancel-btn {
-  background-color: #edf2f7;
+/* Retry State Button (Using your Sidebar Purple) */
+.btn-warning {
+  background-color: #7e69d4;
+  color: white !important;
   border: none;
   border-radius: 8px;
-  color: #4a5568;
   font-weight: 600;
 }
 
-/* Remove Bootstrap Glow */
+.btn-warning:hover {
+  background-color: #6f42c1;
+}
+
+/* General Cleanup */
 .btn:focus {
   box-shadow: none !important;
   outline: none;
+}
+
+.text-muted.small.fw-bold {
+  letter-spacing: 0.5px;
 }

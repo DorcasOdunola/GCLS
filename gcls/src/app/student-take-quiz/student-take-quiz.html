@@ -52,7 +52,7 @@
                       <div
                         class="option-wrapper"
                         (click)="selectAnswer('a', question)"
-                        [class.selected]="studentChoice === 'a' || question.selected_option === 'a'"
+                        [class.selected]="question.selected_option === 'a'"
                       >
                         <span class="badge-letter">A</span>
                         <span class="option-text">{{ question.option_a }}</span>
@@ -62,7 +62,7 @@
                       <div
                         class="option-wrapper"
                         (click)="selectAnswer('b', question)"
-                        [class.selected]="studentChoice === 'b' || question.selected_option === 'b'"
+                        [class.selected]="question.selected_option === 'b'"
                       >
                         <span class="badge-letter">B</span>
                         <span class="option-text">{{ question.option_b }}</span>
@@ -72,7 +72,7 @@
                       <div
                         class="option-wrapper"
                         (click)="selectAnswer('c', question)"
-                        [class.selected]="studentChoice === 'c' || question.selected_option === 'c'"
+                        [class.selected]="question.selected_option === 'c'"
                       >
                         <span class="badge-letter">C</span>
                         <span class="option-text">{{ question.option_c }}</span>
@@ -81,7 +81,7 @@
                       <div
                         class="option-wrapper"
                         (click)="selectAnswer('d', question)"
-                        [class.selected]="studentChoice === 'd' || question.selected_option === 'd'"
+                        [class.selected]="question.selected_option === 'd'"
                       >
                         <span class="badge-letter">D</span>
                         <span class="option-text">{{ question.option_d }}</span>
@@ -139,8 +139,6 @@
                         activeQuestionId ===
                         quizQuestionsArray[quizQuestionsArray.length - 1].quiz_question_id
                       " -->
-                <!-- disabled="activeQuestionId !==
-                            quizQuestionsArray[quizQuestionsArray.length - 1]?.quiz_question_id" -->
                 <button
                   type="button"
                   class="btn btn-success custom-btn submit-btn"

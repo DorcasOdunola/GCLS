@@ -22,11 +22,21 @@ export class QuizDialog {
   quizData: any;
   getUserDetails: any;
 
-  ngOnInit() {
-    this.quizData = this.data;
+  quizState: 'pass' | 'retry' | 'blocked' = 'retry';
+  quizResult: any;
 
-    let getUserDetails = JSON.parse(localStorage.getItem('userData') || '{}');
-    this.getUserDetails = getUserDetails;
+  ngOnInit() {
+    if (this.data.status === 'open_quiz') {
+      this.quizData = this.data;
+
+      let getUserDetails = JSON.parse(localStorage.getItem('userData') || '{}');
+      this.getUserDetails = getUserDetails;
+    }
+
+    if (this.data.status === 'view_result') {
+      this.quizResult = this.data.quizResult;
+      this.calculateState();
+    }
   }
 
   startQuiz() {
@@ -50,5 +60,24 @@ export class QuizDialog {
         // Handle error case for quiz attempt creation
       }
     });
+  }
+
+  calculateState() {
+    if (this.quizResult.percentage >= 70) {
+      this.quizState = 'pass';
+    } else if (this.quizResult.percentage >= 50 && this.quizResult.percentage <= 69) {
+      this.quizState = 'pass';
+    } else if (this.quizResult.attempt < this.data.maxAttempts) {
+      this.quizState = 'retry';
+    } else {
+      this.quizState = 'blocked';
+    }
+  }
+
+  nextLesson() {
+    this.dialogRef.close('next');
+  }
+  retry() {
+    this.dialogRef.close('retry');
   }
 }
