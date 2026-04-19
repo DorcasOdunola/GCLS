@@ -12,6 +12,7 @@ import { StudentLesson } from './student-lesson/student-lesson';
 import { StudentTakeLesson } from './student-take-lesson/student-take-lesson';
 import { StudentQuiz } from './student-quiz/student-quiz';
 import { StudentTakeQuiz } from './student-take-quiz/student-take-quiz';
+import { ReviewQuiz } from './review-quiz/review-quiz';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -41,6 +42,7 @@ const routes: Routes = [
       { path: 'lesson/:lesson.id', component: StudentTakeLesson },
       { path: 'quiz', component: StudentQuiz },
       { path: 'quiz/:quiz_id', component: StudentTakeQuiz },
+      { path: 'review-quiz/:quiz_id', component: ReviewQuiz },
     ],
   },
 

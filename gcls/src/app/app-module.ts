@@ -22,6 +22,7 @@ import { StudentTakeQuiz } from './student-take-quiz/student-take-quiz';
 import { QuillModule } from 'ngx-quill';
 import { StudentDialog } from './student-dialog/student-dialog';
 import { QuizDialog } from './quiz-dialog/quiz-dialog';
+import { ReviewQuiz } from './review-quiz/review-quiz';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { QuizDialog } from './quiz-dialog/quiz-dialog';
     StudentTakeQuiz,
     StudentDialog,
     QuizDialog,
+    ReviewQuiz,
   ],
 
   imports: [

@@ -62,7 +62,6 @@ class QuizController extends Controller
 
     public function getQuiz (Request $request) {
         //
-
         $quizId = $request->quiz_id;
 
         // Get the quiz
@@ -82,12 +81,12 @@ class QuizController extends Controller
         }
 
         // Get related questions
-        $questions = DB::table('quiz_question')
-            ->where('quiz_id', $quizId)
-            ->get();
+        // $questions = DB::table('quiz_question')
+        //     ->where('quiz_id', $quizId)
+        //     ->get();
 
         // Attach questions array to quiz object
-        $quiz->questions = $questions;
+        // $quiz->questions = $questions;
 
         return response()->json([
             "status" => "success",
@@ -331,7 +330,8 @@ class QuizController extends Controller
                 "percentage" => $percentage,
                 "attempt_number" => $attemptNumber,
                 "result" => $result_status,
-                "maxAttempts" => 2
+                "maxAttempts" => 2,
+                "quiz_id" => $attempt->quiz_id
             ]
         ]);
             

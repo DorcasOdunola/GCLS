@@ -104,8 +104,18 @@
               <i class="fas fa-redo"></i>
               <span
                 >Attempt:
-                <strong>{{ quizResult.attempt_number }} of {{ quizResult.maxAttempts }}</strong>
+                <strong>{{ quizResult.attempt_number }} of {{ quizResult.attempt_number }}</strong>
+                <!-- <strong>{{ quizResult.attempt_number }} of {{ quizResult.maxAttempts }}</strong> -->
               </span>
+              <div>
+                <button
+                  matButton
+                  routerLink="/student/review-quiz/{{ quizResult.quiz_id }}"
+                  mat-dialog-close
+                >
+                  Review Quiz
+                </button>
+              </div>
             </div>
           </div>
         </div>

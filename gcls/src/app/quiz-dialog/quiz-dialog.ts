@@ -26,6 +26,7 @@ export class QuizDialog {
   quizResult: any;
 
   ngOnInit() {
+    console.log('QuizDialog initialized with data:', this.data);
     if (this.data.status === 'open_quiz') {
       this.quizData = this.data;
 
