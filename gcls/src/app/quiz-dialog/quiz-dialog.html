@@ -107,15 +107,7 @@
                 <strong>{{ quizResult.attempt_number }} of {{ quizResult.attempt_number }}</strong>
                 <!-- <strong>{{ quizResult.attempt_number }} of {{ quizResult.maxAttempts }}</strong> -->
               </span>
-              <div>
-                <button
-                  matButton
-                  routerLink="/student/review-quiz/{{ quizResult.quiz_id }}"
-                  mat-dialog-close
-                >
-                  Review Quiz
-                </button>
-              </div>
+              <div></div>
             </div>
           </div>
         </div>
@@ -125,6 +117,13 @@
         <span class="fs-4">💬</span>
         <p class="mb-0 fw-medium" *ngIf="quizState === 'pass'">
           Great job! You have a good understanding of this topic.
+          <button
+            matButton
+            routerLink="/student/review-quiz/{{ quizResult.quiz_id }}"
+            mat-dialog-close
+          >
+            Review Quiz
+          </button>
         </p>
         <p class="mb-0 fw-medium" *ngIf="quizState === 'retry'">
           You’re close. Review the lesson and try again.

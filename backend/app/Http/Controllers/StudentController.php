@@ -11,7 +11,7 @@ class StudentController extends Controller
     public function addStudent(Request $request)
     {
         //
-       $addUser = DB::table('users')->insert([
+       $user_id = DB::table('users')->insertGetId([
             "first_name" => $request->first_name,
             "last_name" => $request->last_name,
             "address" => $request->address,
@@ -20,7 +20,19 @@ class StudentController extends Controller
             "user_type" => $request->user_type,
             "password" => bcrypt($request->password),
         ]);
-        if ($addUser) {
+        if ($user_id) {
+            if ($request->user_type == 1) {
+                $firstLesson = DB::table('lesson_tb')
+                ->first();
+
+                if ($firstLesson) {
+                    DB::table('student_lesson_tb')->insert([
+                        "status" => 1,
+                        "user_id" => $user_id,
+                        "lesson_id" => $firstLesson->lesson_id
+                    ]);
+                }
+            }
             return response()->json([
                 "status" => "success",
                 "message" => "User added successfully"
