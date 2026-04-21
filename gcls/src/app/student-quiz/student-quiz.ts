@@ -11,6 +11,7 @@ import { QuizDialog } from '../quiz-dialog/quiz-dialog';
 })
 export class StudentQuiz {
   public quizArray: any = [];
+  getUserDetails: any;
 
   constructor(
     public quizService: QuizService,
@@ -19,11 +20,15 @@ export class StudentQuiz {
 
   ngOnInit() {
     // Initialization logic for student quiz can be added here
-    this.geAllQuiz();
+    let getUserDetails = JSON.parse(localStorage.getItem('userData') || '{}');
+    this.getUserDetails = getUserDetails;
+    if (this.getUserDetails.user_id) {
+      this.geAllQuiz(this.getUserDetails.user_id);
+    }
   }
 
-  geAllQuiz() {
-    this.quizService.getQuiz().subscribe((response) => {
+  geAllQuiz(user_id: number) {
+    this.quizService.getQuizForStudent({ user_id }).subscribe((response) => {
       this.quizArray = response.data;
       // Handle the fetched quizzes as needed
     });

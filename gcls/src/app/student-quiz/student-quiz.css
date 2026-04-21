@@ -76,3 +76,16 @@
     font-weight: 800;
   }
 }
+
+.info-badge {
+  background-color: #e3f2fd;
+  color: #1976d2;
+  .count {
+    font-weight: 800;
+  }
+}
+
+.disabled-card {
+  pointer-events: none;
+  opacity: 0.8;
+}

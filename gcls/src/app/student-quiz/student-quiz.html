@@ -23,7 +23,10 @@
         <div class="col-11 col-md-10 mx-auto">
           <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
             <div class="col" *ngFor="let quiz of quizArray">
-              <div class="card quiz-card h-100 border-0 shadow-sm">
+              <div
+                class="card quiz-card h-100 border-0 shadow-sm"
+                [class.disabled-card]="quiz.quiz_status === 'locked'"
+              >
                 <div
                   class="card-img-top pink-header d-flex align-items-center justify-content-center"
                 >
@@ -55,7 +58,14 @@
                     <span class="stat-badge purple-badge">
                       <span class="count">{{ quiz.questions_count }}</span> Questions
                     </span>
-                    <span class="stat-badge red-badge"> Quiz written </span>
+                    <!-- <span class="stat-badge red-badge">
+                      <mat-icon>lock</mat-icon>
+                      Locked
+                    </span> -->
+                    <span class="stat-badge info-badge">
+                      <mat-icon>lock_open</mat-icon>
+                      Unlocked
+                    </span>
                   </div>
 
                   <p class="text-muted mb-0" style="font-size: 0.65rem">

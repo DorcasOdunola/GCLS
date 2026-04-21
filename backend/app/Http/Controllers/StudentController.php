@@ -23,6 +23,7 @@ class StudentController extends Controller
         if ($user_id) {
             if ($request->user_type == 1) {
                 $firstLesson = DB::table('lesson_tb')
+                    ->orderBy('lesson_id', 'asc')
                 ->first();
 
                 if ($firstLesson) {

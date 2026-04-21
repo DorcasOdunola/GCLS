@@ -60,6 +60,59 @@ class QuizController extends Controller
         ]); 
     }
 
+    public function getAllQuizForStudent(Request $request)
+    {
+        $studentId = $request->user_id;
+
+        $quizzes = DB::table('quiz_tb')
+            ->join('lesson_tb', 'lesson_tb.lesson_id', '=', 'quiz_tb.lesson_id')
+            
+            ->leftJoin('quiz_question', 'quiz_question.quiz_id', '=', 'quiz_tb.quiz_id')
+            
+            ->leftJoin('student_lesson_tb as sl', function ($join) use ($studentId) {
+                $join->on('sl.lesson_id', '=', 'quiz_tb.lesson_id')
+                    ->where('sl.user_id', '=', $studentId);
+            })
+
+            ->select(
+                'quiz_tb.quiz_id',
+                'quiz_tb.quiz_title',
+                'quiz_tb.created_at',
+                'quiz_tb.instructions',
+                'quiz_tb.duration',
+                'lesson_tb.topic as lesson_topic',
+
+                DB::raw('COUNT(quiz_question.quiz_question_id) as questions_count'),
+
+                // Lock logic
+                DB::raw("
+                    CASE 
+                        WHEN sl.lesson_id IS NOT NULL 
+                            AND sl.status = 2 THEN 'open'
+                        ELSE 'locked'
+                    END as quiz_status
+                ")
+            )
+
+            ->groupBy(
+                'quiz_tb.quiz_id',
+                'quiz_tb.quiz_title',
+                'quiz_tb.created_at',
+                'quiz_tb.instructions',
+                'quiz_tb.duration',
+                'lesson_tb.topic',
+                'sl.lesson_id',
+                'sl.status'
+            )
+
+            ->get();
+
+        return response()->json([
+            "status" => "success",
+            "data" => $quizzes
+        ]);
+    }
+
     public function getQuiz (Request $request) {
         //
         $quizId = $request->quiz_id;

@@ -9,7 +9,36 @@ class LessonController extends Controller
     //
     public function getAllLesson()
     {
-        $lessons = DB::table("lesson_tb")->get();
+        $lessons = DB::table("lesson_tb")
+        ->get(); 
+        return response()->json([ 
+            "status" => "success", 
+            "data" => $lessons 
+        ]);
+    }
+
+    public function getAllLessonForStudent(Request $request)
+    {
+        $studentId = $request->user_id;
+
+        $lessons = DB::table('lesson_tb as l')
+            ->leftJoin('student_lesson_tb as sl', function ($join) use ($studentId) {
+                $join->on('l.lesson_id', '=', 'sl.lesson_id')
+                    ->where('sl.user_id', '=', $studentId);
+            })
+            ->select(
+                'l.*',
+                DB::raw("
+                    CASE 
+                        WHEN sl.lesson_id IS NULL THEN 'locked'
+                        WHEN sl.status = 1 THEN 'in_progress'
+                        WHEN sl.status = 2 THEN 'completed'
+                        ELSE 'locked'
+                    END as lesson_status
+                ")
+            )
+            ->orderBy('l.lesson_id', 'asc')
+            ->get();
 
         return response()->json([
             "status" => "success",

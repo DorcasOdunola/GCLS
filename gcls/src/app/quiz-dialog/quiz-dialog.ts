@@ -67,12 +67,14 @@ export class QuizDialog {
     if (this.quizResult.percentage >= 70) {
       this.quizState = 'pass';
     } else if (this.quizResult.percentage >= 50 && this.quizResult.percentage <= 69) {
-      this.quizState = 'pass';
-    } else if (this.quizResult.attempt < this.data.maxAttempts) {
       this.quizState = 'retry';
     } else {
       this.quizState = 'blocked';
     }
+
+    // else if (this.quizResult.attempt < this.data.maxAttempts) {
+    //   this.quizState = 'retry';
+    // }
   }
 
   nextLesson() {

@@ -60,3 +60,52 @@
     height: 150px;
   }
 }
+
+.disabled-card {
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+/* Base Pill Styling */
+.status-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.3px;
+  border: 1px solid transparent;
+}
+
+/* Icon size adjustment */
+.status-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Locked State (Pink/Red) */
+.status-locked {
+  background-color: #fff1f2; /* Soft pink background */
+  color: #f43f5e; /* Deep rose text */
+  border-color: #ffe4e6;
+}
+
+/* In Progress/Completed State (Blue) */
+.status-progress {
+  background-color: #eef7ff; /* Soft blue background */
+  color: #3b82f6; /* Bright blue text */
+  border-color: #d0e8ff;
+}
+
+/* Optional: Created date text style to match the UI */
+.created-date-text {
+  font-size: 10px;
+  color: #999;
+  margin-top: 5px;
+}

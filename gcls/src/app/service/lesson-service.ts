@@ -17,6 +17,9 @@ export class LessonService {
   public getAllLessons() {
     return this.httpClient.get<any>(`${this.baseUrl}get_all_lessons`);
   }
+  public getAllLessonsForStudent(obj: any) {
+    return this.httpClient.post<any>(`${this.baseUrl}get_all_lessons_for_student`, obj);
+  }
 
   public getLessonSection(obj: any) {
     return this.httpClient.post<any>(`${this.baseUrl}lesson_section`, obj);

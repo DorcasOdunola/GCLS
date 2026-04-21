@@ -16,27 +16,50 @@
         <div class="col-12 col-md-6 col-lg-4" *ngFor="let lesson of lessonsArray; let i = index">
           <div
             class="card lesson-card border-0 shadow-sm h-100 rounded-4 overflow-hidden"
-            routerLink="/student/lesson/{{ lesson.lesson_id }}"
+            (click)="openLesson(lesson)"
             style="cursor: pointer"
+            [class.disabled-card]="lesson.lesson_status === 'locked'"
           >
             <div class="card-img-top bg-pink d-flex align-items-center justify-content-center p-4">
               <img src="assets/white-book.png" alt="Lesson Icon" class="img-fluid lesson-icon" />
             </div>
 
             <div class="card-body p-4">
-              <p class="text-muted small mb-1">Lesson {{ i + 1 }}</p>
-              <h5 class="fw-bold mb-3">{{ lesson.topic }}</h5>
+              <div class="row">
+                <div class="col-12 col-md-7">
+                  <p class="text-muted small mb-1">Lesson {{ i + 1 }}</p>
+                  <h5 class="fw-bold mb-3">{{ lesson.topic }}</h5>
 
-              <div class="d-flex gap-2 mb-3">
-                <span class="badge bg-light text-primary border px-3 py-2 fw-normal"
-                  >5 Students</span
-                >
-                <span class="badge bg-light text-danger border px-3 py-2 fw-normal"
-                  >3 Quiz written</span
-                >
+                  <div class="d-flex align-items-center gap-2 mb-3">
+                    <div
+                      class="status-pill"
+                      [ngClass]="{
+                        'status-locked': lesson.lesson_status == 'locked',
+                        'status-progress':
+                          lesson.lesson_status == 'in_progress' ||
+                          lesson.lesson_status == 'completed',
+                      }"
+                    >
+                      <mat-icon class="status-icon" *ngIf="lesson.lesson_status === 'locked'"
+                        >lock</mat-icon
+                      >
+                      <mat-icon class="status-icon" *ngIf="lesson.lesson_status !== 'locked'"
+                        >lock_open</mat-icon
+                      >
+
+                      <span class="status-text">
+                        {{ lesson.lesson_status | uppercase }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-md-5">
+                  <button class="btn btn-primary">Open Lesson</button>
+                </div>
               </div>
 
-              <p class="text-muted extra-small mb-0">
+              <!-- text-muted extra-small mb-0 -->
+              <p class="created_date_text">
                 Created on: {{ lesson.created_at | date: 'shortDate' }}
               </p>
             </div>

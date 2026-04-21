@@ -27,6 +27,9 @@ export class QuizService {
   public getQuiz() {
     return this.httpClient.get<any>(`${this.baseUrl}quizzes`);
   }
+  public getQuizForStudent(obj: any) {
+    return this.httpClient.post<any>(`${this.baseUrl}quizzes_student`, obj);
+  }
 
   public addQuestion(obj: any) {
     return this.httpClient.post<any>(`${this.baseUrl}add_question`, obj);

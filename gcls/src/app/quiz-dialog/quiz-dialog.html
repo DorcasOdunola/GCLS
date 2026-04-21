@@ -117,20 +117,25 @@
         <span class="fs-4">💬</span>
         <p class="mb-0 fw-medium" *ngIf="quizState === 'pass'">
           Great job! You have a good understanding of this topic.
-          <button
-            matButton
-            routerLink="/student/review-quiz/{{ quizResult.quiz_id }}"
-            mat-dialog-close
-          >
-            Review Quiz
-          </button>
         </p>
-        <p class="mb-0 fw-medium" *ngIf="quizState === 'retry'">
-          You’re close. Review the lesson and try again.
+        <p
+          class="mb-0 fw-medium"
+          *ngIf="
+            quizState === 'retry' && (quizResult.percentage >= 50 || quizResult.percentage <= 69)
+          "
+        >
+          You tried. You can review the lesson for better understanding.
         </p>
         <p class="mb-0 fw-medium" *ngIf="quizState === 'blocked'">
           You need to revisit the lesson before attempting again.
         </p>
+        <button
+          matButton
+          routerLink="/student/review-quiz/{{ quizResult.quiz_id }}"
+          mat-dialog-close
+        >
+          Review Quiz
+        </button>
       </div>
     </div>
 
@@ -144,7 +149,9 @@
       </button>
 
       <button
-        *ngIf="quizState === 'retry'"
+        *ngIf="
+          quizState === 'retry' && (quizResult.percentage >= 50 || quizResult.percentage <= 69)
+        "
         class="btn btn-warning w-100 py-3 fs-5 fw-bold"
         (click)="retry()"
       >
