@@ -82,7 +82,4 @@ export class QuizDialog {
   nextLesson() {
     this.dialogRef.close('next');
   }
-  retry() {
-    this.dialogRef.close('retry');
-  }
 }

@@ -137,6 +137,7 @@
         </div>
 
         <button
+          *ngIf="quizState == 'pass' || quizState == 'moderate'"
           class="btn-review"
           routerLink="/student/review-quiz/{{ quizResult.quiz_id }}"
           mat-dialog-close
@@ -170,7 +171,8 @@
       <button
         *ngIf="quizState === 'retry'"
         class="btn btn-warning w-100 py-3 fs-5 fw-bold"
-        (click)="retry()"
+        mat-dialog-close
+        routerLink="/student/quiz"
       >
         Retry Quiz <i class="fas fa-undo ms-2"></i>
       </button>

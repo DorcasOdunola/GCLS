@@ -66,12 +66,26 @@ class QuizController extends Controller
 
         $quizzes = DB::table('quiz_tb')
             ->join('lesson_tb', 'lesson_tb.lesson_id', '=', 'quiz_tb.lesson_id')
-            
+
+            // questions count
             ->leftJoin('quiz_question', 'quiz_question.quiz_id', '=', 'quiz_tb.quiz_id')
-            
+
+            // lesson progress
             ->leftJoin('student_lesson_tb as sl', function ($join) use ($studentId) {
                 $join->on('sl.lesson_id', '=', 'quiz_tb.lesson_id')
                     ->where('sl.user_id', '=', $studentId);
+            })
+
+            // latest attempt only
+            ->leftJoin('quiz_attempt_tb as qa', function ($join) use ($studentId) {
+                $join->on('qa.quiz_id', '=', 'quiz_tb.quiz_id')
+                    ->where('qa.user_id', '=', $studentId)
+                    ->whereRaw('qa.quiz_attempt_id = (
+                        SELECT MAX(q2.quiz_attempt_id)
+                        FROM quiz_attempt_tb q2
+                        WHERE q2.quiz_id = quiz_tb.quiz_id
+                        AND q2.user_id = '.$studentId.'
+                    )');
             })
 
             ->select(
@@ -83,16 +97,33 @@ class QuizController extends Controller
                 'quiz_tb.duration',
                 'lesson_tb.topic as lesson_topic',
 
+                // total questions
                 DB::raw('COUNT(quiz_question.quiz_question_id) as questions_count'),
 
-                // Lock logic
+                // lesson status (lock/unlock)
                 DB::raw("
                     CASE 
-                        WHEN sl.lesson_id IS NOT NULL 
-                            AND sl.status = 2 THEN 'open'
+                        WHEN sl.lesson_id IS NOT NULL AND sl.status = 3 THEN 'passed'
+                        WHEN sl.lesson_id IS NOT NULL AND sl.status = 2 THEN 'completed'
+                        WHEN sl.lesson_id IS NOT NULL AND sl.status = 1 THEN 'in-progress'
                         ELSE 'locked'
-                    END as quiz_status
-                ")
+                    END as lesson_status
+                "),
+
+                // attempt status
+                DB::raw("
+                    CASE 
+                        WHEN qa.status = 0 THEN 'in_progress'
+                        WHEN qa.status = 1 AND qa.result_status = 'failed' THEN 'failed'
+                        WHEN qa.status = 1 AND qa.result_status = 'passed' THEN 'passed'
+                        ELSE 'locked'
+                    END as attempt_status
+                "),
+
+                // attempt info
+                'qa.quiz_attempt_id',
+                'qa.attempt_number',
+                'qa.percentage'
             )
 
             ->groupBy(
@@ -104,7 +135,12 @@ class QuizController extends Controller
                 'quiz_tb.duration',
                 'lesson_tb.topic',
                 'sl.lesson_id',
-                'sl.status'
+                'sl.status',
+                'qa.quiz_attempt_id',
+                'qa.status',
+                'qa.result_status',
+                'qa.attempt_number',
+                'qa.percentage'
             )
 
             ->get();
@@ -239,43 +275,44 @@ class QuizController extends Controller
                 "quiz_attempt" => $existingAttempt
             ]);
         }
+        print_r($existingAttempt);
         //
-        $quiz_attempt_id = DB::table('quiz_attempt_tb')->insertGetId([
-            "score" => $request->score,
-            "status" => $request->status,
-            "quiz_id" => $request->quiz_id,
-            "user_id" => $request->user_id,
-        ]);
-        if (!$quiz_attempt_id) {
-            return response()->json ([
-                "status" => "error",
-                "message" => "Failed to create quiz attempt"
-            ], 500);
-        } else {
-            $questions = DB::table('quiz_question')
-                ->where('quiz_id', $request->quiz_id)
-                ->inRandomOrder()
-            ->get();
+        // $quiz_attempt_id = DB::table('quiz_attempt_tb')->insertGetId([
+        //     "score" => $request->score,
+        //     "status" => $request->status,
+        //     "quiz_id" => $request->quiz_id,
+        //     "user_id" => $request->user_id,
+        // ]);
+        // if (!$quiz_attempt_id) {
+        //     return response()->json ([
+        //         "status" => "error",
+        //         "message" => "Failed to create quiz attempt"
+        //     ], 500);
+        // } else {
+        //     $questions = DB::table('quiz_question')
+        //         ->where('quiz_id', $request->quiz_id)
+        //         ->inRandomOrder()
+        //     ->get();
 
-            $order = 1;
+        //     $order = 1;
 
-            foreach ($questions as $question) {
-                DB::table('quiz_answer_tb')->insert([
-                    'quiz_attempt_id' => $quiz_attempt_id,
-                    'quiz_question_id' => $question->quiz_question_id,
-                    'correct_option' => $question->correct_option,
-                    'question_order' => $order
-                ]);
+        //     foreach ($questions as $question) {
+        //         DB::table('quiz_answer_tb')->insert([
+        //             'quiz_attempt_id' => $quiz_attempt_id,
+        //             'quiz_question_id' => $question->quiz_question_id,
+        //             'correct_option' => $question->correct_option,
+        //             'question_order' => $order
+        //         ]);
 
-                $order++;
-            }
-        }
-        return response()->json ([
+        //         $order++;
+        //     }
+        // }
+        // return response()->json ([
 
-            "status" => "success",
-            "message" => "Quiz attempt created successfully",
-            "quiz_attempt_id" => $quiz_attempt_id
-        ]);
+        //     "status" => "success",
+        //     "message" => "Quiz attempt created successfully",
+        //     "quiz_attempt_id" => $quiz_attempt_id
+        // ]);
     }
 
     public function getStudentQuizAttempt (Request $request) {

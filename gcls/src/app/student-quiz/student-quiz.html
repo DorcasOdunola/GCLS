@@ -66,6 +66,13 @@
                       <mat-icon>lock_open</mat-icon>
                       Unlocked
                     </span>
+                    <span
+                      class="stat-badge info-badge"
+                      *ngIf="quiz.quiz_status !== 'locked' && quiz.quiz_status === 'failed'"
+                    >
+                      <mat-icon>lock_open</mat-icon>
+                      Unlocked
+                    </span>
                   </div>
 
                   <p class="text-muted mb-0" style="font-size: 0.65rem">
