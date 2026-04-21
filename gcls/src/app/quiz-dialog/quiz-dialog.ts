@@ -43,7 +43,7 @@ export class QuizDialog {
   startQuiz() {
     // This Logic create a quiz attempt for the student before starting the quiz. It can be used to track the student's progress and score throughout the quiz attempt.
     let obj = {
-      score: 0,
+      percentage: 0,
       status: 0, // 0 for in-progress, 1 for completed
       quiz_id: this.quizData.quiz_id,
       user_id: this.getUserDetails.user_id,
@@ -66,7 +66,7 @@ export class QuizDialog {
   calculateState() {
     const score = this.quizResult.percentage;
     const attempt = this.quizResult.attempt_number;
-    const maxAttempts = 3;
+    const maxAttempts = 2;
 
     if (score >= 70) {
       this.quizState = 'pass'; // green

@@ -48,7 +48,7 @@ export class StudentQuiz {
 
   getQuizUIState(quiz: any) {
     // 1. Lesson locked
-    if (quiz.lesson_status === 'locked') {
+    if (quiz.lesson_status === 'locked' || quiz.lesson_status === 'in_progress') {
       return {
         action: 'disabled',
         label: 'Locked',
@@ -60,7 +60,7 @@ export class StudentQuiz {
     if (quiz.attempt_status === 'not_started') {
       return {
         action: 'start',
-        label: 'Start Quiz',
+        label: 'Open',
         disabled: false,
       };
     }

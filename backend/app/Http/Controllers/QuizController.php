@@ -105,7 +105,7 @@ class QuizController extends Controller
                     CASE 
                         WHEN sl.lesson_id IS NOT NULL AND sl.status = 3 THEN 'passed'
                         WHEN sl.lesson_id IS NOT NULL AND sl.status = 2 THEN 'completed'
-                        WHEN sl.lesson_id IS NOT NULL AND sl.status = 1 THEN 'in-progress'
+                        WHEN sl.lesson_id IS NOT NULL AND sl.status = 1 THEN 'in_progress'
                         ELSE 'locked'
                     END as lesson_status
                 "),
@@ -279,6 +279,8 @@ class QuizController extends Controller
             ->where('user_id', $request->user_id)
             ->where('status', 0) // In-progress status
         ->first();
+        // \Log::info('Existing attempt:', (array) $existingAttempt);
+        
 
         if ($existingAttempt) {
             return response()->json([
@@ -292,9 +294,10 @@ class QuizController extends Controller
         // Set attempt number for the new attempt
         $attemptNumber = $attemptCount + 1;
 
+
         // Create new quiz attempt
         $quiz_attempt_id = DB::table('quiz_attempt_tb')->insertGetId([
-            "percentage" => $request->score ?? 0,
+            "percentage" => $request->percentage ?? 0,
             "status" => $request->status,
             "quiz_id" => $request->quiz_id,
             "user_id" => $request->user_id,
@@ -307,14 +310,14 @@ class QuizController extends Controller
             ], 500);
         } else {
             $questions = DB::table('quiz_question')
-                ->where('quiz_id', $request->quiz_id)
-                ->inRandomOrder()
+            ->where('quiz_id', $request->quiz_id)
+            ->inRandomOrder()
             ->get();
-
+            
             $order = 1;
 
             foreach ($questions as $question) {
-                DB::table('quiz_answer_tb')->insert([
+                $inserted = DB::table('quiz_answer_tb')->insert([
                     'quiz_attempt_id' => $quiz_attempt_id,
                     'quiz_question_id' => $question->quiz_question_id,
                     'correct_option' => $question->correct_option,
@@ -332,20 +335,22 @@ class QuizController extends Controller
         ]);
     }
 
-    public function getStudentQuizAttempt (Request $request) {
-        //
-        $quiz_attempts = DB::table('quiz_attempt_tb')
+    public function getStudentQuizAttempt(Request $request)
+    {
+        $quiz_attempt = DB::table('quiz_attempt_tb')
             ->join('users', 'quiz_attempt_tb.user_id', '=', 'users.user_id')
             ->where('quiz_attempt_tb.quiz_id', $request->quiz_id)
             ->where('quiz_attempt_tb.user_id', $request->user_id)
+            ->orderBy('quiz_attempt_tb.attempt_number', 'desc') // KEY LINE
             ->select(
                 'quiz_attempt_tb.*',
                 'users.first_name as user_name'
             )
-        ->get();
-        return response()->json ([
+            ->first(); // get only latest
+
+        return response()->json([
             "status" => "success",
-            "data" => $quiz_attempts
+            "data" => $quiz_attempt
         ]);
     }
 

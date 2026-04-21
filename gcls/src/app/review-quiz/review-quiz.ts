@@ -58,10 +58,12 @@ export class ReviewQuiz {
     // Logic to fetch the quiz attempt for the student
     let obj = { quiz_id: this.quiz_id, user_id: this.getUserDetails.user_id };
     this.quizService.getStudentQuizAttempt(obj).subscribe((response) => {
+      console.log(response, 'Quiz attempt details response');
       if (response.status === 'success') {
         this.quizAttemptDetails = response.data;
         if (response.data) {
-          this.getReviewStatus(this.quizAttemptDetails[0]);
+          console.log(this.quizAttemptDetails, 'Quiz attempt details');
+          this.getReviewStatus(this.quizAttemptDetails);
           this.getQuizQuestionsForStudent();
         }
       } else {
@@ -91,7 +93,7 @@ export class ReviewQuiz {
   }
 
   getQuizQuestionsForStudent() {
-    let obj = { quiz_attempt_id: this.quizAttemptDetails[0].quiz_attempt_id };
+    let obj = { quiz_attempt_id: this.quizAttemptDetails.quiz_attempt_id };
     this.quizService.getStudentQuizQuestions(obj).subscribe((response) => {
       if (response.status == 'success') {
         this.quizQuestionsArray = response.data;

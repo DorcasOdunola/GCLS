@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { QuizService } from '../service/quiz-service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { QuizDialog } from '../quiz-dialog/quiz-dialog';
@@ -28,6 +28,7 @@ export class StudentTakeQuiz {
     public formBuilder: FormBuilder,
     public snackBar: MatSnackBar,
     public dialog: MatDialog,
+    public router: Router,
   ) {}
 
   ngOnInit() {
@@ -61,7 +62,7 @@ export class StudentTakeQuiz {
   }
 
   getQuizQuestionsForStudent() {
-    let obj = { quiz_attempt_id: this.quizAttemptDetails[0].quiz_attempt_id };
+    let obj = { quiz_attempt_id: this.quizAttemptDetails.quiz_attempt_id };
     this.quizService.getStudentQuizQuestions(obj).subscribe((response) => {
       if (response.status == 'success') {
         this.quizQuestionsArray = response.data;
@@ -125,16 +126,20 @@ export class StudentTakeQuiz {
   }
 
   submitQuiz() {
-    console.log('Submitting quiz with attempt ID:', this.quizAttemptDetails);
-    console.log('Submitting quiz with attempt ID:', this.quizAttemptDetails[0].quiz_attempt_id);
     this.quizService
-      .submitQuiz({ quiz_attempt_id: this.quizAttemptDetails[0].quiz_attempt_id })
+      .submitQuiz({ quiz_attempt_id: this.quizAttemptDetails.quiz_attempt_id })
       .subscribe((response) => {
         if (response.status === 'success') {
-          this.dialog.open(QuizDialog, {
+          let dialog = this.dialog.open(QuizDialog, {
             data: { quizResult: response.data, status: 'view_result' },
             // height: '400px',
             // width: '600px',
+          });
+          dialog.afterClosed().subscribe((feedback) => {
+            console.log('Dialog closed with feedback:', feedback);
+            if (!feedback) {
+              this.router.navigate(['/student/lesson']);
+            }
           });
           // this.snackBar.open('Quiz submitted successfully!', 'Close', {
           //   duration: 3000,

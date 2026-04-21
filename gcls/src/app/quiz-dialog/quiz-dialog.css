@@ -159,7 +159,7 @@
   border: none;
   padding: 8px 16px;
   border-radius: 20px; /* Pill shape */
-  font-size: 0.85rem;
+  font-size: 1rem;
   font-weight: 700;
   white-space: nowrap; /* Keeps text on one line */
   transition: all 0.2s ease;

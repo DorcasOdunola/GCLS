@@ -64,7 +64,7 @@
           <span *ngIf="quizState === 'pass'">Excellent Work 🎉</span>
           <span *ngIf="quizState === 'moderate'">Good Effort 👍</span>
           <span *ngIf="quizState === 'retry'">Almost There!</span>
-          <span *ngIf="quizState === 'blocked'">Try Again</span>
+          <span *ngIf="quizState === 'blocked'">Maximum Attempts Reached</span>
         </h1>
       </div>
     </div>
@@ -132,21 +132,24 @@
               You can try again to improve your score.
             </p>
             <p class="mb-0 fw-medium" *ngIf="quizState === 'blocked'">
-              You need to revisit the lesson before attempting again.
+              You have reached the maximum number of attempts for this quiz. You can now proceed to
+              the next lesson. We recommend reviewing this quiz to better understand the questions
+              you missed. Your performance has been flagged for attention so additional support can
+              be provided.
             </p>
           </div>
         </div>
 
         <button
-          class="btn-review"
           routerLink="/student/review-quiz/{{ quizResult.quiz_id }}"
           mat-dialog-close
+          class="btn-review"
         >
           Review Quiz
         </button>
       </div>
     </div>
-
+    <span>Focus on the questions you missed to improve your understanding.</span>
     <div mat-dialog-actions class="modal-footer-custom p-0 border-0 justify-content-center">
       <!-- PASS (70+) -->
       <button
@@ -179,10 +182,11 @@
 
       <button
         *ngIf="quizState === 'blocked'"
-        class="btn btn-secondary w-100 py-3 fs-5 fw-bold disabled"
-        disabled
+        class="btn btn-secondary w-100 py-3 fs-5 fw-bold"
+        mat-dialog-close
+        routerLink="/student/lesson"
       >
-        <i class="fas fa-lock me-2"></i> Lesson Locked
+        Go to Next Lesson <i class="fas fa-arrow-right ms-2"></i>
       </button>
     </div>
   </div>
