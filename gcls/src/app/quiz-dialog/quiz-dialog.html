@@ -39,6 +39,7 @@
 
   <div class="modal-footer-custom mt-4">
     <button class="btn btn-primary start-btn px-4 py-2" (click)="startQuiz()">Start Quiz</button>
+    <mat-spinner diameter="30" class="ms-4" *ngIf="spinner"></mat-spinner>
     <button class="btn btn-light cancel-btn px-4 py-2 mx-2" mat-dialog-close>Cancel</button>
   </div>
 </div>
@@ -91,7 +92,7 @@
                 />
                 <text x="18" y="20.35" class="percentage-inner">{{ quizResult.percentage }}%</text>
               </svg>
-              <p class="text-muted text-uppercase small fw-bold mt-1">Total Score</p>
+              <p class="text-muted text-uppercase small fw-bold mt-1">Percentage Score</p>
             </div>
           </div>
 
@@ -99,7 +100,7 @@
             <div class="detail-item mb-2">
               <i class="fas fa-poll"></i>
               <span
-                >Points:
+                >Score:
                 <strong>{{ quizResult.correct_count }} / {{ quizResult.total_questions }}</strong>
               </span>
             </div>

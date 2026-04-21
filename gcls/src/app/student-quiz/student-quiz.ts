@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { QuizService } from '../service/quiz-service';
 import { MatDialog } from '@angular/material/dialog';
 import { QuizDialog } from '../quiz-dialog/quiz-dialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-student-quiz',
@@ -16,6 +17,7 @@ export class StudentQuiz {
   constructor(
     public quizService: QuizService,
     public dialog: MatDialog,
+    public router: Router,
   ) {}
 
   ngOnInit() {
@@ -42,5 +44,82 @@ export class StudentQuiz {
       // height: '400px',
       // width: '600px',
     });
+  }
+
+  getQuizUIState(quiz: any) {
+    // 1. Lesson locked
+    if (quiz.lesson_status === 'locked') {
+      return {
+        action: 'disabled',
+        label: 'Locked',
+        disabled: true,
+      };
+    }
+
+    // 2. No attempt yet
+    if (quiz.attempt_status === 'not_started') {
+      return {
+        action: 'start',
+        label: 'Start Quiz',
+        disabled: false,
+      };
+    }
+
+    // 3. First failure → retry
+    if (quiz.attempt_status === 'failed' && quiz.attempt_number == 1) {
+      return {
+        action: 'retry',
+        label: 'Retry',
+        disabled: false,
+      };
+    }
+
+    // 4. Second failure → locked (review only)
+    if (quiz.attempt_status === 'failed' && quiz.attempt_number >= 2) {
+      return {
+        action: 'review',
+        label: 'Review',
+        disabled: true,
+      };
+    }
+
+    // 5. Passed
+    if (quiz.attempt_status === 'passed') {
+      return {
+        action: 'review',
+        label: 'Review',
+        disabled: true,
+      };
+    }
+
+    return {
+      action: 'unknown',
+      label: 'Open',
+      disabled: false,
+    };
+  }
+
+  handleQuizAction(quiz: any) {
+    const state = this.getQuizUIState(quiz);
+
+    switch (state.action) {
+      case 'start':
+        this.openQuiz(quiz);
+        break;
+
+      case 'retry':
+        this.openQuiz(quiz);
+        break;
+
+      case 'review':
+        this.router.navigate(['/student/review-quiz', quiz.quiz_id]);
+        break;
+
+      // case 'result':
+      //   this.router.navigate(['/student/result', quiz.quiz_id]);
+      //   break;
+      default:
+        break;
+    }
   }
 }

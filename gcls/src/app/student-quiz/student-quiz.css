@@ -72,9 +72,20 @@
 .red-badge {
   background-color: #fff5f5;
   color: #fa5252;
-  .count {
-    font-weight: 800;
-  }
+  /* font-weight: 800; */
+  font-size: 1rem;
+}
+
+.green-badge {
+  background-color: #28a745;
+  color: white;
+  font-size: 1rem;
+}
+
+.orange-badge {
+  background-color: #fd7e14;
+  color: white;
+  font-size: 1rem;
 }
 
 .info-badge {
@@ -88,4 +99,116 @@
 .disabled-card {
   pointer-events: none;
   opacity: 0.8;
+}
+
+/* Base animation */
+.animated-badge {
+  animation:
+    badgePop 0.5s ease-out,
+    badgeGlow 1.5s ease-in-out;
+}
+
+/* Pop-in effect */
+@keyframes badgePop {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Subtle glow pulse */
+@keyframes badgeGlow {
+  0% {
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+  }
+  50% {
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.15);
+  }
+  100% {
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+  }
+}
+
+.green-badge {
+  background-color: #28a745;
+  color: white;
+  box-shadow: 0 0 0 rgba(40, 167, 69, 0);
+}
+
+.green-badge.animated-badge {
+  animation:
+    badgePop 0.5s ease-out,
+    greenGlow 1.5s ease-in-out;
+}
+
+@keyframes greenGlow {
+  0% {
+    box-shadow: 0 0 0 rgba(40, 167, 69, 0);
+  }
+  50% {
+    box-shadow: 0 0 14px rgba(40, 167, 69, 0.4);
+  }
+  100% {
+    box-shadow: 0 0 0 rgba(40, 167, 69, 0);
+  }
+}
+
+/* ORANGE */
+.orange-badge {
+  background-color: #fd7e14;
+  color: white;
+}
+
+.orange-badge.animated-badge {
+  animation:
+    badgePop 0.5s ease-out,
+    orangeGlow 1.5s ease-in-out;
+}
+
+@keyframes orangeGlow {
+  0% {
+    box-shadow: 0 0 0 rgba(253, 126, 20, 0);
+  }
+  50% {
+    box-shadow: 0 0 14px rgba(253, 126, 20, 0.4);
+  }
+  100% {
+    box-shadow: 0 0 0 rgba(253, 126, 20, 0);
+  }
+}
+
+/* RED */
+.red-badge {
+  background-color: #dc3545;
+  color: white;
+}
+
+.red-badge.animated-badge {
+  animation:
+    badgePop 0.5s ease-out,
+    redGlow 1.5s ease-in-out;
+}
+
+@keyframes redGlow {
+  0% {
+    box-shadow: 0 0 0 rgba(220, 53, 69, 0);
+  }
+  50% {
+    box-shadow: 0 0 14px rgba(220, 53, 69, 0.4);
+  }
+  100% {
+    box-shadow: 0 0 0 rgba(220, 53, 69, 0);
+  }
+}
+
+.stat-badge:hover {
+  transform: scale(1.05);
+  transition: transform 0.2s ease;
 }

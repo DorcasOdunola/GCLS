@@ -24,6 +24,7 @@ export class QuizDialog {
 
   quizState: 'pass' | 'moderate' | 'retry' | 'blocked' = 'retry';
   quizResult: any;
+  public spinner = false;
 
   ngOnInit() {
     if (this.data.status === 'open_quiz') {
@@ -47,6 +48,7 @@ export class QuizDialog {
       quiz_id: this.quizData.quiz_id,
       user_id: this.getUserDetails.user_id,
     };
+    this.spinner = true; // Show spinner while creating quiz attempt
     this.quizService.createQuizAttempt(obj).subscribe((response) => {
       if (response.status === 'success') {
         this.dialogRef.close();

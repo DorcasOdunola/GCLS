@@ -116,7 +116,7 @@ class QuizController extends Controller
                         WHEN qa.status = 0 THEN 'in_progress'
                         WHEN qa.status = 1 AND qa.result_status = 'failed' THEN 'failed'
                         WHEN qa.status = 1 AND qa.result_status = 'passed' THEN 'passed'
-                        ELSE 'locked'
+                        ELSE 'not_started'
                     END as attempt_status
                 "),
 
@@ -258,57 +258,78 @@ class QuizController extends Controller
             'user_id' => 'required|integer',
         ]);
 
-        // Check for existing attempt
+        //Count attempts for this quiz and user
+        $attemptCount = DB::table('quiz_attempt_tb')
+            ->where('quiz_id', $request->quiz_id)
+            ->where('user_id', $request->user_id)
+        ->count();
+
+        $maxAttempts = 2; // Max attempts limit
+
+        if ($attemptCount >= $maxAttempts) {
+            return response()->json([
+                "status" => "error",
+                "message" => "Maximum attempts reached for this quiz"
+            ], 422);
+        }
+
+        // Check if there's an existing in-progress attempt
         $existingAttempt = DB::table('quiz_attempt_tb')
             ->where('quiz_id', $request->quiz_id)
             ->where('user_id', $request->user_id)
+            ->where('status', 0) // In-progress status
         ->first();
 
         if ($existingAttempt) {
             return response()->json([
                 "status" => "success",
-                "message" => "Quiz attempt already exists",
-                "quiz_attempt" => $existingAttempt
+                "message" => "Existing in-progress attempt found",
+                "quiz_attempt_id" => $existingAttempt->quiz_attempt_id,
+                "attempt_number" => $existingAttempt->attempt_number
             ]);
         }
-        print_r($existingAttempt);
-        //
-        // $quiz_attempt_id = DB::table('quiz_attempt_tb')->insertGetId([
-        //     "score" => $request->score,
-        //     "status" => $request->status,
-        //     "quiz_id" => $request->quiz_id,
-        //     "user_id" => $request->user_id,
-        // ]);
-        // if (!$quiz_attempt_id) {
-        //     return response()->json ([
-        //         "status" => "error",
-        //         "message" => "Failed to create quiz attempt"
-        //     ], 500);
-        // } else {
-        //     $questions = DB::table('quiz_question')
-        //         ->where('quiz_id', $request->quiz_id)
-        //         ->inRandomOrder()
-        //     ->get();
 
-        //     $order = 1;
+        // Set attempt number for the new attempt
+        $attemptNumber = $attemptCount + 1;
 
-        //     foreach ($questions as $question) {
-        //         DB::table('quiz_answer_tb')->insert([
-        //             'quiz_attempt_id' => $quiz_attempt_id,
-        //             'quiz_question_id' => $question->quiz_question_id,
-        //             'correct_option' => $question->correct_option,
-        //             'question_order' => $order
-        //         ]);
+        // Create new quiz attempt
+        $quiz_attempt_id = DB::table('quiz_attempt_tb')->insertGetId([
+            "percentage" => $request->score ?? 0,
+            "status" => $request->status,
+            "quiz_id" => $request->quiz_id,
+            "user_id" => $request->user_id,
+            "attempt_number" => $attemptNumber
+        ]);
+        if (!$quiz_attempt_id) {
+            return response()->json ([
+                "status" => "error",
+                "message" => "Failed to create quiz attempt"
+            ], 500);
+        } else {
+            $questions = DB::table('quiz_question')
+                ->where('quiz_id', $request->quiz_id)
+                ->inRandomOrder()
+            ->get();
 
-        //         $order++;
-        //     }
-        // }
-        // return response()->json ([
+            $order = 1;
 
-        //     "status" => "success",
-        //     "message" => "Quiz attempt created successfully",
-        //     "quiz_attempt_id" => $quiz_attempt_id
-        // ]);
+            foreach ($questions as $question) {
+                DB::table('quiz_answer_tb')->insert([
+                    'quiz_attempt_id' => $quiz_attempt_id,
+                    'quiz_question_id' => $question->quiz_question_id,
+                    'correct_option' => $question->correct_option,
+                    'question_order' => $order
+                ]);
+
+                $order++;
+            }
+        }
+        return response()->json ([
+
+            "status" => "success",
+            "message" => "Quiz attempt created successfully",
+            "quiz_attempt_id" => $quiz_attempt_id
+        ]);
     }
 
     public function getStudentQuizAttempt (Request $request) {
@@ -464,7 +485,7 @@ class QuizController extends Controller
                 "percentage" => $percentage,
                 "attempt_number" => $attemptNumber,
                 "result" => $result_status,
-                "maxAttempts" => 3,
+                "maxAttempts" => 2,
                 "quiz_id" => $attempt->quiz_id
             ]
         ]);
