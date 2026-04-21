@@ -47,9 +47,11 @@
                     *ngFor="let opt of ['a', 'b', 'c', 'd']"
                     class="review-option"
                     [ngClass]="{
-                      'correct-highlight': question.correct_option === opt,
+                      'correct-highlight': question.correct_option === opt && showCorrectAnswers,
                       'wrong-highlight':
                         question.selected_option === opt && opt !== question.correct_option,
+                      'selected-correct':
+                        question.selected_option === opt && opt === question.correct_option,
                     }"
                   >
                     <span class="opt-badge">{{ opt | uppercase }}</span>
@@ -63,7 +65,7 @@
                   <label class="feedback-title d-flex align-items-center mb-3">
                     <mat-icon class="me-2">comment</mat-icon> FEEDBACK
                   </label>
-                  <p class="feedback-content lead fs-6 text-dark">
+                  <p class="feedback-content lead fs-6 text-dark" *ngIf="showFeedback">
                     {{ question.feedback }}
                   </p>
                 </div>
@@ -98,10 +100,19 @@
 
                 <button
                   class="btn btn-success next-lesson-btn d-inline-flex align-items-center"
-                  (click)="goToNextLesson()"
+                  routerLink="/student/lesson"
+                  *ngIf="canGoToNextLesson"
                 >
                   <span>Next Lesson</span>
                   <mat-icon>done_all</mat-icon>
+                </button>
+                <button
+                  class="btn btn-success next-lesson-btn d-inline-flex align-items-center"
+                  routerLink="/student/quiz"
+                  *ngIf="canRetryQuiz"
+                >
+                  <span>Retry Quiz</span>
+                  <mat-icon>repeat</mat-icon>
                 </button>
               </div>
             </div>

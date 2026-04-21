@@ -136,7 +136,6 @@ export class StudentTakeQuiz {
             // height: '400px',
             // width: '600px',
           });
-          console.log('Quiz submitted successfully:', response);
           // this.snackBar.open('Quiz submitted successfully!', 'Close', {
           //   duration: 3000,
           //   panelClass: ['snackbar-success'],

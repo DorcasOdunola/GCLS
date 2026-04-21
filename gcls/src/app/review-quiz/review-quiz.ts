@@ -17,6 +17,10 @@ export class ReviewQuiz {
   public activeQuestionId: number = 0;
   public getUserDetails: any;
   public quizAttemptDetails: any;
+  public showCorrectAnswers: boolean = true;
+  public showFeedback: boolean = false;
+  public canGoToNextLesson: boolean = false;
+  public canRetryQuiz: boolean = false;
 
   constructor(
     public quizService: QuizService,
@@ -57,6 +61,7 @@ export class ReviewQuiz {
       if (response.status === 'success') {
         this.quizAttemptDetails = response.data;
         if (response.data) {
+          this.getReviewStatus(this.quizAttemptDetails[0]);
           this.getQuizQuestionsForStudent();
         }
       } else {
@@ -67,6 +72,22 @@ export class ReviewQuiz {
         // Handle error case for fetching quiz attempt details
       }
     });
+  }
+
+  getReviewStatus(attempt: any) {
+    if (attempt.attempt_number == 1 && attempt.result_status === 'failed') {
+      this.showCorrectAnswers = true; //  show correct answers
+      this.showFeedback = false; //  hide feedback
+      this.canRetryQuiz = true; // allow retrying the quiz after first failed attempt
+    } else if (attempt.attempt_number >= 2 && attempt.result_status === 'failed') {
+      this.showCorrectAnswers = true;
+      this.showFeedback = true;
+      this.canGoToNextLesson = true; // allow going to next lesson after multiple failed attempts
+    } else if (attempt.result_status === 'passed') {
+      this.showCorrectAnswers = true;
+      this.showFeedback = true;
+      this.canGoToNextLesson = true; // allow going to next lesson if passed
+    }
   }
 
   getQuizQuestionsForStudent() {

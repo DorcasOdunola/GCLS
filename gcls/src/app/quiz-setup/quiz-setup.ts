@@ -93,6 +93,7 @@ export class QuizSetup {
     this.isLoading = true;
     // Fetch and populate quiz details for editing
     this.quizService.getQuizById({ quiz_id: quiz_id }).subscribe((response) => {
+      console.log('Quiz details response:', response);
       if (response.status !== 'success') {
         this.snackBar.open('Error fetching quiz details.', 'Close', {
           duration: 3000,

@@ -157,13 +157,8 @@ class QuizController extends Controller
 
         // Get the quiz
         $quiz = DB::table('quiz_tb')
-            ->join('lesson_tb', 'quiz_tb.lesson_id', '=', 'lesson_tb.lesson_id')
-            ->where('quiz_tb.quiz_id', $quizId)
-            ->select(
-                'quiz_tb.*',
-                'lesson_tb.topic'
-            )
-        ->first();
+            ->where('quiz_id', $quizId)
+            ->first();
 
         if (!$quiz) {
             return response()->json([
@@ -172,18 +167,19 @@ class QuizController extends Controller
         }
 
         // Get related questions
-        // $questions = DB::table('quiz_question')
-        //     ->where('quiz_id', $quizId)
-        //     ->get();
+        $questions = DB::table('quiz_question')
+            ->where('quiz_id', $quizId)
+            ->get();
 
         // Attach questions array to quiz object
-        // $quiz->questions = $questions;
+        $quiz->questions = $questions;
 
         return response()->json([
             "status" => "success",
             "data" => $quiz
         ]);
     }
+    
 
     public function updateQuiz (Request $request) {
         //

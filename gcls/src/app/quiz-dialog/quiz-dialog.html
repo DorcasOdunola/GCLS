@@ -137,7 +137,6 @@
         </div>
 
         <button
-          *ngIf="quizState == 'pass' || quizState == 'moderate'"
           class="btn-review"
           routerLink="/student/review-quiz/{{ quizResult.quiz_id }}"
           mat-dialog-close
