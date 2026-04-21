@@ -52,6 +52,7 @@ class LessonController extends Controller
                         WHEN sl.lesson_id IS NULL THEN 'locked'
                         WHEN sl.status = 1 THEN 'in_progress'
                         WHEN sl.status = 2 THEN 'completed'
+                        When sl.status = 3 THEN 'passed'
                         ELSE 'locked'
                     END as lesson_status
                 ")

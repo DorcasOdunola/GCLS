@@ -375,6 +375,52 @@ class QuizController extends Controller
 
         $attemptNumber = $attempt->attempt_number ?? 1;
 
+        $attempt = DB::table('quiz_attempt_tb')
+        ->where('quiz_attempt_id', $request->quiz_attempt_id)
+        ->first();
+
+        $attemptNumber = $attempt->attempt_number ?? 1;
+
+        // Get lesson_id
+        $quiz = DB::table('quiz_tb')
+            ->where('quiz_id', $attempt->quiz_id)
+            ->first();
+
+        $lessonId = $quiz->lesson_id;
+        $userId = $attempt->user_id;
+
+        // Update lesson status if passed
+        if ($percentage >= $passMark) {
+            DB::table('student_lesson_tb')->updateOrInsert(
+                [
+                    'user_id' => $userId,
+                    'lesson_id' => $lessonId
+                ],
+                [
+                    'status' => 3
+                ]
+            );
+
+            // Get next lesson
+            $nextLesson = DB::table('lesson_tb')
+                ->where('lesson_id', '>', $lessonId)
+                ->orderBy('lesson_id', 'asc')
+                ->first();
+
+            // Unlock next lesson
+            if ($nextLesson) {
+                DB::table('student_lesson_tb')->updateOrInsert(
+                    [
+                        'user_id' => $userId,
+                        'lesson_id' => $nextLesson->lesson_id
+                    ],
+                    [
+                        'status' => 1 // unlocked (In-progress)
+                    ]
+                );
+            }
+        }
+
 
         return response()->json([
             "status" => "success",
@@ -385,7 +431,7 @@ class QuizController extends Controller
                 "percentage" => $percentage,
                 "attempt_number" => $attemptNumber,
                 "result" => $result_status,
-                "maxAttempts" => 2,
+                "maxAttempts" => 3,
                 "quiz_id" => $attempt->quiz_id
             ]
         ]);

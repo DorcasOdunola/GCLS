@@ -48,18 +48,20 @@
     <div
       [ngClass]="{
         'bg-pass': quizState === 'pass',
-        'bg-retry': quizState === 'retry',
+        'bg-retry': quizState === 'retry' || quizState === 'moderate',
         'bg-blocked': quizState === 'blocked',
       }"
       class="result-header p-4 text-center rounded-4 mb-4"
     >
       <div class="header-content">
-        <mat-icon class="status-icon" *ngIf="quizState === 'pass'">check_circle</mat-icon>
-        <mat-icon class="status-icon" *ngIf="quizState === 'retry'">report_problem</mat-icon>
-        <mat-icon class="status-icon" *ngIf="quizState === 'blocked'">cancel</mat-icon>
+        <mat-icon *ngIf="quizState === 'pass'">check_circle</mat-icon>
+        <mat-icon *ngIf="quizState === 'moderate'">emoji_events</mat-icon>
+        <mat-icon *ngIf="quizState === 'retry'">report_problem</mat-icon>
+        <mat-icon *ngIf="quizState === 'blocked'">cancel</mat-icon>
 
-        <h1 class="m-0 text-white fw-bold">
-          <span *ngIf="quizState === 'pass'">Quiz Passed 🎉</span>
+        <h1>
+          <span *ngIf="quizState === 'pass'">Excellent Work 🎉</span>
+          <span *ngIf="quizState === 'moderate'">Good Effort 👍</span>
           <span *ngIf="quizState === 'retry'">Almost There!</span>
           <span *ngIf="quizState === 'blocked'">Try Again</span>
         </h1>
@@ -81,6 +83,7 @@
                   [ngClass]="{
                     'stroke-pass': quizState === 'pass',
                     'stroke-retry': quizState === 'retry',
+                    'stroke-modern': quizState === 'moderate',
                     'stroke-blocked': quizState === 'blocked',
                   }"
                   [attr.stroke-dasharray]="quizResult.percentage + ', 100'"
@@ -104,8 +107,8 @@
               <i class="fas fa-redo"></i>
               <span
                 >Attempt:
-                <strong>{{ quizResult.attempt_number }} of {{ quizResult.attempt_number }}</strong>
-                <!-- <strong>{{ quizResult.attempt_number }} of {{ quizResult.maxAttempts }}</strong> -->
+                <!-- <strong>{{ quizResult.attempt_number }} of {{ quizResult.attempt_number }}</strong> -->
+                <strong>{{ quizResult.attempt_number }} of {{ quizResult.maxAttempts }}</strong>
               </span>
               <div></div>
             </div>
@@ -113,24 +116,28 @@
         </div>
       </div>
 
-      <div class="info-bar mb-4 d-flex align-items-center gap-3">
-        <span class="fs-4">💬</span>
-        <p class="mb-0 fw-medium" *ngIf="quizState === 'pass'">
-          Great job! You have a good understanding of this topic.
-        </p>
-        <p
-          class="mb-0 fw-medium"
-          *ngIf="
-            quizState === 'retry' && (quizResult.percentage >= 50 || quizResult.percentage <= 69)
-          "
-        >
-          You tried. You can review the lesson for better understanding.
-        </p>
-        <p class="mb-0 fw-medium" *ngIf="quizState === 'blocked'">
-          You need to revisit the lesson before attempting again.
-        </p>
+      <div class="info-bar mb-4 d-flex align-items-center justify-content-between gap-3">
+        <div class="d-flex align-items-center gap-3 flex-grow-1">
+          <span class="fs-4">💬</span>
+          <div class="feedback-message">
+            <p class="mb-0 fw-medium" *ngIf="quizState === 'pass'">
+              Excellent! You have mastered this topic.
+            </p>
+            <p class="mb-0 fw-medium" *ngIf="quizState === 'moderate'">
+              You did well, but there’s room for improvement. You may review the lesson at your
+              convenience.
+            </p>
+            <p class="mb-0 fw-medium" *ngIf="quizState === 'retry'">
+              You can try again to improve your score.
+            </p>
+            <p class="mb-0 fw-medium" *ngIf="quizState === 'blocked'">
+              You need to revisit the lesson before attempting again.
+            </p>
+          </div>
+        </div>
+
         <button
-          matButton
+          class="btn-review"
           routerLink="/student/review-quiz/{{ quizResult.quiz_id }}"
           mat-dialog-close
         >
@@ -140,18 +147,28 @@
     </div>
 
     <div mat-dialog-actions class="modal-footer-custom p-0 border-0 justify-content-center">
+      <!-- PASS (70+) -->
       <button
         *ngIf="quizState === 'pass'"
         class="start-btn btn text-white w-100 py-3 fs-5"
-        (click)="nextLesson()"
+        mat-dialog-close
+        routerLink="/student/lesson"
+      >
+        Go to Next Lesson <i class="fas fa-arrow-right ms-2"></i>
+      </button>
+
+      <!-- MODERATE (50-69) -->
+      <button
+        *ngIf="quizState === 'moderate'"
+        class="start-btn btn text-white w-100 py-3 fs-5"
+        mat-dialog-close
+        routerLink="/student/lesson"
       >
         Go to Next Lesson <i class="fas fa-arrow-right ms-2"></i>
       </button>
 
       <button
-        *ngIf="
-          quizState === 'retry' && (quizResult.percentage >= 50 || quizResult.percentage <= 69)
-        "
+        *ngIf="quizState === 'retry'"
         class="btn btn-warning w-100 py-3 fs-5 fw-bold"
         (click)="retry()"
       >

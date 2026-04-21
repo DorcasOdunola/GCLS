@@ -44,13 +44,13 @@ export class QuizDialog {
     let obj = {
       score: 0,
       status: 0, // 0 for in-progress, 1 for completed
-      quiz_id: this.data.quiz_id,
+      quiz_id: this.quizData.quiz_id,
       user_id: this.getUserDetails.user_id,
     };
     this.quizService.createQuizAttempt(obj).subscribe((response) => {
       if (response.status === 'success') {
         this.dialogRef.close();
-        this.router.navigate([`/student/quiz/${this.data.quiz_id}`]);
+        this.router.navigate([`/student/quiz/${this.quizData.quiz_id}`]);
       } else {
         this.snackBar.open('Error creating quiz attempt.', 'Close', {
           duration: 3000,

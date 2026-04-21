@@ -20,6 +20,7 @@ export class StudentTakeQuiz {
   public activeQuestionId: number = 0;
   public getUserDetails: any;
   public quizAttemptDetails: any;
+  public isLoading: boolean = true;
 
   constructor(
     public quizService: QuizService,
@@ -59,36 +60,6 @@ export class StudentTakeQuiz {
     });
   }
 
-  // getQuizQuestions() {
-  //   this.quizService.getQuizById({ quiz_id: this.quiz_id }).subscribe((response) => {
-  //     console.log(response);
-  //     if (response.status !== 'success') {
-  //       this.snackBar.open('Error fetching quiz details.', 'Close', {
-  //         duration: 3000,
-  //         panelClass: ['snackbar-error'],
-  //       });
-  //       // Handle error
-  //     } else {
-  //       this.quizDetails = response.data;
-  //       this.quizQuestionsArray = response.data.questions;
-  //       let optionsArray = [];
-  //       this.quizQuestionsArray.forEach((question: any) => {
-  //         optionsArray = [
-  //           { key: 'A', value: question.option_a },
-  //           { key: 'B', value: question.option_b },
-  //           { key: 'C', value: question.option_c },
-  //           { key: 'D', value: question.option_d },
-  //         ];
-  //         question.options = optionsArray;
-  //       });
-  //       this.activeQuestionId = this.quizQuestionsArray[0].quiz_question_id;
-  //       console.log(this.quizQuestionsArray);
-  //       // Populate quiz details for the student to take the quiz
-  //     }
-  //   });
-  //   // Logic to fetch and display quiz questions for the student
-  // }
-
   getQuizQuestionsForStudent() {
     let obj = { quiz_attempt_id: this.quizAttemptDetails[0].quiz_attempt_id };
     this.quizService.getStudentQuizQuestions(obj).subscribe((response) => {
@@ -96,12 +67,14 @@ export class StudentTakeQuiz {
         this.quizQuestionsArray = response.data;
         this.activeQuestionId = this.quizQuestionsArray[0].quiz_question_id;
         this.quizQuestionsArray.map((q) => {});
+        this.isLoading = false;
       }
       if (response.status !== 'success') {
         this.snackBar.open('Error fetching quiz questions.', 'Close', {
           duration: 3000,
           panelClass: ['snackbar-error'],
         });
+        this.isLoading = false;
         // Handle error case for fetching quiz questions
       }
     });

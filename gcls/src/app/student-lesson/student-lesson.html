@@ -35,16 +35,30 @@
                       class="status-pill"
                       [ngClass]="{
                         'status-locked': lesson.lesson_status == 'locked',
+                        'status-passed': lesson.lesson_status == 'passed',
                         'status-progress':
                           lesson.lesson_status == 'in_progress' ||
                           lesson.lesson_status == 'completed',
                       }"
                     >
-                      <mat-icon class="status-icon" *ngIf="lesson.lesson_status === 'locked'"
+                      <mat-icon
+                        class="status-icon status-locked"
+                        *ngIf="lesson.lesson_status === 'locked'"
                         >lock</mat-icon
                       >
-                      <mat-icon class="status-icon" *ngIf="lesson.lesson_status !== 'locked'"
+                      <mat-icon
+                        class="status-icon status-progress"
+                        *ngIf="
+                          lesson.lesson_status !== 'locked' && lesson.lesson_status == 'in_progress'
+                        "
                         >lock_open</mat-icon
+                      >
+                      <mat-icon
+                        class="status-icon status-passed"
+                        *ngIf="
+                          lesson.lesson_status !== 'locked' && lesson.lesson_status == 'passed'
+                        "
+                        >check_circle</mat-icon
                       >
 
                       <span class="status-text">

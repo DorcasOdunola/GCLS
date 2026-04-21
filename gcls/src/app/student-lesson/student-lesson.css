@@ -103,6 +103,13 @@
   border-color: #d0e8ff;
 }
 
+/* Passed/Completed State (Green) */
+.status-passed {
+  background-color: #f0fdf4; /* Soft mint green background */
+  color: #166534; /* Deep forest green text */
+  border-color: #dcfce7;
+}
+
 /* Optional: Created date text style to match the UI */
 .created-date-text {
   font-size: 10px;
