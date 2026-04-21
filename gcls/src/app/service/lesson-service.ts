@@ -28,4 +28,8 @@ export class LessonService {
   public getLesson(obj: any) {
     return this.httpClient.post<any>(`${this.baseUrl}get_lesson`, obj);
   }
+
+  public endLesson(obj: any) {
+    return this.httpClient.post<any>(`${this.baseUrl}end_lesson`, obj);
+  }
 }

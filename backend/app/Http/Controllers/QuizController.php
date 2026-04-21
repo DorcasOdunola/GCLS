@@ -77,6 +77,7 @@ class QuizController extends Controller
             ->select(
                 'quiz_tb.quiz_id',
                 'quiz_tb.quiz_title',
+                'quiz_tb.lesson_id',
                 'quiz_tb.created_at',
                 'quiz_tb.instructions',
                 'quiz_tb.duration',
@@ -97,6 +98,7 @@ class QuizController extends Controller
             ->groupBy(
                 'quiz_tb.quiz_id',
                 'quiz_tb.quiz_title',
+                'quiz_tb.lesson_id',
                 'quiz_tb.created_at',
                 'quiz_tb.instructions',
                 'quiz_tb.duration',

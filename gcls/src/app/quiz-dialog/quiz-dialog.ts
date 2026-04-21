@@ -22,13 +22,12 @@ export class QuizDialog {
   quizData: any;
   getUserDetails: any;
 
-  quizState: 'pass' | 'retry' | 'blocked' = 'retry';
+  quizState: 'pass' | 'moderate' | 'retry' | 'blocked' = 'retry';
   quizResult: any;
 
   ngOnInit() {
-    console.log('QuizDialog initialized with data:', this.data);
     if (this.data.status === 'open_quiz') {
-      this.quizData = this.data;
+      this.quizData = this.data.quiz;
 
       let getUserDetails = JSON.parse(localStorage.getItem('userData') || '{}');
       this.getUserDetails = getUserDetails;
@@ -48,7 +47,6 @@ export class QuizDialog {
       quiz_id: this.data.quiz_id,
       user_id: this.getUserDetails.user_id,
     };
-    console.log('Creating quiz attempt with data:', obj);
     this.quizService.createQuizAttempt(obj).subscribe((response) => {
       if (response.status === 'success') {
         this.dialogRef.close();
@@ -64,17 +62,21 @@ export class QuizDialog {
   }
 
   calculateState() {
-    if (this.quizResult.percentage >= 70) {
-      this.quizState = 'pass';
-    } else if (this.quizResult.percentage >= 50 && this.quizResult.percentage <= 69) {
-      this.quizState = 'retry';
-    } else {
-      this.quizState = 'blocked';
-    }
+    const score = this.quizResult.percentage;
+    const attempt = this.quizResult.attempt_number;
+    const maxAttempts = 3;
 
-    // else if (this.quizResult.attempt < this.data.maxAttempts) {
-    //   this.quizState = 'retry';
-    // }
+    if (score >= 70) {
+      this.quizState = 'pass'; // green
+    } else if (score >= 50 && score <= 69) {
+      this.quizState = 'moderate'; //
+    } else {
+      if (attempt < maxAttempts) {
+        this.quizState = 'retry'; // still trying
+      } else {
+        this.quizState = 'blocked'; // final fail
+      }
+    }
   }
 
   nextLesson() {

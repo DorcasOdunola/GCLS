@@ -13,11 +13,12 @@ export class StudentTakeLesson {
     public actRoute: ActivatedRoute,
     public lessonService: LessonService,
   ) {}
-  public lessonId: string | null = null;
+  public lesson_id: string | null = null;
   step = signal(0);
   public lessonSections: any[] = [];
   public lessonData: any = {};
   public isLoading: boolean = true;
+  public getUserDetails: any;
 
   setStep(index: number) {
     this.step.set(index);
@@ -33,19 +34,21 @@ export class StudentTakeLesson {
   }
 
   ngOnInit(): void {
-    this.lessonId = this.actRoute.snapshot.paramMap.get('lesson.id');
-    this.lessonService.getLesson({ lesson_id: this.lessonId }).subscribe((response: any) => {
+    this.lesson_id = this.actRoute.snapshot.paramMap.get('lesson.id');
+    this.lessonService.getLesson({ lesson_id: this.lesson_id }).subscribe((response: any) => {
       if (response.status === 'success') {
         this.getLessonSection();
         // Handle the lesson data if needed
         this.lessonData = response.data;
       }
     });
+    let getUserDetails = JSON.parse(localStorage.getItem('userData') || '{}');
+    this.getUserDetails = getUserDetails;
   }
 
   getLessonSection() {
-    // Use this.lessonId to fetch lesson section data
-    let obj = { lesson_id: this.lessonId };
+    // Use this.lesson_id to fetch lesson section data
+    let obj = { lesson_id: this.lesson_id };
     this.lessonService.getLessonSection(obj).subscribe((response: any) => {
       if (response.status === 'success') {
         // Handle the lesson section data
@@ -58,6 +61,19 @@ export class StudentTakeLesson {
             section.disabled = true;
           }
         });
+      }
+    });
+  }
+
+  endLesson() {
+    let obj = {
+      lesson_id: this.lesson_id,
+      user_id: this.getUserDetails.user_id,
+    };
+    this.lessonService.endLesson(obj).subscribe((response: any) => {
+      console.log('End lesson response:', response);
+      if (response.status === 'success') {
+        // Handle the end lesson response if needed
       }
     });
   }

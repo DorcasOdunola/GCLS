@@ -58,11 +58,11 @@
                     <span class="stat-badge purple-badge">
                       <span class="count">{{ quiz.questions_count }}</span> Questions
                     </span>
-                    <!-- <span class="stat-badge red-badge">
+                    <span class="stat-badge red-badge" *ngIf="quiz.quiz_status === 'locked'">
                       <mat-icon>lock</mat-icon>
                       Locked
-                    </span> -->
-                    <span class="stat-badge info-badge">
+                    </span>
+                    <span class="stat-badge info-badge" *ngIf="quiz.quiz_status !== 'locked'">
                       <mat-icon>lock_open</mat-icon>
                       Unlocked
                     </span>

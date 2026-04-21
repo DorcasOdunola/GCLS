@@ -17,6 +17,25 @@ class LessonController extends Controller
         ]);
     }
 
+    public function getLesson(Request $request)
+    {
+        $lesson = DB::table("lesson_tb")
+            ->where("lesson_id", $request->lesson_id)
+            ->first();
+
+        if ($lesson) {
+            return response()->json([
+                "status" => "success",
+                "data" => $lesson
+            ]);
+        } else {
+            return response()->json([
+                "status" => "error",
+                "message" => "Lesson not found"
+            ], 404);
+        }
+    }
+
     public function getAllLessonForStudent(Request $request)
     {
         $studentId = $request->user_id;
@@ -82,22 +101,35 @@ class LessonController extends Controller
         ]);
     }
 
-    public function getLesson(Request $request)
+    public function endLesson(Request $request)
     {
-        $lesson = DB::table("lesson_tb")
-            ->where("lesson_id", $request->lesson_id)
+        $studentId = $request->user_id;
+        $lessonId = $request->lesson_id;
+
+        // Check if the record exists
+        $record = DB::table('student_lesson_tb')
+            ->where('user_id', $studentId)
+            ->where('lesson_id', $lessonId)
             ->first();
 
-        if ($lesson) {
-            return response()->json([
-                "status" => "success",
-                "data" => $lesson
-            ]);
+        if ($record) {
+            // Update the existing record to mark as completed
+            DB::table('student_lesson_tb')
+                ->where('user_id', $studentId)
+                ->where('lesson_id', $lessonId)
+                ->update(['status' => 2]); // 2 means completed
         } else {
-            return response()->json([
-                "status" => "error",
-                "message" => "Lesson not found"
-            ], 404);
+            // Insert a new record to mark as completed
+            DB::table('student_lesson_tb')->insert([
+                'user_id' => $studentId,
+                'lesson_id' => $lessonId,
+                'status' => 2 // 2 means completed
+            ]);
         }
+
+        return response()->json([
+            "status" => "success",
+            "message" => "Lesson marked as completed"
+        ]);
     }
 }
