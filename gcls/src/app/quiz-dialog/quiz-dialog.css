@@ -179,3 +179,88 @@
   border-radius: 12px;
   min-height: 60px;
 }
+
+/* Rewards Section */
+.rewards-section {
+  animation: slideDown 0.5s ease-out;
+}
+
+.points-text {
+  color: #28a745;
+  font-size: 1.5rem;
+  font-weight: 800;
+  display: inline-block;
+  animation: pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.badge-card {
+  background-color: #f3f0ff; /* Soft Purple to match your brand */
+  border-color: #e5dbff !important;
+}
+
+.badge-card h6 {
+  color: #6f42c1;
+}
+
+/* Animations */
+@keyframes pop {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes slideDown {
+  0% {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Container for the badges */
+.badge-list {
+  max-width: 900px; /* Adjust based on modal size */
+  margin: 0 auto;
+}
+
+/* Individual Badge Card */
+.badge-card {
+  background-color: #f3f0ff; /* Soft Brand Purple */
+  border-color: #e5dbff !important;
+  min-width: 260px;
+  flex: 1 1 260px; /* Allows cards to grow/shrink but stay readable */
+  max-width: 320px;
+  transition: transform 0.2s ease;
+}
+
+.badge-card:hover {
+  transform: translateY(-3px);
+}
+
+/* Points Animation */
+.points-text {
+  color: #28a745;
+  font-size: 1.6rem;
+  font-weight: 800;
+  display: inline-block;
+  animation: badgePop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes badgePop {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

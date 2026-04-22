@@ -213,7 +213,5 @@ class LessonController extends Controller
         }
 
         return null;
-    }
-
-    
+    }    
 }

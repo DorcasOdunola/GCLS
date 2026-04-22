@@ -399,11 +399,8 @@ class QuizController extends Controller
         $answers = DB::table('quiz_answer_tb')
             ->join('quiz_question', 'quiz_answer_tb.quiz_question_id', '=', 'quiz_question.quiz_question_id')
             ->where('quiz_answer_tb.quiz_attempt_id', $request->quiz_attempt_id)
-            ->select(
-                'quiz_answer_tb.selected_option',
-                'quiz_question.correct_option'
-            )
-        ->get();
+            ->select('quiz_answer_tb.selected_option', 'quiz_question.correct_option')
+            ->get();
         $correctCount = $answers->filter(function ($answer) {
             return $answer->selected_option == $answer->correct_option;
         })->count();
@@ -428,22 +425,29 @@ class QuizController extends Controller
             'result_status' => $result_status,
             'submitted_at' => now()
         ]);
-        $attempt = DB::table('quiz_attempt_tb')
-            ->where('quiz_attempt_id', $request->quiz_attempt_id)
-            ->first();
-
-        $attemptNumber = $attempt->attempt_number ?? 1;
 
         $attempt = DB::table('quiz_attempt_tb')
         ->where('quiz_attempt_id', $request->quiz_attempt_id)
         ->first();
 
         $attemptNumber = $attempt->attempt_number ?? 1;
-
+        if (!$attempt) {
+        return response()->json([
+            "status" => "error",
+            "message" => "Invalid quiz attempt"
+        ], 400);
+}
         // Get lesson_id
         $quiz = DB::table('quiz_tb')
             ->where('quiz_id', $attempt->quiz_id)
             ->first();
+
+        if (!$quiz) {
+            return response()->json([
+                "status" => "error",
+                "message" => "Quiz not found"
+            ], 404);
+        }
 
         $lessonId = $quiz->lesson_id;
         $userId = $attempt->user_id;
@@ -480,6 +484,32 @@ class QuizController extends Controller
             }
         }
 
+        $points = 0;
+        $earnedBadges = [];
+
+        if ($percentage >= 70) {
+            $points = 5;
+            $badge = $this->awardBadge($userId, 'High Achiever');
+            if ($badge) $earnedBadges[] = $badge;
+        } elseif ($percentage >= 50) {
+            $points = 3;
+        }
+
+        if ($points > 0) {
+            $this->addPoints($userId, $points, 'quiz');
+        }
+
+
+        // First quiz badge
+        // 0 - in progress 1 - Completed
+        $quizCount = DB::table('quiz_attempt_tb')
+            ->where('user_id', $userId)
+            ->where('status', 1)
+            ->count();
+        if ($quizCount >= 1) {
+            $badge = $this->awardBadge($userId, 'Quiz Taker');
+            if ($badge) $earnedBadges[] = $badge;
+        }
 
         return response()->json([
             "status" => "success",
@@ -491,9 +521,45 @@ class QuizController extends Controller
                 "attempt_number" => $attemptNumber,
                 "result" => $result_status,
                 "maxAttempts" => 2,
-                "quiz_id" => $attempt->quiz_id
+                "quiz_id" => $attempt->quiz_id,
+                "badges_earned" => $earnedBadges,
+                "points_earned" => $points
+
             ]
         ]);
             
+    }
+
+        public function addPoints($userId, $points, $type) {
+        DB::table('student_points_tb')->insert([
+            'user_id' => $userId,
+            'points' => $points,
+            'point_type' => $type,
+        ]);
+    }
+
+    public function awardBadge($userId, $badgeName) {
+
+        $badge = DB::table('badges_tb')
+            ->where('name', $badgeName)
+            ->first();
+
+        if (!$badge) return null;
+
+        $exists = DB::table('student_badges_tb')
+            ->where('user_id', $userId)
+            ->where('badge_id', $badge->badge_id)
+            ->exists();
+
+        if (!$exists) {
+            DB::table('student_badges_tb')->insert([
+                'user_id' => $userId,
+                'badge_id' => $badge->badge_id,
+            ]);
+
+            return $badge; // return for UI
+        }
+
+        return null;
     }
 }
