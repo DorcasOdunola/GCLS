@@ -1,6 +1,8 @@
 import { Component, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LessonService } from '../service/lesson-service';
+import { MatDialog } from '@angular/material/dialog';
+import { LessonDialog } from '../lesson-dialog/lesson-dialog';
 
 @Component({
   selector: 'app-student-take-lesson',
@@ -12,6 +14,8 @@ export class StudentTakeLesson {
   constructor(
     public actRoute: ActivatedRoute,
     public lessonService: LessonService,
+    public dialog: MatDialog,
+    public router: Router,
   ) {}
   public lesson_id: string | null = null;
   step = signal(0);
@@ -73,7 +77,17 @@ export class StudentTakeLesson {
     this.lessonService.endLesson(obj).subscribe((response: any) => {
       console.log('End lesson response:', response);
       if (response.status === 'success') {
-        // Handle the end lesson response if needed
+        // Handle the end lesson response
+        let dialog = this.dialog.open(LessonDialog, {
+          data: { lesson_data: this.lessonData, lesson_response: response.data },
+        });
+        dialog.afterClosed().subscribe((result) => {
+          // Handle any actions after the dialog is closed
+          if (!result) {
+            // Do something if the dialog is closed without a result
+            this.router.navigate(['/student/lesson']);
+          }
+        });
       }
     });
   }

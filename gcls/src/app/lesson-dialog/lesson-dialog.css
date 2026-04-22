@@ -1,0 +1,43 @@
+.points-badge {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #28a745;
+  animation: pop 0.4s ease;
+}
+
+.badge-card {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 15px;
+  animation: pop 0.4s ease;
+}
+
+.badge-icon {
+  font-size: 2rem;
+  margin: 10px 0;
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+header-card {
+  background: #e9ecef;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+header-card h2 {
+  font-size: 1.75rem;
+  color: #333;
+}
+header-card p {
+  font-size: 1rem;
+  color: #666;
+}

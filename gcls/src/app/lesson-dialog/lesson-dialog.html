@@ -1,0 +1,57 @@
+<div class="completion-card text-center p-5">
+  <!-- Header -->
+  <h2 class="text-success fw-bold mb-3"><mat-icon>check</mat-icon> Lesson Completed!</h2>
+
+  <!-- Points -->
+  <div class="points-badge mb-4" *ngIf="lessonResponse.points_earned > 0">
+    +{{ lessonResponse.points_earned }} Points Earned
+  </div>
+
+  <!-- Badge -->
+  <div
+    class="badge-card mb-4"
+    *ngIf="lessonResponse.badges_earned && lessonResponse.badges_earned.length > 0"
+  >
+    <div class="badge-earned" *ngFor="let earnedBadge of lessonResponse.badges_earned">
+      <h5>🎉 Badge Unlocked!</h5>
+      <div class="badge-icon">
+        <mat-icon>{{ earnedBadge.icon }}</mat-icon>
+      </div>
+      <p class="fw-bold">{{ earnedBadge.name }}</p>
+      <small>{{ earnedBadge.description }}</small>
+    </div>
+  </div>
+
+  <!-- Lesson Info -->
+  <p class="lead">
+    You have successfully completed
+    <strong>{{ lessonData.topic }} - {{ lessonData.sub_topic }}</strong>
+  </p>
+
+  <p class="text-muted">
+    Great job!
+    <span *ngIf="lessonResponse.points_earned > 0"
+      >You can now test your understanding by taking the quiz.</span
+    >
+  </p>
+
+  <!-- Progress -->
+  <p class="fw-bold">
+    Progress: {{ lessonResponse.lesson_count }} / {{ lessonResponse.total_lessons }} Lessons
+  </p>
+
+  <!-- Actions -->
+  <div class="d-flex justify-content-center gap-3 mt-4">
+    <button
+      class="btn btn-primary"
+      mat-dialog-close
+      routerLink="/student/quiz"
+      *ngIf="lessonResponse.points_earned"
+    >
+      Take Quiz
+    </button>
+    <button class="btn btn-outline-secondary" mat-dialog-close routerLink="/student/lesson">
+      Review Lesson
+    </button>
+  </div>
+</div>

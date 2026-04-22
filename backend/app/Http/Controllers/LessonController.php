@@ -107,30 +107,113 @@ class LessonController extends Controller
         $studentId = $request->user_id;
         $lessonId = $request->lesson_id;
 
-        // Check if the record exists
+        // Track if this is a new completion
+        $isNewCompletion = false;
+
         $record = DB::table('student_lesson_tb')
             ->where('user_id', $studentId)
             ->where('lesson_id', $lessonId)
             ->first();
 
-        if ($record) {
-            // Update the existing record to mark as completed
-            DB::table('student_lesson_tb')
-                ->where('user_id', $studentId)
-                ->where('lesson_id', $lessonId)
-                ->update(['status' => 2]); // 2 means completed
+        if (!$record || $record->status != 2) {
+            $isNewCompletion = true;
+
+            DB::table('student_lesson_tb')->updateOrInsert(
+                [
+                    'user_id' => $studentId,
+                    'lesson_id' => $lessonId
+                ],
+                [
+                    'status' => 2
+                ]
+            );
+        }
+
+        // Only award points if it's a new completion
+        if ($isNewCompletion) {
+            $earnedPoints = 5;
+            $this->addPoints($studentId, $earnedPoints, 'lesson');
         } else {
-            // Insert a new record to mark as completed
-            DB::table('student_lesson_tb')->insert([
-                'user_id' => $studentId,
-                'lesson_id' => $lessonId,
-                'status' => 2 // 2 means completed
-            ]);
+            $earnedPoints = 0;
+        }
+
+        $totalLessons = DB::table('lesson_tb')->count();
+        
+        // Count completed lessons
+        $lessonCount = DB::table('student_lesson_tb')
+            ->where('user_id', $studentId)
+            ->where('status', 2)
+            ->distinct('lesson_id')
+            ->count('lesson_id');
+
+        $earnedBadges = [];
+
+        if ($lessonCount >= 1) {
+            $badge = $this->awardBadge($studentId, 'Lesson Starter');
+            if ($badge) $earnedBadges[] = $badge;
+        }
+
+        if ($lessonCount >= 3) {
+            $badge = $this->awardBadge($studentId, 'Bronze Learner');
+            if ($badge) $earnedBadges[] = $badge;
+        }
+
+        if ($lessonCount >= 5) {
+            $badge = $this->awardBadge($studentId, 'Silver Learner');
+            if ($badge) $earnedBadges[] = $badge;
+        }
+
+        if ($lessonCount >= 10) {
+            $badge = $this->awardBadge($studentId, 'Gold Learner');
+            if ($badge) $earnedBadges[] = $badge;
         }
 
         return response()->json([
             "status" => "success",
-            "message" => "Lesson marked as completed"
+            "message" => "Lesson marked as completed",
+            "data" => [
+                "points_earned" => $earnedPoints,
+                "badges_earned" => $earnedBadges,
+                "lesson_count" => $lessonCount,
+                "total_lessons" => $totalLessons
+
+            ]
         ]);
     }
+
+
+    public function addPoints($userId, $points, $type) {
+        DB::table('student_points_tb')->insert([
+            'user_id' => $userId,
+            'points' => $points,
+            'point_type' => $type,
+        ]);
+    }
+
+    public function awardBadge($userId, $badgeName) {
+
+        $badge = DB::table('badges_tb')
+            ->where('name', $badgeName)
+            ->first();
+
+        if (!$badge) return null;
+
+        $exists = DB::table('student_badges_tb')
+            ->where('user_id', $userId)
+            ->where('badge_id', $badge->badge_id)
+            ->exists();
+
+        if (!$exists) {
+            DB::table('student_badges_tb')->insert([
+                'user_id' => $userId,
+                'badge_id' => $badge->badge_id,
+            ]);
+
+            return $badge; // return for UI
+        }
+
+        return null;
+    }
+
+    
 }
