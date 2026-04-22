@@ -18,17 +18,17 @@ export class SideNavComponent {
   );
 
   public adminNavItems = [
-    { name: 'Dashboard', route: '/admin/dashboard', icon: 'dashboard' },
+    // { name: 'Dashboard', route: '/admin/dashboard', icon: 'dashboard' },
     { name: 'Students', route: '/admin/students', icon: 'school' },
     { name: 'Lessons', route: '/admin/lesson', icon: 'library_add' },
     { name: 'Quiz', route: '/admin/quiz', icon: 'quiz' },
-    { name: 'Leaderboard', route: '/admin/lesson', icon: 'leaderboard' },
+    { name: 'Leaderboard', route: '/admin/leaderboard', icon: 'leaderboard' },
   ];
   public studentNavItems = [
-    { name: 'Dashboard', route: '/student/dashboard', icon: 'dashboard' },
+    // { name: 'Dashboard', route: '/student/dashboard', icon: 'dashboard' },
     { name: 'Lessons', route: '/student/lesson', icon: 'library_add' },
     { name: 'Quiz', route: '/student/quiz', icon: 'quiz' },
-    { name: 'Leaderboard', route: '/student/lesson', icon: 'leaderboard' },
+    { name: 'Leaderboard', route: '/student/leaderboard', icon: 'leaderboard' },
   ];
 
   public navItems: any = [];

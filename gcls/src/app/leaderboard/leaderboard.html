@@ -1,1 +1,140 @@
-<p>leaderboard works!</p>
+<div class="leaderboard-container p-4">
+  <div class="podium-section mb-5 p-4 rounded-4 shadow-sm" *ngIf="topThree.length > 0">
+    <div class="text-center text-white mb-4">
+      <mat-icon style="font-size: 40px; height: 40px; width: 40px">check_circle</mat-icon>
+      <h2 class="fw-bold">Top Students 🎉</h2>
+    </div>
+
+    <div class="d-flex align-items-end justify-content-center gap-3 text-center">
+      <div class="podium-card secondary-card p-3 rounded-4 bg-white shadow-sm" *ngIf="topThree[1]">
+        <p class="text-muted small fw-bold mb-1">2nd place</p>
+        <mat-icon class="rank-medal silver">emoji_events</mat-icon>
+        <h5 class="mb-1 fw-bold">{{ topThree[1].name }}</h5>
+        <div class="stats-grid small text-start px-2">
+          <div class="d-flex justify-content-between"><span>Rank</span> <strong>2</strong></div>
+          <div class="d-flex justify-content-between text-primary">
+            <span>Score</span> <strong>{{ topThree[1].score }}</strong>
+          </div>
+          <div class="d-flex justify-content-between text-muted">
+            <span>XP</span> <strong>{{ topThree[1].points }}</strong>
+          </div>
+        </div>
+        <div class="table-progress mt-2 mx-auto" style="width: 90%">
+          <div class="table-progress-bar" style="width: 75%"></div>
+        </div>
+      </div>
+
+      <div class="podium-card primary-card p-4 rounded-4 bg-white shadow" *ngIf="topThree[0]">
+        <p class="text-muted small fw-bold mb-1">1st place</p>
+        <mat-icon class="rank-medal gold">workspace_premium</mat-icon>
+        <h4 class="mb-1 fw-bold">{{ topThree[0].name }}</h4>
+        <div class="stats-grid mb-2 text-start px-2">
+          <div class="d-flex justify-content-between"><span>Rank</span> <strong>1</strong></div>
+          <div class="d-flex justify-content-between fs-5 text-primary">
+            <span>Score</span> <strong>{{ topThree[0].score }}</strong>
+          </div>
+          <hr class="my-1" />
+          <div class="d-flex justify-content-between small text-muted">
+            <span>XP</span> <strong>{{ topThree[0].points }}</strong>
+          </div>
+          <div class="d-flex justify-content-between small text-muted">
+            <span>Badges</span> <strong>{{ topThree[0].badges }}</strong>
+          </div>
+          <div class="d-flex justify-content-between small">
+            <span>Lessons</span> <strong>{{ topThree[0].lessons_completed }}</strong>
+          </div>
+        </div>
+        <div class="table-progress mx-auto" style="width: 100%">
+          <div class="table-progress-bar" style="width: 90%"></div>
+        </div>
+      </div>
+
+      <div class="podium-card secondary-card p-3 rounded-4 bg-white shadow-sm" *ngIf="topThree[2]">
+        <p class="text-muted small fw-bold mb-1">3rd place</p>
+        <mat-icon class="rank-medal bronze">military_tech</mat-icon>
+        <h5 class="mb-1 fw-bold">{{ topThree[2].name }}</h5>
+        <div class="stats-grid small text-start px-2">
+          <div class="d-flex justify-content-between"><span>Rank</span> <strong>3</strong></div>
+          <div class="d-flex justify-content-between text-primary">
+            <span>Score</span> <strong>{{ topThree[2].score }}</strong>
+          </div>
+          <div class="d-flex justify-content-between text-muted">
+            <span>XP</span> <strong>{{ topThree[2].points }}</strong>
+          </div>
+        </div>
+        <div class="table-progress mt-2 mx-auto" style="width: 90%">
+          <div class="table-progress-bar" style="width: 60%"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="filter-bar d-flex flex-wrap align-items-center gap-3 mb-4 p-3 bg-white rounded-3 shadow-sm border"
+  >
+    <mat-form-field appearance="outline" class="flex-grow-1">
+      <mat-label>Search Student...</mat-label>
+      <input matInput placeholder="Enter student name" />
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-select placeholder="All Time">
+        <mat-option value="all">All Time</mat-option>
+        <mat-option value="weekly">Weekly</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-select placeholder="Select Class">
+        <mat-option value="jss1">JSS 1</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="table-responsive rounded-4 shadow-sm bg-white border">
+    <table class="table table-hover align-middle mb-0">
+      <thead class="bg-light">
+        <tr>
+          <th class="ps-4">🏅 Rank</th>
+          <th>👤 Student Info</th>
+          <th>⭐ Score</th>
+          <th>⚡ XP</th>
+          <th>📚 Lessons Completed</th>
+          <th>🧠 Avg Quiz Score</th>
+          <th>🏅 Badges</th>
+          <th class="pe-4">📈 Progress Indicator</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let student of others; let i = index">
+          <td class="ps-4 fw-bold text-muted">#{{ i + 4 }}</td>
+          <td>
+            <div class="d-flex align-items-center gap-3">
+              <div class="avatar-circle"></div>
+              <span class="fw-medium text-dark">{{ student.name }}</span>
+            </div>
+          </td>
+          <td class="fw-bold text-primary">{{ student.score }}</td>
+          <td>{{ student.points }}</td>
+          <td>{{ student.lessons_completed }}</td>
+          <td>{{ student.avg_quiz_score }}%</td>
+          <td>
+            <div class="d-flex gap-1 align-items-center">
+              <mat-icon *ngFor="let b of [].constructor(student.badges)" class="small-badge-icon"
+                >stars</mat-icon
+              >
+              <span class="small text-muted" *ngIf="student.badges === 0">0</span>
+            </div>
+          </td>
+          <td class="pe-4">
+            <div class="d-flex align-items-center gap-2">
+              <div class="table-progress">
+                <div class="table-progress-bar" style="width: 70%"></div>
+              </div>
+              <span class="small text-muted">70%</span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

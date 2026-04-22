@@ -1,0 +1,182 @@
+.leaderboard-container {
+  background-color: #f8f9fa;
+  font-family: 'Segoe UI', Roboto, sans-serif;
+}
+
+/* PODIUM SECTION */
+.podium-section {
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  min-height: 380px;
+}
+
+.podium-card {
+  width: 220px;
+  transition: transform 0.3s ease;
+  border: 1px solid #edf2f7;
+}
+
+.primary-card {
+  width: 260px;
+  z-index: 2;
+  border: 3px solid #7e69d4 !important; /* Brand Purple Highlight */
+  transform: translateY(-25px);
+}
+
+.rank-medal {
+  font-size: 48px;
+  height: 48px;
+  width: 48px;
+  margin-bottom: 5px;
+}
+
+.gold {
+  color: #ffd700;
+}
+.silver {
+  color: #c0c0c0;
+}
+.bronze {
+  color: #cd7f32;
+}
+
+/* TABLE STYLING */
+.table thead th {
+  background-color: #f8fafc;
+  color: #6c757d;
+  font-weight: 600;
+  font-size: 13px;
+  padding: 18px 15px;
+  border: none;
+}
+
+.table tbody td {
+  padding: 16px 15px;
+  border-bottom: 1px solid #f1f3f5;
+}
+
+.avatar-circle {
+  width: 38px;
+  height: 38px;
+  background-color: #e2e8f0;
+  border-radius: 50%;
+}
+
+.text-primary {
+  color: #7e69d4 !important; /* Your Brand Purple for Score */
+}
+
+.small-badge-icon {
+  font-size: 20px;
+  height: 20px;
+  width: 20px;
+  color: #7e69d4;
+}
+
+/* PROGRESS BARS */
+.table-progress {
+  height: 8px;
+  border-radius: 10px;
+  background-color: #eef2f7;
+  overflow: hidden;
+  width: 100px;
+}
+
+.table-progress-bar {
+  height: 100%;
+  background-color: #7e69d4;
+  border-radius: 10px;
+}
+
+/* MAT-FIELD OVERRIDES */
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-wrapper {
+  margin-bottom: -1em;
+}
+
+.leaderboard-container {
+  background-color: #f8f9fa;
+  font-family: 'Segoe UI', Roboto, sans-serif;
+}
+
+/* PODIUM SECTION WITH CELEBRATORY GRADIENT */
+.podium-section {
+  position: relative;
+  background: linear-gradient(135deg, #28a745 0%, #34d058 50%, #20c997 100%);
+  background-size: 200% 200%;
+  animation: gradientBG 8s ease infinite;
+  min-height: 380px;
+}
+
+@keyframes gradientBG {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.podium-card {
+  width: 220px;
+  transition: transform 0.3s ease;
+  border: 1px solid #edf2f7;
+}
+
+.primary-card {
+  width: 260px;
+  z-index: 2;
+  border: 3px solid #7e69d4 !important;
+  transform: translateY(-25px);
+}
+
+.rank-medal {
+  font-size: 40px;
+  height: 40px;
+  width: 40px;
+  margin-bottom: 10px;
+}
+
+.gold {
+  color: #ffd700;
+}
+.silver {
+  color: #c0c0c0;
+}
+.bronze {
+  color: #cd7f32;
+}
+
+/* TABLE & PROGRESS */
+.text-primary {
+  color: #7e69d4 !important;
+}
+
+.table-progress {
+  height: 8px;
+  border-radius: 10px;
+  background-color: #eef2f7;
+  overflow: hidden;
+  width: 100px;
+}
+
+.table-progress-bar {
+  height: 100%;
+  background-color: #7e69d4;
+  border-radius: 10px;
+}
+
+.small-badge-icon {
+  font-size: 20px;
+  height: 20px;
+  width: 20px;
+  color: #7e69d4;
+}
+
+.avatar-circle {
+  width: 35px;
+  height: 35px;
+  background-color: #e9ecef;
+  border-radius: 50%;
+}

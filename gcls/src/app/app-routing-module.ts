@@ -13,6 +13,7 @@ import { StudentTakeLesson } from './student-take-lesson/student-take-lesson';
 import { StudentQuiz } from './student-quiz/student-quiz';
 import { StudentTakeQuiz } from './student-take-quiz/student-take-quiz';
 import { ReviewQuiz } from './review-quiz/review-quiz';
+import { Leaderboard } from './leaderboard/leaderboard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -30,6 +31,7 @@ const routes: Routes = [
       { path: 'quiz', component: Quiz },
       { path: 'quiz-setup', component: QuizSetup },
       { path: 'quiz-setup/:quiz_id', component: QuizSetup },
+      { path: 'leaderboard', component: Leaderboard },
     ],
   },
   {
@@ -43,6 +45,7 @@ const routes: Routes = [
       { path: 'quiz', component: StudentQuiz },
       { path: 'quiz/:quiz_id', component: StudentTakeQuiz },
       { path: 'review-quiz/:quiz_id', component: ReviewQuiz },
+      { path: 'leaderboard', component: Leaderboard },
     ],
   },
 

@@ -24,6 +24,7 @@ import { StudentDialog } from './student-dialog/student-dialog';
 import { QuizDialog } from './quiz-dialog/quiz-dialog';
 import { ReviewQuiz } from './review-quiz/review-quiz';
 import { LessonDialog } from './lesson-dialog/lesson-dialog';
+import { Leaderboard } from './leaderboard/leaderboard';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { LessonDialog } from './lesson-dialog/lesson-dialog';
     QuizDialog,
     ReviewQuiz,
     LessonDialog,
+    Leaderboard,
   ],
 
   imports: [

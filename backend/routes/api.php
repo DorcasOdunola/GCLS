@@ -54,3 +54,4 @@ Route::post('/get_student_quiz_attempt', [QuizController::class, 'getStudentQuiz
 Route::post('/get_student_quiz_questions', [QuizController::class, 'getStudentQuizQuestion']);
 Route::post('/save_student_question_answers', [QuizController::class, 'saveStudentQuestionAnswers']);
 Route::post('/submit_quiz', [QuizController::class, 'submitQuiz']);
+Route::get('/leaderboard', [App\Http\Controllers\LeaderboardController::class, 'getLeaderboard']);
