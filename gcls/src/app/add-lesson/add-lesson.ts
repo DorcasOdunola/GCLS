@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { LessonService } from '../service/lesson-service';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-add-lesson',
@@ -22,6 +23,7 @@ export class AddLesson {
     public formBuilder: FormBuilder,
     public lessonService: LessonService,
     public router: Router,
+    public snackbar: MatSnackBar,
   ) {
     this.lessonForm = this.formBuilder.group({
       topic: [''],
@@ -66,16 +68,26 @@ export class AddLesson {
       (response: any) => {
         if (response.status === 'success') {
           console.log('Lesson created successfully');
-          this.router.navigate(['/lesson']);
+          this.snackbar.open('Lesson created successfully', 'Close', {
+            duration: 3000,
+            panelClass: ['snackbar-success'],
+          });
+          this.router.navigate(['/admin/lesson']);
           // this.lessonForm.reset();
           // this.allSectionsArray = [];
         } else {
-          // alert('Failed to create lesson');
+          this.snackbar.open('Failed to create lesson', 'Close', {
+            duration: 3000,
+            panelClass: ['snackbar-error'],
+          });
         }
       },
       (error: any) => {
         console.error('Error creating lesson:', error);
-        // alert('An error occurred while creating the lesson');
+        this.snackbar.open('An error occurred while creating the lesson', 'Close', {
+          duration: 3000,
+          panelClass: ['snackbar-error'],
+        });
       },
     );
   }
