@@ -142,7 +142,7 @@ class LessonController extends Controller
         // Count completed lessons
         $lessonCount = DB::table('student_lesson_tb')
             ->where('user_id', $studentId)
-            ->where('status', 2)
+            ->where('status', [2, 3]) // count both completed and passed
             ->distinct('lesson_id')
             ->count('lesson_id');
 

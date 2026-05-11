@@ -71,10 +71,10 @@
 
     <div
       class="rewards-section text-center mb-4"
-      *ngIf="quizState === 'pass' || quizState === 'moderate'"
+      *ngIf="quizState === 'pass' || quizState === 'moderate' || quizState === 'retry'"
     >
-      <div class="points-badge mb-3">
-        <span class="points-text">+{{ quizResult.points_earned || 5 }} Points Earned 🎊</span>
+      <div class="points-badge mb-3" *ngIf="quizResult.points_earned > 0">
+        <span class="points-text">+{{ quizResult.points_earned }} Points Earned 🎊</span>
       </div>
 
       <div *ngIf="quizResult.badges_earned?.length > 0">
@@ -174,8 +174,8 @@
 
         <button
           routerLink="/student/review-quiz/{{ quizResult.quiz_id }}"
-          mat-dialog-close
           class="btn-review"
+          mat-dialog-close="close"
         >
           Review Quiz
         </button>
@@ -187,7 +187,7 @@
       <button
         *ngIf="quizState === 'pass'"
         class="start-btn btn text-white w-100 py-3 fs-5"
-        mat-dialog-close
+        mat-dialog-close="close"
         routerLink="/student/lesson"
       >
         Go to Next Lesson <i class="fas fa-arrow-right ms-2"></i>
@@ -197,7 +197,7 @@
       <button
         *ngIf="quizState === 'moderate'"
         class="start-btn btn text-white w-100 py-3 fs-5"
-        mat-dialog-close
+        mat-dialog-close="close"
         routerLink="/student/lesson"
       >
         Go to Next Lesson <i class="fas fa-arrow-right ms-2"></i>
@@ -206,7 +206,7 @@
       <button
         *ngIf="quizState === 'retry'"
         class="btn btn-warning w-100 py-3 fs-5 fw-bold"
-        mat-dialog-close
+        mat-dialog-close="close"
         routerLink="/student/quiz"
       >
         Retry Quiz <i class="fas fa-undo ms-2"></i>
@@ -215,7 +215,7 @@
       <button
         *ngIf="quizState === 'blocked'"
         class="btn btn-secondary w-100 py-3 fs-5 fw-bold"
-        mat-dialog-close
+        mat-dialog-close="close"
         routerLink="/student/lesson"
       >
         Go to Next Lesson <i class="fas fa-arrow-right ms-2"></i>

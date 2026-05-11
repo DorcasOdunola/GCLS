@@ -71,6 +71,7 @@ export class QuizSetup {
     this.quizTitle = this.quizForm.get('quiz_title').value;
     this.isLoading = true;
     this.quizService.createQuiz(this.quizForm.value).subscribe((response) => {
+      console.log(response, 'Create quiz response');
       this.quizForm.disable();
       if (response.status !== 'success') {
         this.snackBar.open('Error creating quiz. Please try again.', 'Close', {
@@ -85,6 +86,7 @@ export class QuizSetup {
         panelClass: ['snackbar-success'],
       });
       this.isLoading = false;
+      this.quiz_id = response.quiz_id;
       // this.quizService.quiz_id.next(response.data.quiz_id);
     });
   }

@@ -31,8 +31,8 @@
   <p class="text-muted">
     Great job!
     <span *ngIf="lessonResponse.points_earned > 0"
-      >You can now test your understanding by taking the quiz.</span
-    >
+      >You can now test your understanding by taking the quiz.
+    </span>
   </p>
 
   <!-- Progress -->
@@ -44,13 +44,13 @@
   <div class="d-flex justify-content-center gap-3 mt-4">
     <button
       class="btn btn-primary"
-      mat-dialog-close
+      mat-dialog-close="close"
       routerLink="/student/quiz"
       *ngIf="lessonResponse.points_earned"
     >
       Take Quiz
     </button>
-    <button class="btn btn-outline-secondary" mat-dialog-close routerLink="/student/lesson">
+    <button class="btn btn-outline-secondary" mat-dialog-close="close" routerLink="/student/lesson">
       Review Lesson
     </button>
   </div>
