@@ -18,7 +18,8 @@
 .primary-card {
   width: 260px;
   z-index: 2;
-  border: 3px solid #7e69d4 !important; /* Brand Purple Highlight */
+  border: 3px solid #7e69d4 !important;
+  /* Brand Purple Highlight */
   transform: translateY(-25px);
 }
 
@@ -32,9 +33,11 @@
 .gold {
   color: #ffd700;
 }
+
 .silver {
   color: #c0c0c0;
 }
+
 .bronze {
   color: #cd7f32;
 }
@@ -59,10 +62,34 @@
   height: 38px;
   background-color: #e2e8f0;
   border-radius: 50%;
+
+  /* 1. Turn the circle into a flexbox container */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-circle mat-icon {
+  /* 2. Scale the internal graphic size to fit comfortably (e.g., 20px) */
+  font-size: 20px;
+
+  /* 3. Force the layout box of the icon to match its font-size exactly */
+  width: 20px;
+  height: 20px;
+  line-height: 1;
+
+  /* 4. Reset default alignment rules */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  color: #475569;
+  /* Optional: Nice slate grey color for the icon */
 }
 
 .text-primary {
-  color: #7e69d4 !important; /* Your Brand Purple for Score */
+  color: #7e69d4 !important;
+  /* Your Brand Purple for Score */
 }
 
 .small-badge-icon {
@@ -110,9 +137,11 @@
   0% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
+
   100% {
     background-position: 0% 50%;
   }
@@ -141,9 +170,11 @@
 .gold {
   color: #ffd700;
 }
+
 .silver {
   color: #c0c0c0;
 }
+
 .bronze {
   color: #cd7f32;
 }

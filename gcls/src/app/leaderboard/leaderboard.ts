@@ -32,11 +32,11 @@ export class Leaderboard {
     }
   }
 
-  students = [
-    { name: 'Alin Dorcas', score: 980, xp: 450, lessons: 8, quizAvg: 78, progress: 70 },
-    { name: 'Emeka Emeka', score: 980, xp: 350, lessons: 7, quizAvg: 78, progress: 70 },
-    { name: 'John Raw', score: 450, xp: 350, lessons: 6, quizAvg: 78, progress: 70 },
-  ];
+  // students = [
+  //   { name: 'Alin Dorcas', score: 980, xp: 450, lessons: 8, quizAvg: 78, progress: 70 },
+  //   { name: 'Emeka Emeka', score: 980, xp: 350, lessons: 7, quizAvg: 78, progress: 70 },
+  //   { name: 'John Raw', score: 450, xp: 350, lessons: 6, quizAvg: 78, progress: 70 },
+  // ];
 
   ngOnInit() {
     let userData = JSON.parse(localStorage.getItem('userData') || '{}');

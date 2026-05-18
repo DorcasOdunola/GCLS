@@ -18,9 +18,12 @@
           <div class="d-flex justify-content-between text-muted">
             <span>XP</span> <strong>{{ topThree[1].points }}</strong>
           </div>
+          <div class="d-flex justify-content-between small">
+            <span>Lessons</span> <strong>{{ topThree[0].lessons_completed }}</strong>
+          </div>
         </div>
         <div class="table-progress mt-2 mx-auto" style="width: 90%">
-          <div class="table-progress-bar" style="width: 75%"></div>
+          <div class="table-progress-bar" [style.width]="topThree[1].avg_quiz_score + '%'"></div>
         </div>
       </div>
 
@@ -41,11 +44,11 @@
             <span>Badges</span> <strong>{{ topThree[0].badges }}</strong>
           </div>
           <div class="d-flex justify-content-between small">
-            <span>Lessons</span> <strong>{{ topThree[0].lessons_completed }}</strong>
+            <span>Lessons</span> <strong>{{ topThree[1].lessons_completed }}</strong>
           </div>
         </div>
         <div class="table-progress mx-auto" style="width: 100%">
-          <div class="table-progress-bar" style="width: 90%"></div>
+          <div class="table-progress-bar" [style.width]="topThree[0].avg_quiz_score + '%'"></div>
         </div>
       </div>
 
@@ -61,9 +64,12 @@
           <div class="d-flex justify-content-between text-muted">
             <span>XP</span> <strong>{{ topThree[2].points }}</strong>
           </div>
+          <div class="d-flex justify-content-between small">
+            <span>Lessons</span> <strong>{{ topThree[2].lessons_completed }}</strong>
+          </div>
         </div>
         <div class="table-progress mt-2 mx-auto" style="width: 90%">
-          <div class="table-progress-bar" style="width: 60%"></div>
+          <div class="table-progress-bar" [style.width]="topThree[1].avg_quiz_score + '%'"></div>
         </div>
       </div>
     </div>
@@ -119,7 +125,9 @@
           <td class="ps-4 fw-bold text-muted">#{{ i + 4 }}</td>
           <td>
             <div class="d-flex align-items-center gap-3">
-              <div class="avatar-circle"></div>
+              <div class="avatar-circle">
+                <mat-icon>person</mat-icon>
+              </div>
               <span class="fw-medium text-dark">{{ student.name }}</span>
             </div>
           </td>
@@ -130,15 +138,15 @@
           <td>
             <div class="d-flex gap-1 align-items-center">
               <mat-icon *ngFor="let b of [].constructor(student.badges)" class="small-badge-icon">stars</mat-icon>
-              <span class="small text-muted" *ngIf="student.badges === 0">0</span>
+              <span class="small text-muted" *ngIf="student.badges === 0"></span>
             </div>
           </td>
           <td class="pe-4">
             <div class="d-flex align-items-center gap-2">
               <div class="table-progress">
-                <div class="table-progress-bar" style="width: 70%"></div>
+                <div class="table-progress-bar" [style.width]="student.avg_quiz_score + '%'"></div>
               </div>
-              <span class="small text-muted">70%</span>
+              <span class="small text-muted">{{student.avg_quiz_score}}%</span>
             </div>
           </td>
         </tr>
