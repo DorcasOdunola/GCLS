@@ -6,10 +6,10 @@ import { environment } from '../../environments/environment';
   providedIn: 'root',
 })
 export class LeaderboardService {
-  constructor(public httpClient: HttpClient) {}
+  constructor(public httpClient: HttpClient) { }
   public baseUrl: string = environment.apiUrl;
 
-  public getLeaderboard() {
-    return this.httpClient.get<any>(`${this.baseUrl}leaderboard`);
+  public getLeaderboard(obj: any) {
+    return this.httpClient.post<any>(`${this.baseUrl}leaderboard`, obj);
   }
 }

@@ -69,9 +69,7 @@
     </div>
   </div>
 
-  <div
-    class="filter-bar d-flex flex-wrap align-items-center gap-3 mb-4 p-3 bg-white rounded-3 shadow-sm border"
-  >
+  <!-- <div class="filter-bar d-flex flex-wrap align-items-center gap-3 mb-4 p-3 bg-white rounded-3 shadow-sm border">
     <mat-form-field appearance="outline" class="flex-grow-1">
       <mat-label>Search Student...</mat-label>
       <input matInput placeholder="Enter student name" />
@@ -86,6 +84,18 @@
     <mat-form-field appearance="outline">
       <mat-select placeholder="Select Class">
         <mat-option value="jss1">JSS 1</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div> -->
+
+  <div class="col-11 col-md-9 mx-auto mb-3 d-flex justify-content-end" *ngIf="userDetails?.user_type == 2">
+    <mat-form-field appearance="outline" class="center-filter-select-right">
+      <mat-label>Filter by Center</mat-label>
+      <mat-select [(ngModel)]="selectedCenter" (selectionChange)="onCenterChange()">
+        <mat-option value="all">See All</mat-option>
+        <mat-option *ngFor="let center of centersList" [value]="center.center_id">
+          {{ center.center_name }} ({{ center.code_name }})
+        </mat-option>
       </mat-select>
     </mat-form-field>
   </div>
@@ -119,9 +129,7 @@
           <td>{{ student.avg_quiz_score }}%</td>
           <td>
             <div class="d-flex gap-1 align-items-center">
-              <mat-icon *ngFor="let b of [].constructor(student.badges)" class="small-badge-icon"
-                >stars</mat-icon
-              >
+              <mat-icon *ngFor="let b of [].constructor(student.badges)" class="small-badge-icon">stars</mat-icon>
               <span class="small text-muted" *ngIf="student.badges === 0">0</span>
             </div>
           </td>
