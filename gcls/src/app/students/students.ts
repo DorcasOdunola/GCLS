@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { StudentService } from '../service/student-service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { StudentDialog } from '../student-dialog/student-dialog';
+import { CenterService } from '../service/center-service';
 
 @Component({
   selector: 'app-students',
@@ -12,18 +13,33 @@ import { StudentDialog } from '../student-dialog/student-dialog';
 })
 export class Students {
   public studentsArray: any = [];
+  public userDetails: any;
+  public centersList: any[] = [];
+  public selectedCenter: string = 'all';
+
+
   constructor(
     public dialog: MatDialog,
     public studentService: StudentService,
     public snackbar: MatSnackBar,
+    public centerService: CenterService
   ) { }
 
   ngOnInit() {
-    this.getStudents();
+    let userData = JSON.parse(localStorage.getItem('userData') || '{}');
+    this.userDetails = userData;
+    if (this.userDetails.user_id) {
+      this.getStudents(this.userDetails);
+      this.getAllCenters();
+    }
   }
 
-  getStudents() {
-    this.studentService.getStudents().subscribe((response) => {
+  getStudents(user_details: any) {
+    const obj = {
+      center_id: this.selectedCenter == 'all' ? 'all' : this.selectedCenter,
+      user_id: user_details.user_id,
+    };
+    this.studentService.getStudents(obj).subscribe((response) => {
       console.log('Students fetched successfully', response);
       this.studentsArray = response.data;
     });
@@ -49,11 +65,25 @@ export class Students {
               panelClass: ['snackbar-error'],
             });
           }
-          this.getStudents();
+          this.getStudents(this.userDetails);
         });
       }
       console.log('The dialog was closed', result);
     });
     // Logic to add a new student
+  }
+
+  public getAllCenters() {
+    this.centerService.getCenters().subscribe((response: any) => {
+      console.log(response);
+      if (response.status === 'success') {
+        this.centersList = response.data;
+      }
+    });
+  }
+
+  onCenterChange() {
+    console.log(this.selectedCenter);
+    this.getStudents(this.userDetails);
   }
 }

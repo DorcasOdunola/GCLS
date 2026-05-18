@@ -39,7 +39,7 @@ Route::post('/get_all_lessons_for_student', [LessonController::class, 'getAllLes
 Route::post('/lesson_section', [LessonController::class, 'getLessonSection']);
 Route::post('/end_lesson', [LessonController::class, 'endLesson']);
 Route::post('/add_student', [StudentController::class, 'addStudent']);
-Route::get('/students', [StudentController::class, 'getStudents']);
+Route::post('/students', [StudentController::class, 'getStudents']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/auth_admin', [AuthController::class, 'authAdmin']);
 Route::post('/create_quiz', [QuizController::class, 'createQuiz']);
