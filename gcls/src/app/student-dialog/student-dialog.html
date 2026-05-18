@@ -30,7 +30,8 @@
     <div class="row">
       <mat-form-field appearance="outline" class="col-12 col-md-6">
         <mat-select formControlName="center_id" placeholder="Select Center">
-          <mat-option *ngFor="let center of centersList" [value]="center.id">
+          <mat-option value=0 disabled>Select Center</mat-option>
+          <mat-option *ngFor="let center of centersList" [value]="center.center_id">
             {{ center.center_name }}
           </mat-option>
         </mat-select>
