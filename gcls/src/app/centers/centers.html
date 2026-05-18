@@ -1,0 +1,79 @@
+<div class="container-fluid centers-page py-4">
+
+    <div class="row mb-4">
+        <div
+            class="col-11 col-lg-10 mx-auto header-card shadow-sm d-flex justify-content-between align-items-center p-3">
+            <h4 class="mb-0 fw-bold text-dark d-inline-flex align-items-center">
+                <mat-icon class="me-2 text-primary">hub</mat-icon>
+                <span>Centers Management</span>
+            </h4>
+            <mat-icon class="header-hand">front_hand</mat-icon>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-11 col-lg-10 mx-auto">
+            <div class="row g-4">
+
+                <div class="col-md-5">
+                    <div class="form-card shadow-sm p-4 bg-white rounded h-100">
+                        <h5 class="fw-bold mb-3 text-secondary d-inline-flex align-items-center">
+                            <mat-icon class="me-2 text-success">add_circle</mat-icon>
+                            <span>Create New Center</span>
+                        </h5>
+
+                        <hr class="mb-4">
+
+                        <div class="mb-3">
+                            <label for="cName" class="form-label fw-semibold text-muted small">CENTER NAME</label>
+                            <input type="text" id="cName" class="form-control custom-input"
+                                placeholder="e.g., Port Harcourt Branch" [(ngModel)]="centerName" name="centerName">
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="cCode" class="form-label fw-semibold text-muted small">CENTER CODE NAME</label>
+                            <input type="text" id="cCode" class="form-control custom-input" placeholder="e.g., PHC-03"
+                                [(ngModel)]="centerCode" name="centerCode">
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="button"
+                                class="btn submit-btn d-inline-flex align-items-center justify-content-center"
+                                (click)="createCenter()">
+                                <span>Create Center</span>
+                                <mat-icon>check_circle</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-7">
+                    <div class="list-card shadow-sm p-4 bg-white rounded h-100">
+                        <h5 class="fw-bold mb-3 text-secondary d-inline-flex align-items-center">
+                            <mat-icon class="me-2 text-purple">list_alt</mat-icon>
+                            <span>All Registered Centers</span>
+                        </h5>
+
+                        <hr class="mb-4">
+
+                        <div *ngIf="centersList.length === 0"
+                            class="info-alert p-3 mb-2 rounded d-flex align-items-center">
+                            <mat-icon class="me-2">info_outline</mat-icon>
+                            <span>No centers have been registered yet.</span>
+                        </div>
+
+                        <div class="d-flex flex-column gap-3 overflow-auto" style="max-height: 400px;">
+                            <div *ngFor="let center of centersList" class="center-display-wrapper shadow-sm">
+                                <span class="center-badge">{{ center.code_name }}</span>
+                                <span class="center-text fw-semibold text-dark">{{ center.center_name }}</span>
+                                <mat-icon class="ms-auto text-muted icon-status">domain</mat-icon>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

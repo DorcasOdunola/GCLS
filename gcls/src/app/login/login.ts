@@ -12,7 +12,7 @@ export class Login {
   constructor(
     public authService: AuthService,
     public router: Router,
-  ) {}
+  ) { }
 
   public email: string = '';
   public password: string = '';
@@ -33,6 +33,8 @@ export class Login {
         this.router.navigate(['/admin/lesson']);
       } else if (response.status === 'success' && response.data.user_type === 1) {
         this.router.navigate(['/student/lesson']);
+      } else if (response.status === 'success' && response.data.user_type === 2) {
+        this.router.navigate(['/admin/lesson']);
       } else {
         this.incorrect = 'Incorrect email or password.';
       }

@@ -16,7 +16,7 @@ export class Students {
     public dialog: MatDialog,
     public studentService: StudentService,
     public snackbar: MatSnackBar,
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.getStudents();
@@ -31,8 +31,8 @@ export class Students {
 
   addStudent() {
     let dialogRef = this.dialog.open(StudentDialog, {
-      height: '420px',
-      width: '1000px',
+      height: '500px',
+      width: '700px',
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {

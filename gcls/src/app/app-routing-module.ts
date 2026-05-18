@@ -14,6 +14,7 @@ import { StudentQuiz } from './student-quiz/student-quiz';
 import { StudentTakeQuiz } from './student-take-quiz/student-take-quiz';
 import { ReviewQuiz } from './review-quiz/review-quiz';
 import { Leaderboard } from './leaderboard/leaderboard';
+import { Centers } from './centers/centers';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -32,6 +33,7 @@ const routes: Routes = [
       { path: 'quiz-setup', component: QuizSetup },
       { path: 'quiz-setup/:quiz_id', component: QuizSetup },
       { path: 'leaderboard', component: Leaderboard },
+      { path: 'centers', component: Centers },
     ],
   },
   {
@@ -57,4 +59,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

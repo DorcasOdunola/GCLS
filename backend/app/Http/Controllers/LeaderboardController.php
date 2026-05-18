@@ -22,7 +22,7 @@ class LeaderboardController extends Controller
 
             $lessonsCompleted = DB::table('student_lesson_tb')
                 ->where('user_id', $user->user_id)
-                ->where('status', 2)
+                ->where('status', [2,3])
                 ->distinct('lesson_id')
                 ->count('lesson_id');
 

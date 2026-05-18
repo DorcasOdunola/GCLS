@@ -24,6 +24,15 @@ export class SideNavComponent {
     { name: 'Quiz', route: '/admin/quiz', icon: 'quiz' },
     { name: 'Leaderboard', route: '/admin/leaderboard', icon: 'leaderboard' },
   ];
+
+  public superAdminNavItems = [
+    // { name: 'Dashboard', route: '/admin/dashboard', icon: 'dashboard' },
+    { name: 'Students', route: '/admin/students', icon: 'school' },
+    { name: 'Lessons', route: '/admin/lesson', icon: 'library_add' },
+    { name: 'Quiz', route: '/admin/quiz', icon: 'quiz' },
+    { name: 'Leaderboard', route: '/admin/leaderboard', icon: 'leaderboard' },
+    { name: 'Centers', route: '/admin/centers', icon: 'location_city' }
+  ];
   public studentNavItems = [
     // { name: 'Dashboard', route: '/student/dashboard', icon: 'dashboard' },
     { name: 'Lessons', route: '/student/lesson', icon: 'library_add' },
@@ -41,6 +50,8 @@ export class SideNavComponent {
         this.navItems = this.studentNavItems;
       } else if (user.user_type === 0) {
         this.navItems = this.adminNavItems;
+      } else if (user.user_type === 2) {
+        this.navItems = this.superAdminNavItems;
       }
     }
     // this.navItems = this.adminNavItems;

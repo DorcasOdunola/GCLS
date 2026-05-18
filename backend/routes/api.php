@@ -10,7 +10,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\QuizController;
-
+use App\Http\Controllers\CenterController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -55,3 +55,5 @@ Route::post('/get_student_quiz_questions', [QuizController::class, 'getStudentQu
 Route::post('/save_student_question_answers', [QuizController::class, 'saveStudentQuestionAnswers']);
 Route::post('/submit_quiz', [QuizController::class, 'submitQuiz']);
 Route::get('/leaderboard', [App\Http\Controllers\LeaderboardController::class, 'getLeaderboard']);
+Route::post('/add_center', [CenterController::class, 'addCenter']);
+Route::get('/get_centers', [CenterController::class, 'getCenters']);

@@ -28,6 +28,15 @@
       </mat-form-field>
     </div>
     <div class="row">
+      <mat-form-field appearance="outline" class="col-12 col-md-6">
+        <mat-select formControlName="center_id" placeholder="Select Center">
+          <mat-option *ngFor="let center of centersList" [value]="center.id">
+            {{ center.center_name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="row">
       <div class="col-12 text-end">
         <button matButton color="primary" (click)="saveStudent()">Save Student</button>
       </div>
