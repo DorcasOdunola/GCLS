@@ -12,7 +12,7 @@ export class Login {
   constructor(
     public authService: AuthService,
     public router: Router,
-  ) { }
+  ) {}
 
   public email: string = '';
   public password: string = '';
@@ -25,20 +25,26 @@ export class Login {
       password: this.password,
     };
 
-    this.authService.login(obj).subscribe((response) => {
-      console.log('Login response:', response);
-      localStorage.setItem('userData', JSON.stringify(response.data));
-      // user-type: 0 - admin 1 - student
-      if (response.status === 'success' && response.data.user_type === 0) {
-        this.router.navigate(['/admin/lesson']);
-      } else if (response.status === 'success' && response.data.user_type === 1) {
-        this.router.navigate(['/student/lesson']);
-      } else if (response.status === 'success' && response.data.user_type === 2) {
-        this.router.navigate(['/admin/lesson']);
-      } else {
+    this.authService.login(obj).subscribe(
+      (response) => {
+        console.log('Login response:', response);
+        localStorage.setItem('userData', JSON.stringify(response.data));
+        // user-type: 0 - admin 1 - student
+        if (response.status === 'success' && response.data.user_type === 0) {
+          this.router.navigate(['/admin/lesson']);
+        } else if (response.status === 'success' && response.data.user_type === 1) {
+          this.router.navigate(['/student/lesson']);
+        } else if (response.status === 'success' && response.data.user_type === 2) {
+          this.router.navigate(['/admin/lesson']);
+        } else {
+          this.incorrect = 'Incorrect email or password.';
+        }
+        // Handle successful login.
+      },
+      (error) => {
+        console.error('Login error:', error);
         this.incorrect = 'Incorrect email or password.';
-      }
-      // Handle successful login.
-    });
+      },
+    );
   }
 }

@@ -58,7 +58,9 @@
               [(ngModel)]="password"
             />
           </mat-form-field>
-          <p class="text-danger text-center">{{ incorrect }}</p>
+          <p class="text-danger text-center" style="font-size: 1.25rem" *ngIf="incorrect">
+            <b>{{ incorrect }}</b>
+          </p>
           <div class="row mx-auto justify-content-center mb-3">
             <button mat-raised-button color="primary" (click)="login()">Login</button>
           </div>
