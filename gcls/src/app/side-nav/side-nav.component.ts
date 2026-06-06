@@ -31,7 +31,7 @@ export class SideNavComponent {
     { name: 'Lessons', route: '/admin/lesson', icon: 'library_add' },
     { name: 'Quiz', route: '/admin/quiz', icon: 'quiz' },
     { name: 'Leaderboard', route: '/admin/leaderboard', icon: 'leaderboard' },
-    { name: 'Centers', route: '/admin/centers', icon: 'location_city' }
+    { name: 'Centers', route: '/admin/centers', icon: 'location_city' },
   ];
   public studentNavItems = [
     // { name: 'Dashboard', route: '/student/dashboard', icon: 'dashboard' },
@@ -55,5 +55,9 @@ export class SideNavComponent {
       }
     }
     // this.navItems = this.adminNavItems;
+  }
+
+  logout() {
+    localStorage.removeItem('userData');
   }
 }

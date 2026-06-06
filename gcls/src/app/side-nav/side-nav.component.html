@@ -23,6 +23,17 @@
         >
         <span class="mx-3">{{ navItem.name }}</span>
       </a>
+      <a
+        mat-list-item
+        routerLink="/login"
+        routerLinkActive="active"
+        class="list-item rounded-2 mb-3"
+        (click)="logout()"
+      >
+        <!-- <span><i class="fa-solid fa-grip fs-4"></i></span> -->
+        <span><mat-icon>logout</mat-icon></span>
+        <span class="mx-3">Logout</span>
+      </a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
