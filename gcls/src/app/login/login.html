@@ -34,6 +34,7 @@
 <div class="container-fluid bg-light p-2" style="height: 100vh">
   <div class="row w-100 mt-md-5 mx-auto">
     <div class="col-12 col-md-4 mx-auto p-1 mt-5 mb-5 mb-md-0 p-md-5">
+      <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
       <div class="bg-white mx-auto shadow-sm" style="height: 60vh">
         <p class="display-4 text-center pt-3">DGCLS</p>
         <p class="h5 initialism text-center">Login</p>

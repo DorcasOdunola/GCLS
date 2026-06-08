@@ -17,9 +17,11 @@ export class Login {
   public email: string = '';
   public password: string = '';
   public incorrect: string = '';
+  public loading: boolean = false;
 
   login() {
     // Logic to handle login
+    this.loading = true;
     let obj = {
       email: this.email,
       password: this.password,
@@ -39,11 +41,13 @@ export class Login {
         } else {
           this.incorrect = 'Incorrect email or password.';
         }
+        this.loading = false;
         // Handle successful login.
       },
       (error) => {
         console.error('Login error:', error);
-        this.incorrect = 'Incorrect email or password.';
+        this.incorrect = 'An error occurred.';
+        this.loading = false;
       },
     );
   }
