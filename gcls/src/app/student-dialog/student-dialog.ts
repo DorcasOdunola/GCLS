@@ -22,8 +22,8 @@ export class StudentDialog {
       first_name: [''],
       last_name: [''],
       email: [''],
-      phone: [''],
-      address: [''],
+      phone: ['000'],
+      address: ['Aba'],
       password: [''],
       center_id: [null],
       user_type: [1], // 1 represents 'student'

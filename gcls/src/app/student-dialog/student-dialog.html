@@ -5,10 +5,10 @@
   <form [formGroup]="userForm">
     <div class="row">
       <mat-form-field appearance="outline" class="col-12 col-md-6">
-        <input matInput formControlName="first_name" placeholder="First Name" />
+        <input matInput formControlName="last_name" placeholder="Last Name" />
       </mat-form-field>
       <mat-form-field appearance="outline" class="col-12 col-md-6">
-        <input matInput formControlName="last_name" placeholder="Last Name" />
+        <input matInput formControlName="first_name" placeholder="First Name" />
       </mat-form-field>
     </div>
     <div class="row">
@@ -24,13 +24,13 @@
         <input matInput formControlName="email" placeholder="Email" />
       </mat-form-field>
       <mat-form-field appearance="outline" class="col-12 col-md-6">
-        <input matInput formControlName="password" placeholder="Password" type="password" />
+        <input matInput formControlName="password" placeholder="Password" type="" />
       </mat-form-field>
     </div>
     <div class="row">
       <mat-form-field appearance="outline" class="col-12 col-md-6">
         <mat-select formControlName="center_id" placeholder="Select Center">
-          <mat-option value=0 disabled>Select Center</mat-option>
+          <mat-option value="0" disabled>Select Center</mat-option>
           <mat-option *ngFor="let center of centersList" [value]="center.center_id">
             {{ center.center_name }}
           </mat-option>

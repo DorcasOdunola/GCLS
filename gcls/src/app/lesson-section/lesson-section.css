@@ -62,6 +62,31 @@
 .lesson-html-content {
   line-height: 1.7;
   font-size: 16px;
+  /* Add these properties below to handle layout clipping */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+/* If you have images, math containers, or pre tags inside the rich text, 
+   ensure they scale and do not push past 100% width */
+.lesson-html-content img,
+.lesson-html-content table,
+.lesson-html-content div {
+  max-width: 100% !important;
+  height: auto;
+}
+
+/* If you want an overflow container for elements that absolutely cannot break (like large math expressions) */
+.lesson-html-content .math-container,
+.lesson-html-content pre {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.lesson-html-content {
+  line-height: 1.7;
+  font-size: 16px;
 }
 
 .lesson-html-content p {
