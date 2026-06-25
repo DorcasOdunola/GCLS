@@ -52,12 +52,22 @@
           <mat-form-field class="w-100" appearance="outline">
             <mat-label>Password</mat-label>
             <input
-              type="password"
+              [type]="hidePassword ? 'password' : 'text'"
               name="password"
               matInput
               placeholder="password"
               [(ngModel)]="password"
             />
+            <button
+              type="button"
+              mat-icon-button
+              matSuffix
+              (click)="hidePassword = !hidePassword"
+              [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hidePassword"
+            >
+              <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
           </mat-form-field>
           <p class="text-danger text-center" style="font-size: 1.25rem" *ngIf="incorrect">
             <b>{{ incorrect }}</b>

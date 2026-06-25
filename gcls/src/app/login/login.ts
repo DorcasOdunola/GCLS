@@ -18,6 +18,7 @@ export class Login {
   public password: string = '';
   public incorrect: string = '';
   public loading: boolean = false;
+  public hidePassword: boolean = true;
 
   login() {
     // Logic to handle login
@@ -46,7 +47,13 @@ export class Login {
       },
       (error) => {
         console.error('Login error:', error);
-        this.incorrect = 'An error occurred.';
+        if (error.status === 401) {
+          // Specifically catch the invalid credentials
+          this.incorrect = 'Incorrect email or password.';
+        } else {
+          // True server errors (500), network timeouts, etc.
+          this.incorrect = 'An error occurred on the server. Please try again later.';
+        }
         this.loading = false;
       },
     );

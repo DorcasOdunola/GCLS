@@ -44,6 +44,7 @@ export class StudentDialog {
   }
   saveStudent() {
     // Logic to save student details
+    // console.log('Student Details:', this.userForm.value);
     this.dialogRef.close(this.userForm.value);
   }
 }
