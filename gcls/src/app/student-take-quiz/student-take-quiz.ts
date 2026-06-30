@@ -21,6 +21,8 @@ export class StudentTakeQuiz {
   public getUserDetails: any;
   public quizAttemptDetails: any;
   public isLoading: boolean = true;
+  public isSubmitting: boolean = false;
+  public activeSaveRequestsCount: number = 0;
 
   constructor(
     public quizService: QuizService,
@@ -117,42 +119,67 @@ export class StudentTakeQuiz {
       (q) => q.quiz_question_id === question.quiz_question_id,
     );
     this.quizQuestionsArray[qIndex].selected_option = letter;
+
+    this.activeSaveRequestsCount++;
+
     this.quizService
       .saveStudentQuestionAnswers({
         quiz_answer_id: question.quiz_answer_id,
         selected_option: letter,
       })
-      .subscribe((response) => {});
+      .subscribe({
+        next: (response) => {
+          // Decrement when done
+          this.activeSaveRequestsCount--;
+        },
+        error: (err) => {
+          this.activeSaveRequestsCount--;
+        },
+      });
   }
 
   submitQuiz() {
+    // prevent double clicks
+    if (this.isSubmitting) return;
+
+    // 2. Prevent submission if an answer is still saving in the background
+    if (this.activeSaveRequestsCount > 0) {
+      this.snackBar.open('Please wait, saving your final answers...', 'Close', {
+        duration: 2000,
+        panelClass: ['snackbar-warning'],
+      });
+      return;
+    }
+    this.isSubmitting = true;
     this.quizService
       .submitQuiz({ quiz_attempt_id: this.quizAttemptDetails.quiz_attempt_id })
-      .subscribe((response) => {
-        if (response.status === 'success') {
-          let dialog = this.dialog.open(QuizDialog, {
-            data: { quizResult: response.data, status: 'view_result' },
-            // height: '400px',
-            // width: '600px',
-          });
-          dialog.afterClosed().subscribe((feedback) => {
-            console.log('Dialog closed with feedback:', feedback);
-            if (!feedback) {
-              this.router.navigate(['/student/lesson']);
-            }
-          });
-          // this.snackBar.open('Quiz submitted successfully!', 'Close', {
-          //   duration: 3000,
-          //   panelClass: ['snackbar-success'],
-          // });
-          // Logic to show quiz results can be added here
-        } else {
-          this.snackBar.open('Error submitting quiz.', 'Close', {
+      .subscribe({
+        next: (response) => {
+          this.isSubmitting = false; // Reset flag
+
+          if (response.status === 'success') {
+            let dialog = this.dialog.open(QuizDialog, {
+              data: { quizResult: response.data, status: 'view_result' },
+            });
+            dialog.afterClosed().subscribe((feedback) => {
+              if (!feedback) {
+                this.router.navigate(['/student/lesson']);
+              }
+            });
+          } else {
+            this.snackBar.open('Error submitting quiz.', 'Close', {
+              duration: 3000,
+              panelClass: ['snackbar-error'],
+            });
+          }
+        },
+        error: (err) => {
+          this.isSubmitting = false; // Reset flag on server error
+          this.snackBar.open('Server error submitting quiz.', 'Close', {
             duration: 3000,
             panelClass: ['snackbar-error'],
           });
-          // Handle error case for submitting quiz
-        }
+        },
       });
     // Logic to submit the quiz and show results
   }

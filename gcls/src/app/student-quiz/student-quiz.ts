@@ -57,7 +57,7 @@ export class StudentQuiz {
     }
 
     // 2. No attempt yet
-    if (quiz.attempt_status === 'not_started') {
+    if (quiz.attempt_status === 'not_started' || quiz.attempt_status === 'in_progress') {
       return {
         action: 'start',
         label: 'Open',

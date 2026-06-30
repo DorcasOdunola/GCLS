@@ -144,8 +144,9 @@
                   type="button"
                   class="btn btn-success custom-btn submit-btn"
                   (click)="submitQuiz()"
+                  [disabled]="isSubmitting || activeSaveRequestsCount > 0"
                 >
-                  Submit <mat-icon>done_all</mat-icon>
+                  {{ isSubmitting ? 'Submitting...' : 'Submit Quiz' }}<mat-icon>done_all</mat-icon>
                 </button>
               </div>
             </div>

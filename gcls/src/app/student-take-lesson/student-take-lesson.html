@@ -64,9 +64,10 @@
               <button
                 class="btn btn-outline-primary fw-bold px-4"
                 (click)="endLesson()"
+                [disabled]="isSubmitting"
                 *ngIf="i === lessonSections.length - 1"
               >
-                END
+                {{ isSubmitting ? 'Completing Lesson...' : 'Finish Lesson' }}
               </button>
             </div>
           </div>

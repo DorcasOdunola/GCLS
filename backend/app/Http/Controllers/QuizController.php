@@ -395,142 +395,122 @@ class QuizController extends Controller
     }
 
     public function submitQuiz (Request $request) {
-        //
-        $answers = DB::table('quiz_answer_tb')
-            ->join('quiz_question', 'quiz_answer_tb.quiz_question_id', '=', 'quiz_question.quiz_question_id')
-            ->where('quiz_answer_tb.quiz_attempt_id', $request->quiz_attempt_id)
-            ->select('quiz_answer_tb.selected_option', 'quiz_question.correct_option')
-            ->get();
-        $correctCount = $answers->filter(function ($answer) {
-            return $answer->selected_option == $answer->correct_option;
-        })->count();
+        // 1. Wrap the entire operation in a DB transaction
+        return DB::transaction(function () use ($request) {
+            
+            // 2. Add lockForUpdate() to secure the rows while calculating
+            $answers = DB::table('quiz_answer_tb')
+                ->join('quiz_question', 'quiz_answer_tb.quiz_question_id', '=', 'quiz_question.quiz_question_id')
+                ->where('quiz_answer_tb.quiz_attempt_id', $request->quiz_attempt_id)
+                ->select('quiz_answer_tb.selected_option', 'quiz_question.correct_option')
+                ->lockForUpdate() 
+                ->get();
 
-        $totalQuestions = $answers->count();
-        $incorrectCount = $totalQuestions - $correctCount;
+            $correctCount = $answers->filter(function ($answer) {
+                return $answer->selected_option == $answer->correct_option;
+            })->count();
 
-        $percentage = $totalQuestions > 0 ? round(($correctCount / $totalQuestions) * 100, 2): 0;
-        $passMark = 50;
+            $totalQuestions = $answers->count();
+            $incorrectCount = $totalQuestions - $correctCount;
 
-        $result_status = $percentage >= $passMark ? 'passed' : 'failed';
+            $percentage = $totalQuestions > 0 ? round(($correctCount / $totalQuestions) * 100, 2): 0;
+            $passMark = 50;
+            $result_status = $percentage >= $passMark ? 'passed' : 'failed';
 
+            DB::table('quiz_attempt_tb')
+                ->where('quiz_attempt_id', $request->quiz_attempt_id)
+                ->update([
+                    'correct_count' => $correctCount,
+                    'incorrect_count' => $incorrectCount,
+                    'total_questions' => $totalQuestions,
+                    'percentage' => $percentage,
+                    'status' => 1, 
+                    'result_status' => $result_status,
+                    'submitted_at' => now()
+                ]);
 
-        DB::table('quiz_attempt_tb')
-        ->where('quiz_attempt_id', $request->quiz_attempt_id)
-        ->update([
-            'correct_count' => $correctCount,
-            'incorrect_count' => $incorrectCount,
-            'total_questions' => $totalQuestions,
-            'percentage' => $percentage,
-            'status' => 1, // Mark as completed
-            'result_status' => $result_status,
-            'submitted_at' => now()
-        ]);
-
-        $attempt = DB::table('quiz_attempt_tb')
-        ->where('quiz_attempt_id', $request->quiz_attempt_id)
-        ->first();
-
-        $attemptNumber = $attempt->attempt_number ?? 1;
-        if (!$attempt) {
-        return response()->json([
-            "status" => "error",
-            "message" => "Invalid quiz attempt"
-        ], 400);
-}
-        // Get lesson_id
-        $quiz = DB::table('quiz_tb')
-            ->where('quiz_id', $attempt->quiz_id)
-            ->first();
-
-        if (!$quiz) {
-            return response()->json([
-                "status" => "error",
-                "message" => "Quiz not found"
-            ], 404);
-        }
-
-        $lessonId = $quiz->lesson_id;
-        $userId = $attempt->user_id;
-
-        // Update lesson status if passed
-        if ($percentage >= $passMark) {
-            DB::table('student_lesson_tb')->updateOrInsert(
-                [
-                    'user_id' => $userId,
-                    'lesson_id' => $lessonId
-                ],
-                [
-                    'status' => 3
-                ]
-            );
-
-            // Get next lesson
-            $nextLesson = DB::table('lesson_tb')
-                ->where('lesson_id', '>', $lessonId)
-                ->orderBy('lesson_id', 'asc')
+            $attempt = DB::table('quiz_attempt_tb')
+                ->where('quiz_attempt_id', $request->quiz_attempt_id)
                 ->first();
 
-            // Unlock next lesson
-            if ($nextLesson) {
-                DB::table('student_lesson_tb')->updateOrInsert(
-                    [
-                        'user_id' => $userId,
-                        'lesson_id' => $nextLesson->lesson_id
-                    ],
-                    [
-                        'status' => 1 // unlocked (In-progress)
-                    ]
-                );
+            if (!$attempt) {
+                return response()->json(["status" => "error", "message" => "Invalid quiz attempt"], 400);
             }
-        }
 
-        $points = 0;
-        $earnedBadges = [];
+            $attemptNumber = $attempt->attempt_number ?? 1;
+            $quiz = DB::table('quiz_tb')->where('quiz_id', $attempt->quiz_id)->first();
 
-        if ($percentage >= 70) {
-            $points = 5;
-            $badge = $this->awardBadge($userId, 'High Achiever');
-            if ($badge) $earnedBadges[] = $badge;
-        } elseif ($percentage >= 50) {
-            $points = 3;
-        }
+            if (!$quiz) {
+                return response()->json(["status" => "error", "message" => "Quiz not found"], 404);
+            }
 
-        if ($points > 0) {
-            $this->addPoints($userId, $points, 'quiz');
-        }
+            $lessonId = $quiz->lesson_id;
+            $userId = $attempt->user_id;
 
+            if ($percentage >= $passMark) {
+                DB::table('student_lesson_tb')->updateOrInsert(
+                    ['user_id' => $userId, 'lesson_id' => $lessonId],
+                    ['status' => 3]
+                );
 
-        // First quiz badge
-        // 0 - in progress 1 - Completed
-        $quizCount = DB::table('quiz_attempt_tb')
-            ->where('user_id', $userId)
-            ->where('status', 1)
-            ->count();
-        if ($quizCount >= 1) {
-            $badge = $this->awardBadge($userId, 'Quiz Taker');
-            if ($badge) $earnedBadges[] = $badge;
-        }
+                $nextLesson = DB::table('lesson_tb')
+                    ->where('lesson_id', '>', $lessonId)
+                    ->orderBy('lesson_id', 'asc')
+                    ->first();
 
-        return response()->json([
-            "status" => "success",
-            "data" => [
-                "correct_count" => $correctCount,
-                "total_questions" => $totalQuestions,
-                "incorrect_count" => $incorrectCount,
-                "percentage" => $percentage,
-                "attempt_number" => $attemptNumber,
-                "result" => $result_status,
-                "maxAttempts" => 2,
-                "quiz_id" => $attempt->quiz_id,
-                "badges_earned" => $earnedBadges,
-                "points_earned" => $points
+                if ($nextLesson) {
+                    DB::table('student_lesson_tb')->updateOrInsert(
+                        ['user_id' => $userId, 'lesson_id' => $nextLesson->lesson_id],
+                        ['status' => 1]
+                    );
+                }
+            }
 
-            ]
-        ]);
-            
+            $points = 0;
+            $earnedBadges = [];
+
+            if ($percentage >= 70) {
+                $points = 5;
+                $badge = $this->awardBadge($userId, 'High Achiever');
+                if ($badge) $earnedBadges[] = $badge;
+            } elseif ($percentage >= 50) {
+                $points = 3;
+            }
+
+            if ($points > 0) {
+                $this->addPoints($userId, $points, 'quiz');
+            }
+
+            $quizCount = DB::table('quiz_attempt_tb')
+                ->where('user_id', $userId)
+                ->where('status', 1)
+                ->count();
+                
+            if ($quizCount >= 1) {
+                $badge = $this->awardBadge($userId, 'Quiz Taker');
+                if ($badge) $earnedBadges[] = $badge;
+            }
+
+            // Return the response inside the transaction closure
+            return response()->json([
+                "status" => "success",
+                "data" => [
+                    "correct_count" => $correctCount,
+                    "total_questions" => $totalQuestions,
+                    "incorrect_count" => $incorrectCount,
+                    "percentage" => $percentage,
+                    "attempt_number" => $attemptNumber,
+                    "result" => $result_status,
+                    "maxAttempts" => 2,
+                    "quiz_id" => $attempt->quiz_id,
+                    "badges_earned" => $earnedBadges,
+                    "points_earned" => $points
+                ]
+            ]);
+        });
     }
 
-        public function addPoints($userId, $points, $type) {
+    public function addPoints($userId, $points, $type) {
         DB::table('student_points_tb')->insert([
             'user_id' => $userId,
             'points' => $points,

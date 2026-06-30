@@ -17,12 +17,14 @@ export class StudentTakeLesson {
     public dialog: MatDialog,
     public router: Router,
   ) {}
+
   public lesson_id: string | null = null;
   step = signal(0);
   public lessonSections: any[] = [];
   public lessonData: any = {};
   public isLoading: boolean = true;
   public getUserDetails: any;
+  public isSubmitting: boolean = false; // <--- Added flag to prevent double clicks
 
   setStep(index: number) {
     this.step.set(index);
@@ -42,7 +44,6 @@ export class StudentTakeLesson {
     this.lessonService.getLesson({ lesson_id: this.lesson_id }).subscribe((response: any) => {
       if (response.status === 'success') {
         this.getLessonSection();
-        // Handle the lesson data if needed
         this.lessonData = response.data;
       }
     });
@@ -51,11 +52,9 @@ export class StudentTakeLesson {
   }
 
   getLessonSection() {
-    // Use this.lesson_id to fetch lesson section data
     let obj = { lesson_id: this.lesson_id };
     this.lessonService.getLessonSection(obj).subscribe((response: any) => {
       if (response.status === 'success') {
-        // Handle the lesson section data
         this.isLoading = false;
         this.lessonSections = response.data;
         this.lessonSections.map((section, i) => {
@@ -70,25 +69,41 @@ export class StudentTakeLesson {
   }
 
   endLesson() {
+    // 1. Prevent execution if already submitting
+    if (this.isSubmitting) return;
+
+    // 2. Set submitting state to true
+    this.isSubmitting = true;
+
     let obj = {
       lesson_id: this.lesson_id,
       user_id: this.getUserDetails.user_id,
     };
-    this.lessonService.endLesson(obj).subscribe((response: any) => {
-      console.log('End lesson response:', response);
-      if (response.status === 'success') {
-        // Handle the end lesson response
-        let dialog = this.dialog.open(LessonDialog, {
-          data: { lesson_data: this.lessonData, lesson_response: response.data },
-        });
-        dialog.afterClosed().subscribe((result) => {
-          // Handle any actions after the dialog is closed
-          if (!result) {
-            // Do something if the dialog is closed without a result
-            this.router.navigate(['/student/lesson']);
-          }
-        });
-      }
+
+    this.lessonService.endLesson(obj).subscribe({
+      next: (response: any) => {
+        console.log('End lesson response:', response);
+        if (response.status === 'success') {
+          let dialog = this.dialog.open(LessonDialog, {
+            data: { lesson_data: this.lessonData, lesson_response: response.data },
+          });
+          dialog.afterClosed().subscribe((result) => {
+            // Reset state upon routing away or closing
+            this.isSubmitting = false;
+            if (!result) {
+              this.router.navigate(['/student/lesson']);
+            }
+          });
+        } else {
+          // Reset state if server sends an error status so they can retry
+          this.isSubmitting = false;
+        }
+      },
+      error: (err) => {
+        // Reset state on HTTP network failures
+        this.isSubmitting = false;
+        console.error('Error ending lesson:', err);
+      },
     });
   }
 }
