@@ -1,0 +1,108 @@
+<div class="container mt-4">
+  <!-- Summary Cards -->
+  <div class="row mb-4">
+    <div class="col-md-3 mb-3">
+      <div class="card">
+        <div class="card-body text-center">
+          <h3>{{ summary.total_students || 0 }}</h3>
+          <small>Total Attempts</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+      <div class="card">
+        <div class="card-body text-center">
+          <h3>{{ summary.average_score || 0 }}%</h3>
+          <small>Average Score</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+      <div class="card">
+        <div class="card-body text-center">
+          <h3>{{ summary.passed_students || 0 }}</h3>
+          <small>Passed</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+      <div class="card">
+        <div class="card-body text-center">
+          <h3>{{ summary.failed_students || 0 }}</h3>
+          <small>Failed</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="card">
+    <div class="card-header">
+      <h5 class="mb-0">Lesson Performance</h5>
+    </div>
+
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Student</th>
+              <th>Attempt</th>
+              <th>Performance</th>
+              <th>Score</th>
+              <th>Result</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let student of lessonScores; let i = index">
+              <td>{{ i + 1 }}</td>
+
+              <td>
+                {{ student.first_name }}
+                {{ student.last_name }}
+              </td>
+
+              <td>Attempt {{ student.attempt_number }}</td>
+
+              <td>
+                <strong> {{ student.correct_count }}/{{ student.total_questions }} </strong>
+
+                <small class="d-block text-muted"> {{ student.incorrect_count }} wrong </small>
+              </td>
+
+              <td>
+                <span class="score-badge"> {{ student.percentage }}% </span>
+              </td>
+
+              <td>
+                <span
+                  class="badge"
+                  [ngClass]="{
+                    'bg-success': student.result_status === 'passed',
+                    'bg-danger': student.result_status === 'failed',
+                  }"
+                >
+                  {{ student.result_status | titlecase }}
+                </span>
+              </td>
+
+              <td>
+                {{ student.submitted_at | date: 'medium' }}
+              </td>
+            </tr>
+
+            <tr *ngIf="lessonScores.length === 0">
+              <td colspan="7" class="text-center">No records found</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

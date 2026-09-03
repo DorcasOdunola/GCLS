@@ -58,3 +58,4 @@ Route::post('/submit_quiz', [QuizController::class, 'submitQuiz']);
 Route::post('/leaderboard', [LeaderboardController::class, 'getLeaderboard']);
 Route::post('/add_center', [CenterController::class, 'addCenter']);
 Route::get('/get_centers', [CenterController::class, 'getCenters']);
+Route::post('/lesson-scores', [LessonController::class, 'getLessonScores']);

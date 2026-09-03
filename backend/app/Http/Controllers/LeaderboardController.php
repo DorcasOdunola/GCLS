@@ -25,17 +25,16 @@ class LeaderboardController extends Controller
             ->select(
                 'users.user_id',
                 'users.first_name',
+                'users.last_name', // <--- FIX 1: Select last name
                 'centers_tb.center_name',
                 'centers_tb.code_name'
             )
             ->where('users.user_type', 1);
 
         if ($currentUser->user_type == 2) {
-
             if ($request->filled('center_id') && $request->center_id != 'all') {
                 $usersQuery->where('users.center_id', $request->center_id);
             }
-
         } else {
             $usersQuery->where('users.center_id', $currentUser->center_id);
         }
@@ -54,24 +53,32 @@ class LeaderboardController extends Controller
                 ->distinct('lesson_id')
                 ->count('lesson_id');
 
-            $avgScore = DB::table('quiz_attempt_tb')
+            // FIX 2: Instead of averaging everything blindly, 
+            // group by quiz_id to isolate the HIGHEST percentage for each unique quiz
+            $bestQuizScores = DB::table('quiz_attempt_tb')
+                ->select('quiz_id', DB::raw('MAX(percentage) as best_percentage'))
                 ->where('user_id', $user->user_id)
                 ->where('status', 1)
-                ->avg('percentage') ?? 0;
+                ->groupBy('quiz_id')
+                ->get();
+
+            // Calculate the average using only their best scores
+            $avgScore = $bestQuizScores->count() > 0 
+                ? $bestQuizScores->avg('best_percentage') 
+                : 0;
 
             $badges = DB::table('student_badges_tb')
                 ->where('user_id', $user->user_id)
                 ->count();
-
             $score =
-                ($points * 1) +
-                ($lessonsCompleted * 5) +
+                $points +
                 ($avgScore * 0.5) +
                 ($badges * 10);
 
             return [
                 "user_id" => $user->user_id,
-                "name" => $user->first_name,
+                "first_name" => $user->first_name, // Updated key
+                "last_name" => $user->last_name,   // Added key
                 "center_name" => $user->center_name,
                 "code_name" => $user->code_name,
                 "points" => $points,

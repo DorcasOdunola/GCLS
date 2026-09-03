@@ -15,6 +15,7 @@ import { StudentTakeQuiz } from './student-take-quiz/student-take-quiz';
 import { ReviewQuiz } from './review-quiz/review-quiz';
 import { Leaderboard } from './leaderboard/leaderboard';
 import { Centers } from './centers/centers';
+import { LessonScore } from './lesson-score/lesson-score';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -34,6 +35,7 @@ const routes: Routes = [
       { path: 'quiz-setup/:quiz_id', component: QuizSetup },
       { path: 'leaderboard', component: Leaderboard },
       { path: 'centers', component: Centers },
+      { path: 'lesson-score/:lesson_id', component: LessonScore },
     ],
   },
   {

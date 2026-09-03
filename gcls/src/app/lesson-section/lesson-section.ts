@@ -1,5 +1,5 @@
 import { Component, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LessonService } from '../service/lesson-service';
 
 @Component({
@@ -12,6 +12,7 @@ export class LessonSection {
   constructor(
     public actRoute: ActivatedRoute,
     public lessonService: LessonService,
+    public router: Router,
   ) {}
   public lessonId: string | null = null;
   step = signal(0);
@@ -60,5 +61,10 @@ export class LessonSection {
         });
       }
     });
+  }
+
+  lessonScore() {
+    console.log('Navigating to lesson score for lesson ID:', this.lessonId);
+    this.router.navigate(['/admin/lesson-score', this.lessonId]);
   }
 }

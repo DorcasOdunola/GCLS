@@ -212,5 +212,44 @@ class LessonController extends Controller
         }
 
         return null;
-    }    
+    }  
+    
+    public function getLessonScores(Request $request)
+    {
+        $scores = DB::table('quiz_attempt_tb as qa')
+            ->join('users as u', 'qa.user_id', '=', 'u.user_id')
+            ->join('quiz_tb as q', 'qa.quiz_id', '=', 'q.quiz_id')
+            ->join('lesson_tb as l', 'q.lesson_id', '=', 'l.lesson_id')
+            ->where('q.lesson_id', $request->lesson_id)
+            ->where('qa.status', 1)
+            ->select(
+                'u.user_id',
+                'u.first_name',
+                'u.last_name',
+                'l.lesson_id',
+                'l.topic',
+                'qa.correct_count',
+                'qa.incorrect_count',
+                'qa.total_questions',
+                'qa.percentage',
+                'qa.result_status',
+                'qa.attempt_number',
+                'qa.submitted_at'
+            )
+            ->orderByDesc('qa.percentage')
+            ->get();
+
+        return response()->json([
+            'status' => 'success',
+            'data' => [
+                'students' => $scores,
+                'summary' => [
+                    'total_students' => $scores->count(),
+                    'average_score' => round($scores->avg('percentage'), 2),
+                    'passed_students' => $scores->where('result_status', 'passed')->count(),
+                    'failed_students' => $scores->where('result_status', 'failed')->count()
+                ]
+            ]
+        ]);
+    }
 }

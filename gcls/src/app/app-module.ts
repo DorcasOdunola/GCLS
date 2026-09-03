@@ -26,6 +26,7 @@ import { ReviewQuiz } from './review-quiz/review-quiz';
 import { LessonDialog } from './lesson-dialog/lesson-dialog';
 import { Leaderboard } from './leaderboard/leaderboard';
 import { Centers } from './centers/centers';
+import { LessonScore } from './lesson-score/lesson-score';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { Centers } from './centers/centers';
     ReviewQuiz,
     LessonDialog,
     Leaderboard,
-    Centers
+    Centers,
+    LessonScore,
   ],
 
   imports: [
@@ -72,4 +74,4 @@ import { Centers } from './centers/centers';
   providers: [provideBrowserGlobalErrorListeners(), provideHttpClient()],
   bootstrap: [App],
 })
-export class AppModule { }
+export class AppModule {}

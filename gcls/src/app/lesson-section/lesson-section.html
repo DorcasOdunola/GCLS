@@ -10,6 +10,12 @@
               <mat-icon class="me-1 small-icon">topic</mat-icon>
               Sub-topic: {{ lessonData.sub_topic }}
             </p>
+            <button
+              class="btn btn-primary btn-lg rounded-3 shadow-sm d-flex align-items-center"
+              (click)="lessonScore()"
+            >
+              <mat-icon class="me-2">add</mat-icon>
+            </button>
           </div>
           <button class="btn btn-primary btn-lg rounded-3 shadow-sm d-flex align-items-center">
             <mat-icon class="me-2">import_contacts</mat-icon> GO TO LESSON
