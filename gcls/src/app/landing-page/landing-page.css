@@ -1,0 +1,269 @@
+:host {
+  display: block;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: hidden;
+}
+
+.landing-page {
+  min-height: 100vh;
+  max-width: 100%;
+  overflow-x: hidden;
+  color: #132238;
+  background: #f7f8f5;
+  font-family: inherit;
+}
+
+.topbar {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  padding: 28px 24px;
+}
+.brand,
+.topbar-links a {
+  color: inherit;
+  text-decoration: none;
+}
+.brand {
+  align-items: center;
+  display: flex;
+  font-size: 1.25rem;
+  font-weight: 800;
+  gap: 9px;
+}
+.brand-mark {
+  align-items: center;
+  background: #ff725e;
+  border-radius: 9px;
+  color: white;
+  display: inline-flex;
+  font-family: inherit;
+  font-size: 1.4rem;
+  height: 36px;
+  justify-content: center;
+  transform: rotate(-6deg);
+  width: 36px;
+}
+.topbar-links {
+  align-items: center;
+  display: flex;
+  gap: 29px;
+  font-size: 1rem;
+  font-weight: 700;
+}
+.topbar-cta {
+  border-bottom: 2px solid #ff725e;
+  padding: 8px 0;
+}
+
+.hero {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 64px 24px 70px;
+}
+.hero-copy {
+  min-width: 0;
+  position: relative;
+  z-index: 1;
+}
+.eyebrow {
+  align-items: center;
+  color: #ff725e;
+  display: flex;
+  font-size: 0.9rem;
+  font-weight: 800;
+  gap: 8px;
+  letter-spacing: 0.1em;
+  margin: 0 0 1.5rem;
+  text-transform: uppercase;
+}
+.eyebrow-line {
+  background: #ff725e;
+  height: 2px;
+  width: 28px;
+}
+h1 {
+  color: #132238;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(3.5rem, 6vw, 5.5rem);
+  font-weight: 600;
+  line-height: 1;
+  margin: 0 0 1.75rem;
+  max-width: 600px;
+  overflow-wrap: break-word;
+}
+h1 em {
+  color: #ff725e;
+}
+.hero-description {
+  color: #607086;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin: 0 0 2rem;
+  max-width: 540px;
+}
+.button {
+  font-size: 1rem;
+  font-weight: 800;
+  padding: 0.85rem 1.25rem;
+}
+.button-primary {
+  background: #132238;
+  color: white;
+}
+.button-secondary {
+  border-color: #d6dce0;
+  color: #132238;
+}
+.button span {
+  margin-left: 8px;
+}
+.supporting-text {
+  color: #8994a1;
+  font-size: 0.9rem;
+  margin: 2rem 0 0;
+}
+.supporting-text span {
+  padding: 0 6px;
+}
+
+.dashboard-stage {
+  min-width: 0;
+  padding: 2rem 0 2rem 1rem;
+}
+.dashboard-image {
+  border-radius: 12px;
+  box-shadow: 0 24px 60px #263c3d1c;
+  display: block;
+  width: 100%;
+}
+
+.challenge-approach {
+  background: #edf4f1;
+}
+.section-title {
+  color: #132238;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(2.5rem, 4vw, 4.25rem);
+  font-weight: 600;
+  line-height: 1.05;
+  max-width: 560px;
+}
+.section-lead {
+  color: #132238;
+  font-size: 1.25rem;
+  line-height: 1.6;
+}
+.section-copy,
+.benefit-card p {
+  color: #607086;
+  line-height: 1.7;
+}
+.benefit-card {
+  background: #fff;
+  border: 1px solid #dfeae5;
+  border-radius: 8px;
+}
+.benefit-icon {
+  color: #ff725e;
+  font-size: 2rem;
+}
+.benefit-card h3 {
+  color: #132238;
+}
+
+.features-journey {
+  background: #f7f8f5;
+}
+.feature-card {
+  background: #fff;
+  border: 1px solid #e1e9e5;
+  border-radius: 8px;
+  transition:
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+.feature-card:hover {
+  border-color: #ff725e;
+  transform: translateY(-3px);
+}
+.feature-icon {
+  color: #ff725e;
+  font-size: 2rem;
+}
+.journey-steps {
+  position: relative;
+}
+.journey-steps::before {
+  background: #ffd0c7;
+  content: '';
+  height: 2px;
+  left: 10%;
+  position: absolute;
+  right: 10%;
+  top: 25px;
+}
+.journey-step {
+  position: relative;
+  text-align: center;
+  z-index: 1;
+}
+.step-number {
+  align-items: center;
+  background: #ff725e;
+  border: 6px solid #f7f8f5;
+  border-radius: 50%;
+  color: #fff;
+  display: flex;
+  font-size: 1rem;
+  font-weight: 700;
+  height: 52px;
+  justify-content: center;
+  margin: 0 auto;
+  width: 52px;
+}
+
+@media (max-width: 780px) {
+  .topbar {
+    padding: 22px 12px;
+  }
+  .topbar-links {
+    gap: 17px;
+  }
+  .topbar-cta {
+    display: none;
+  }
+  .hero {
+    min-height: auto;
+    padding: 45px 12px 70px;
+  }
+  .hero-copy {
+    margin: 0 auto;
+  }
+  .dashboard-stage {
+    margin: 2rem auto 0;
+    padding: 1rem 0 2rem;
+  }
+  .section-lead {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 540px) {
+  h1 {
+    font-size: 3.25rem;
+  }
+  .eyebrow {
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+  }
+  .hero-description {
+    font-size: 1rem;
+  }
+  .supporting-text {
+    font-size: 0.8rem;
+  }
+}

@@ -16,10 +16,12 @@ import { ReviewQuiz } from './review-quiz/review-quiz';
 import { Leaderboard } from './leaderboard/leaderboard';
 import { Centers } from './centers/centers';
 import { LessonScore } from './lesson-score/lesson-score';
+import { LandingPage } from './landing-page/landing-page';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', redirectTo: 'landing-page', pathMatch: 'full' },
   { path: 'login', component: Login },
+  { path: 'landing-page', component: LandingPage },
   {
     path: 'admin',
     component: SideNavComponent,
