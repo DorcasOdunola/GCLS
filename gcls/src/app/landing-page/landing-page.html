@@ -1,12 +1,18 @@
 <main class="landing-page">
   <nav class="topbar container" aria-label="Main navigation">
-    <a class="brand" routerLink="/landing-page" aria-label="GCLS home">
+    <a
+      class="brand"
+      routerLink="/landing-page"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="GCLS home"
+    >
       <span class="brand-mark">G</span>
       <span>GCLS</span>
     </a>
     <div class="topbar-links">
-      <a routerLink="/login">Sign in</a>
-      <a class="topbar-cta" routerLink="/login"
+      <a routerLink="/login" target="_blank" rel="noopener noreferrer">Sign in</a>
+      <a class="topbar-cta" routerLink="/login" target="_blank" rel="noopener noreferrer"
         >Get started <span aria-hidden="true">&#8594;</span></a
       >
     </div>
@@ -15,26 +21,35 @@
   <section class="hero container" aria-labelledby="hero-title">
     <div class="hero-copy col-lg-5">
       <p class="eyebrow">
-        <span class="eyebrow-line"></span>Gamified <span aria-hidden="true">&#8226;</span> Adaptive
+        <span class="eyebrow-line"></span>Gamified
+        <span aria-hidden="true">&#8226;</span> Cybernetic (Adaptive)
         <span aria-hidden="true">&#8226;</span> Engaging Learning
       </p>
       <h1 id="hero-title">Learning, Made <em>More</em> Engaging.</h1>
       <p class="hero-description">
-        GCLS is a gamified learning system designed to help educators create classes and subjects,
-        deliver interactive lessons, assess learning, track student progress, and provide adaptive
-        feedback.
+        GCLS is a gamified cybernetic learning system designed to help educators create classes and
+        subjects, deliver interactive lessons, assess learning, track student progress, and provide
+        an adaptive feedback.
       </p>
       <div class="hero-actions d-flex flex-wrap gap-2">
-        <a class="button button-primary btn" routerLink="/login"
-          >Explore GCLS <span aria-hidden="true">&#8594;</span></a
+        <a
+          class="button button-primary btn"
+          routerLink="/signup"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Explore GCLS <span class="material-icons action-icon" aria-hidden="true">launch</span></a
         >
         <a
           class="button button-secondary btn"
-          href="https://github.com/"
+          href="https://github.com/DorcasOdunola/GCLS"
           target="_blank"
           rel="noreferrer"
-          >View Source Code <span aria-hidden="true">&#8599;</span></a
-        >
+          >View Source Code
+          <svg class="github-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M12 2C6.48 2 2 6.58 2 12.24c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49v-1.72c-2.78.62-3.37-1.2-3.37-1.2-.46-1.2-1.11-1.52-1.11-1.52-.91-.64.07-.63.07-.63 1.01.07 1.54 1.07 1.54 1.07.9 1.58 2.35 1.13 2.92.86.09-.67.35-1.13.64-1.39-2.22-.26-4.55-1.14-4.55-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.31.1-2.72 0 0 .84-.28 2.75 1.05A9.2 9.2 0 0 1 12 8.2c.85 0 1.7.12 2.5.36 1.9-1.33 2.74-1.05 2.74-1.05.55 1.41.2 2.46.1 2.72.64.72 1.03 1.64 1.03 2.76 0 3.94-2.34 4.8-4.57 5.06.36.32.68.94.68 1.9v1.4c0 .27.18.6.69.49A10.25 10.25 0 0 0 22 12.24C22 6.58 17.52 2 12 2Z"
+            /></svg
+        ></a>
       </div>
       <p class="supporting-text">
         An M.Ed. Educational Technology project <span aria-hidden="true">&#8226;</span> Built with
@@ -52,9 +67,9 @@
   </section>
 
   <section class="challenge-approach py-5" aria-labelledby="challenge-title">
-    <div class="container py-lg-5">
+    <div class="container py-lg-4">
       <div class="row g-5 align-items-start">
-        <div class="col-lg-5">
+        <div class="col-lg-4">
           <p class="eyebrow mb-3">
             <span class="eyebrow-line"></span> The challenge &amp; our approach
           </p>
@@ -62,7 +77,7 @@
             Making Learning More Engaging and Adaptive
           </h2>
         </div>
-        <div class="col-lg-7">
+        <div class="col-lg-8">
           <p class="section-lead mb-4">
             Traditional digital learning platforms can provide access to lessons and assessments,
             but they may not provide enough motivation, meaningful progress feedback, or
@@ -76,7 +91,7 @@
           </p>
           <div class="row row-cols-1 row-cols-sm-2 g-3">
             <div class="col">
-              <article class="benefit-card h-100 p-4">
+              <article class="benefit-card h-100 p-3">
                 <span class="material-icons benefit-icon">account_tree</span>
                 <h3 class="h5 mt-3">Structured Learning</h3>
                 <p class="mb-0">
@@ -85,7 +100,7 @@
               </article>
             </div>
             <div class="col">
-              <article class="benefit-card h-100 p-4">
+              <article class="benefit-card h-100 p-3">
                 <span class="material-icons benefit-icon">emoji_events</span>
                 <h3 class="h5 mt-3">Active Engagement</h3>
                 <p class="mb-0">
@@ -94,7 +109,7 @@
               </article>
             </div>
             <div class="col">
-              <article class="benefit-card h-100 p-4">
+              <article class="benefit-card h-100 p-3">
                 <span class="material-icons benefit-icon">insights</span>
                 <h3 class="h5 mt-3">Progress &amp; Performance Tracking</h3>
                 <p class="mb-0">
@@ -104,9 +119,9 @@
               </article>
             </div>
             <div class="col">
-              <article class="benefit-card h-100 p-4">
+              <article class="benefit-card h-100 p-3">
                 <span class="material-icons benefit-icon">tune</span>
-                <h3 class="h5 mt-3">Adaptive Feedback</h3>
+                <h3 class="h5 mt-3">Adaptive Feedback (Cybernetic)</h3>
                 <p class="mb-0">
                   Turn learner results into useful feedback and a better next step for each learner.
                 </p>
@@ -190,7 +205,7 @@
         <div class="col">
           <article class="feature-card h-100 p-4">
             <span class="material-icons feature-icon">tune</span>
-            <h3 class="h5 mt-4">Adaptive Feedback</h3>
+            <h3 class="h5 mt-4">Adaptive Feedback (Cybernetic)</h3>
             <p class="section-copy mb-0">
               The system responds to performance and guides learners towards the appropriate next
               step.
@@ -232,4 +247,356 @@
       </div>
     </div>
   </section>
+
+  <section class="gamification-cybernetic py-5" aria-labelledby="gamification-title">
+    <div class="container py-lg-5">
+      <div class="row justify-content-center text-center mb-5">
+        <div class="col-lg-8">
+          <span class="badge text-bg-light text-uppercase px-3 py-2 mb-3"
+            >Engagement &amp; response</span
+          >
+          <h2 id="gamification-title" class="section-title mx-auto">
+            Learning That Responds and Rewards
+          </h2>
+          <p class="section-copy fs-5 mt-3 mb-0">
+            Gamification encourages engagement and progress, while cybernetic (adaptive) feedback
+            helps students understand what to do next based on their performance.
+          </p>
+        </div>
+      </div>
+      <div class="row g-4">
+        <div class="col-lg-5">
+          <article class="feature-card h-100 p-4 p-lg-5">
+            <span class="material-icons feature-icon">emoji_events</span>
+            <h3 class="h3 mt-4">Motivation students can see</h3>
+            <p class="section-copy">
+              Students earn Points through learning activities and performance. Badges recognise
+              achievements and milestones, while the Leaderboard motivates progress. Scores and
+              performance tracking make growth visible.
+            </p>
+            <div class="d-flex flex-wrap gap-2 mt-4">
+              <span class="badge rounded-pill text-bg-warning px-3 py-2">Points</span>
+              <span class="badge rounded-pill text-bg-light px-3 py-2">Badges</span>
+              <span class="badge rounded-pill text-bg-light px-3 py-2">Leaderboard</span>
+              <span class="badge rounded-pill text-bg-light px-3 py-2">Scores</span>
+            </div>
+          </article>
+        </div>
+        <div class="col-lg-7">
+          <article class="feature-card h-100 p-4 p-lg-5">
+            <span class="material-icons feature-icon">tune</span>
+            <h3 class="h3 mt-4">Cybernetic (Adaptive) guidance</h3>
+            <p class="section-copy">
+              Student performance is evaluated through assessments, and feedback responds to the
+              result. Learners who need support can review learning content, while strong
+              performance helps students progress confidently.
+            </p>
+            <div class="row row-cols-1 row-cols-sm-3 g-3 mt-3">
+              <div class="col">
+                <div class="cybernetic-point">
+                  <span class="material-icons">fact_check</span><strong>Assess</strong
+                  ><small>Evaluate performance</small>
+                </div>
+              </div>
+              <div class="col">
+                <div class="cybernetic-point">
+                  <span class="material-icons">refresh</span><strong>Review</strong
+                  ><small>Return to content when needed</small>
+                </div>
+              </div>
+              <div class="col">
+                <div class="cybernetic-point">
+                  <span class="material-icons">trending_up</span><strong>Progress</strong
+                  ><small>Move forward confidently</small>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="technology-stack py-4" aria-labelledby="technology-title">
+    <div class="container">
+      <div class="row align-items-center g-3">
+        <div class="col-lg-3">
+          <p class="eyebrow mb-0"><span class="eyebrow-line"></span> Technology</p>
+          <h2 id="technology-title" class="h4 mb-0 mt-2">Built with purpose.</h2>
+        </div>
+        <div class="col-lg-9">
+          <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-7 g-2 text-center">
+            <div class="col">
+              <div class="technology-item">
+                <span class="material-icons">code</span><span>Angular</span>
+              </div>
+            </div>
+            <div class="col">
+              <div class="technology-item">
+                <span class="material-icons">web</span><span>Laravel</span>
+              </div>
+            </div>
+            <div class="col">
+              <div class="technology-item">
+                <span class="material-icons">php</span><span>PHP</span>
+              </div>
+            </div>
+            <div class="col">
+              <div class="technology-item">
+                <span class="material-icons">storage</span><span>MySQL</span>
+              </div>
+            </div>
+            <div class="col">
+              <div class="technology-item">
+                <span class="material-icons">grid_view</span><span>Bootstrap</span>
+              </div>
+            </div>
+            <div class="col">
+              <div class="technology-item">
+                <span class="material-icons">auto_awesome</span><span>AI</span>
+              </div>
+            </div>
+            <div class="col">
+              <div class="technology-item">
+                <span class="material-icons">text_fields</span
+                ><span>Google Fonts / Material Symbols</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="research-results py-4" aria-labelledby="research-title">
+    <div class="container">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-4">
+          <p class="eyebrow mb-2"><span class="eyebrow-line"></span> Research &amp; results</p>
+          <h2 id="research-title" class="h3 mb-2">Evidence of meaningful learning</h2>
+          <p class="section-copy mb-0">
+            Developed as part of an M.Ed. Educational Technology research project investigating how
+            a gamified cybernetic learning system can support student motivation and academic
+            performance.
+          </p>
+        </div>
+        <div class="col-lg-8">
+          <div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-2 text-center">
+            <div class="col">
+              <div class="research-point">
+                <span class="material-icons">groups</span><strong>High engagement</strong>
+              </div>
+            </div>
+            <div class="col">
+              <div class="research-point">
+                <span class="material-icons">sentiment_satisfied</span
+                ><strong>Positive perception &amp; motivation</strong>
+              </div>
+            </div>
+            <div class="col">
+              <div class="research-point">
+                <span class="material-icons">thumb_up</span><strong>High usability</strong>
+              </div>
+            </div>
+            <div class="col">
+              <div class="research-point">
+                <span class="material-icons">auto_graph</span
+                ><strong>Improved learning experience</strong>
+              </div>
+            </div>
+            <div class="col">
+              <div class="research-point">
+                <span class="material-icons">person</span><strong>Self-Directed Learning</strong>
+              </div>
+            </div>
+          </div>
+          <p class="research-note mb-0 mt-3">
+            Developed and evaluated as part of an academic research study.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="project-showcase py-5" aria-labelledby="showcase-title">
+    <div class="container">
+      <div class="row justify-content-between align-items-end g-3 mb-4">
+        <div class="col-md-8">
+          <p class="eyebrow mb-2"><span class="eyebrow-line"></span> Project showcase</p>
+          <h2 id="showcase-title" class="section-title mb-0">A closer look at GCLS</h2>
+        </div>
+        <div class="col-md-4">
+          <p class="section-copy mb-0">
+            Explore the learning experience, from lessons and quizzes to progress and feedback.
+          </p>
+        </div>
+      </div>
+
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-3">
+        <!-- Replace each placeholder path below with an actual GCLS screenshot. -->
+        <div class="col">
+          <img class="showcase-image" src="assets/images/placeholder.jpg" alt="GCLS screenshot 1" />
+        </div>
+        <div class="col">
+          <img class="showcase-image" src="assets/images/placeholder.jpg" alt="GCLS screenshot 2" />
+        </div>
+        <div class="col">
+          <img class="showcase-image" src="assets/images/placeholder.jpg" alt="GCLS screenshot 3" />
+        </div>
+        <div class="col">
+          <img class="showcase-image" src="assets/images/placeholder.jpg" alt="GCLS screenshot 4" />
+        </div>
+        <div class="col">
+          <img class="showcase-image" src="assets/images/placeholder.jpg" alt="GCLS screenshot 5" />
+        </div>
+        <div class="col">
+          <img class="showcase-image" src="assets/images/placeholder.jpg" alt="GCLS screenshot 6" />
+        </div>
+        <div class="col">
+          <img class="showcase-image" src="assets/images/placeholder.jpg" alt="GCLS screenshot 7" />
+        </div>
+        <div class="col">
+          <img class="showcase-image" src="assets/images/placeholder.jpg" alt="GCLS screenshot 8" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="challenges-lessons py-5" aria-labelledby="lessons-title">
+    <div class="container">
+      <div class="row justify-content-between align-items-end g-3 mb-4">
+        <div class="col-md-7">
+          <p class="eyebrow mb-2"><span class="eyebrow-line"></span> Developer growth</p>
+          <h2 id="lessons-title" class="section-title mb-0">Challenges &amp; Lessons</h2>
+        </div>
+        <div class="col-md-5">
+          <p class="section-copy mb-0">
+            Practical lessons I learned while designing and building GCLS.
+          </p>
+        </div>
+      </div>
+
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-3">
+        <div class="col">
+          <article class="lesson-card h-100 p-4">
+            <span class="material-icons lesson-icon">groups</span>
+            <h3 class="h5 mt-3">Designing for Real Users</h3>
+            <p class="section-copy mb-0">
+              Functionality is only the start; students’ real interactions should shape the
+              experience.
+            </p>
+          </article>
+        </div>
+        <div class="col">
+          <article class="lesson-card h-100 p-4">
+            <span class="material-icons lesson-icon">account_tree</span>
+            <h3 class="h5 mt-3">Adaptive Logic</h3>
+            <p class="section-copy mb-0">
+              Performance-based feedback and progression require carefully planned decision logic.
+            </p>
+          </article>
+        </div>
+        <div class="col">
+          <article class="lesson-card h-100 p-4">
+            <span class="material-icons lesson-icon">emoji_events</span>
+            <h3 class="h5 mt-3">Gamification</h3>
+            <p class="section-copy mb-0">
+              Points, badges, scores, and leaderboards connect technical features with meaningful
+              engagement.
+            </p>
+          </article>
+        </div>
+        <div class="col">
+          <article class="lesson-card h-100 p-4">
+            <span class="material-icons lesson-icon">hub</span>
+            <h3 class="h5 mt-3">Building for Scalability</h3>
+            <p class="section-copy mb-0">
+              Structuring classes, subjects, lessons, assessments, and student data supports varied
+              learning contexts.
+            </p>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="final-cta py-5" aria-labelledby="final-cta-title">
+    <div class="container py-lg-4">
+      <div class="row justify-content-center text-center">
+        <div class="col-lg-8">
+          <p class="eyebrow justify-content-center mb-3">
+            <span class="eyebrow-line"></span> Explore the project
+          </p>
+          <h2 id="final-cta-title" class="section-title mx-auto">See GCLS in Action</h2>
+          <p class="section-copy cta-copy mx-auto mb-4">
+            Explore the system, see how the learning experience works, and take a closer look at the
+            technology behind it.
+          </p>
+          <div class="d-flex flex-wrap justify-content-center gap-2">
+            <a
+              class="button button-primary btn"
+              routerLink="/signup"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Explore GCLS
+              <span class="material-icons action-icon" aria-hidden="true">launch</span>
+            </a>
+            <!-- Replace this placeholder with the project's GitHub repository URL. -->
+            <a
+              class="button button-secondary btn"
+              href="https://github.com/DorcasOdunola/GCLS"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              View Source Code
+              <svg class="github-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M12 2C6.48 2 2 6.58 2 12.24c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49v-1.72c-2.78.62-3.37-1.2-3.37-1.2-.46-1.2-1.11-1.52-1.11-1.52-.91-.64.07-.63.07-.63 1.01.07 1.54 1.07 1.54 1.07.9 1.58 2.35 1.13 2.92.86.09-.67.35-1.13.64-1.39-2.22-.26-4.55-1.14-4.55-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.31.1-2.72 0 0 .84-.28 2.75 1.05A9.2 9.2 0 0 1 12 8.2c.85 0 1.7.12 2.5.36 1.9-1.33 2.74-1.05 2.74-1.05.55 1.41.2 2.46.1 2.72.64.72 1.03 1.64 1.03 2.76 0 3.94-2.34 4.8-4.57 5.06.36.32.68.94.68 1.9v1.4c0 .27.18.6.69.49A10.25 10.25 0 0 0 22 12.24C22 6.58 17.52 2 12 2Z"
+                />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="landing-footer py-4">
+    <div class="container">
+      <div
+        class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3"
+      >
+        <div>
+          <a
+            class="footer-brand"
+            routerLink="/landing-page"
+            target="_blank"
+            rel="noopener noreferrer"
+            >GCLS</a
+          >
+          <p class="footer-tagline mb-1">
+            Gamified Learning. Adaptive Progress. Better Engagement.
+          </p>
+          <small class="footer-copyright"
+            >&copy; 2026 GCLS. Built as an M.Ed. Educational Technology project.</small
+          >
+        </div>
+        <nav class="footer-links d-flex flex-wrap gap-3" aria-label="Footer navigation">
+          <!-- Replace this placeholder with the project's GitHub repository URL. -->
+          <a href="https://github.com/DorcasOdunola/GCLS" target="_blank" rel="noopener noreferrer"
+            >GitHub
+            <svg class="github-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M12 2C6.48 2 2 6.58 2 12.24c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49v-1.72c-2.78.62-3.37-1.2-3.37-1.2-.46-1.2-1.11-1.52-1.11-1.52-.91-.64.07-.63.07-.63 1.01.07 1.54 1.07 1.54 1.07.9 1.58 2.35 1.13 2.92.86.09-.67.35-1.13.64-1.39-2.22-.26-4.55-1.14-4.55-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.31.1-2.72 0 0 .84-.28 2.75 1.05A9.2 9.2 0 0 1 12 8.2c.85 0 1.7.12 2.5.36 1.9-1.33 2.74-1.05 2.74-1.05.55 1.41.2 2.46.1 2.72.64.72 1.03 1.64 1.03 2.76 0 3.94-2.34 4.8-4.57 5.06.36.32.68.94.68 1.9v1.4c0 .27.18.6.69.49A10.25 10.25 0 0 0 22 12.24C22 6.58 17.52 2 12 2Z"
+              /></svg
+          ></a>
+          <a routerLink="/signup" target="_blank" rel="noopener noreferrer"
+            >Explore GCLS
+            <span class="material-icons action-icon" aria-hidden="true">launch</span></a
+          >
+        </nav>
+      </div>
+    </div>
+  </footer>
 </main>

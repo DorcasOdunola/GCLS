@@ -28,6 +28,7 @@ import { Leaderboard } from './leaderboard/leaderboard';
 import { Centers } from './centers/centers';
 import { LessonScore } from './lesson-score/lesson-score';
 import { LandingPage } from './landing-page/landing-page';
+import { Signup } from './signup/signup';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { LandingPage } from './landing-page/landing-page';
     Centers,
     LessonScore,
     LandingPage,
+    Signup,
   ],
 
   imports: [

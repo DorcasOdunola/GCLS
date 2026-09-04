@@ -17,10 +17,12 @@ import { Leaderboard } from './leaderboard/leaderboard';
 import { Centers } from './centers/centers';
 import { LessonScore } from './lesson-score/lesson-score';
 import { LandingPage } from './landing-page/landing-page';
+import { Signup } from './signup/signup';
 
 const routes: Routes = [
   { path: '', redirectTo: 'landing-page', pathMatch: 'full' },
   { path: 'login', component: Login },
+  { path: 'signup', component: Signup },
   { path: 'landing-page', component: LandingPage },
   {
     path: 'admin',
