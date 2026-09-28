@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../service/auth-service';
 import { Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -20,10 +21,15 @@ export class Login {
   public loading: boolean = false;
   public hidePassword: boolean = true;
 
-  login() {
-    // Logic to handle login
+  login(form?: NgForm) {
+    // if (form?.invalid) {
+    //   form.control.markAllAsTouched();
+    //   return;
+    // }
+
+    this.incorrect = '';
     this.loading = true;
-    let obj = {
+    const obj = {
       email: this.email,
       password: this.password,
     };

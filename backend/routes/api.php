@@ -31,6 +31,8 @@ Route::get('/test', function(){
     return "Hello, World!";
 });
 Route::get('/test', [TestController::class, 'test']);
+
+Route::post('/signup', [AuthController::class, 'register']);
 Route::get('/get_class', [ClassController::class, 'getAllClass']);
 Route::get('/get_subjects', [SubjectController::class, 'getAllSubject']);
 Route::post('/add_lesson', [LessonController::class, 'addLesson']);

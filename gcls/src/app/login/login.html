@@ -31,52 +31,68 @@
   </div>
 </div> -->
 
-<div class="container-fluid bg-light p-2" style="height: 100vh">
-  <div class="row w-100 mt-md-5 mx-auto">
-    <div class="col-12 col-md-4 mx-auto p-1 mt-5 mb-5 mb-md-0 p-md-5">
-      <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
-      <div class="bg-white mx-auto shadow-sm" style="height: 60vh">
-        <p class="display-4 text-center pt-3">DGCLS</p>
-        <p class="h5 initialism text-center">Login</p>
-        <form class="form-group p-5 p-md-5">
-          <mat-form-field class="w-100" appearance="outline">
-            <mat-label>Email</mat-label>
-            <input
-              type="text"
-              name="email"
-              matInput
-              placeholder="your registerd email"
-              [(ngModel)]="email"
-            />
-          </mat-form-field>
-          <mat-form-field class="w-100" appearance="outline">
-            <mat-label>Password</mat-label>
-            <input
-              [type]="hidePassword ? 'password' : 'text'"
-              name="password"
-              matInput
-              placeholder="password"
-              [(ngModel)]="password"
-            />
-            <button
-              type="button"
-              mat-icon-button
-              matSuffix
-              (click)="hidePassword = !hidePassword"
-              [attr.aria-label]="'Hide password'"
-              [attr.aria-pressed]="hidePassword"
-            >
-              <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
-            </button>
-          </mat-form-field>
-          <p class="text-danger text-center" style="font-size: 1.25rem" *ngIf="incorrect">
-            <b>{{ incorrect }}</b>
+<main class="login-page">
+  <div class="container py-4 py-lg-5">
+    <div class="row min-vh-100 align-items-center justify-content-center g-4">
+      <div class="col-lg-5 d-none d-lg-block">
+        <div class="login-intro">
+          <a class="login-brand" routerLink="/landing-page">
+            <span class="login-brand-mark">G</span><span>GCLS</span>
+          </a>
+          <p class="login-eyebrow mt-5 mb-3">WELCOME TO GCLS</p>
+          <h1>Your Learning Environment, All in One Place.</h1>
+          <p class="login-intro-copy">
+            Sign in to access your GCLS account, manage or explore learning experiences, and stay
+            connected to everything happening in your learning environment.
           </p>
-          <div class="row mx-auto justify-content-center mb-3">
-            <button mat-raised-button color="primary" (click)="login()">Login</button>
+          <div class="login-points mt-5">
+            <span><mat-icon>school</mat-icon> Manage or access classes and subjects</span>
+            <span><mat-icon>menu_book</mat-icon> Create or continue engaging lessons</span>
+            <span><mat-icon>insights</mat-icon> Track learning and performance</span>
+            <span><mat-icon>feedback</mat-icon> Make progress through meaningful feedback</span>
           </div>
-        </form>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-9 col-lg-6 col-xl-5">
+        <section class="login-card p-4 p-sm-5" aria-labelledby="login-title">
+          <div class="d-lg-none text-center mb-4">
+            <a class="login-brand justify-content-center" routerLink="/landing-page">
+              <span class="login-brand-mark">G</span><span>GCLS</span>
+            </a>
+          </div>
+          <div class="mb-4">
+            <p class="form-eyebrow mb-2">SIGN IN TO GCLS</p>
+            <h2 id="login-title">Welcome Back</h2>
+            <p class="form-intro mb-0">Sign in to access your account and continue where you left off.</p>
+          </div>
+
+          <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+          <form #loginForm="ngForm" (ngSubmit)="login(loginForm)" novalidate>
+            <mat-form-field class="w-100" appearance="outline">
+              <mat-label>Email</mat-label>
+              <input matInput type="email" name="email" placeholder="you@example.com" [(ngModel)]="email" #emailField="ngModel" required email autocomplete="email" />
+              <mat-error *ngIf="emailField.hasError('required')">Email is required.</mat-error>
+              <mat-error *ngIf="emailField.hasError('email')">Enter a valid email address.</mat-error>
+            </mat-form-field>
+            <mat-form-field class="w-100" appearance="outline">
+              <mat-label>Password</mat-label>
+              <input matInput [type]="hidePassword ? 'password' : 'text'" name="password" placeholder="Enter your password" [(ngModel)]="password" #passwordField="ngModel" required minlength="8" autocomplete="current-password" />
+              <button type="button" mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="hidePassword ? 'Show password' : 'Hide password'" [attr.aria-pressed]="!hidePassword">
+                <mat-icon>{{ hidePassword ? 'visibility' : 'visibility_off' }}</mat-icon>
+              </button>
+              <mat-hint>Use at least 8 characters.</mat-hint>
+              <mat-error *ngIf="passwordField.hasError('required')">Password is required.</mat-error>
+              <mat-error *ngIf="passwordField.hasError('minlength')">Password must be at least 8 characters.</mat-error>
+            </mat-form-field>
+            <p class="login-error" *ngIf="incorrect" role="alert">{{ incorrect }}</p>
+            <button class="sign-in-button w-100 mt-2" mat-flat-button type="submit" [disabled]="loading">
+              <mat-spinner *ngIf="loading" diameter="20"></mat-spinner><span *ngIf="!loading">Sign In</span>
+            </button>
+          </form>
+          <p class="signup-prompt text-center mb-0 mt-4">Don't have an account? <a routerLink="/signup">Create one</a></p>
+        </section>
       </div>
     </div>
   </div>
-</div>
+</main>

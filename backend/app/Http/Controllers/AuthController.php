@@ -10,6 +10,41 @@ class AuthController extends Controller
 {
 
     //
+    public function register(Request $request)
+    {
+        $existingUser = DB::table('users')
+            ->where('email', $request->email)
+            ->first();
+
+        if ($existingUser) {
+            return response()->json([
+                "status" => "error",
+                "message" => "Email already exists"
+            ], 409);
+        }
+
+        $userId = DB::table('users')->insertGetId([
+            'first_name' => $request->name,
+            'last_name' => $request->last_name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'user_type' => 0,
+        ]);
+
+        return response()->json([
+            "status" => "success",
+            "message" => "User registered successfully",
+            "data" => [
+                "user_id" => $userId,
+                "first_name" => $request->name,
+                "last_name" => $request->last_name,
+                "email" => $request->email,
+                "user_type" => $request->user_type
+            ]
+        ]);
+    }
+
+
     public function login(Request $request)
     {
         $user = DB::table('users')

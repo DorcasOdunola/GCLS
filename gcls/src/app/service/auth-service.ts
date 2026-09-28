@@ -20,4 +20,9 @@ export class AuthService {
     // Logic to authenticate the user
     return this.httpClient.post<any>(`${this.baseUrl}login`, obj);
   }
+
+  public signup(obj: any) {
+    // Logic to register a new user
+    return this.httpClient.post<any>(`${this.baseUrl}signup`, obj);
+  }
 }
