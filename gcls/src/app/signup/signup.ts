@@ -1,6 +1,20 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, ValidationErrors, Validators } from '@angular/forms';
 import { AuthService } from '../service/auth-service';
+
+function phoneNumberValidator(control: AbstractControl): ValidationErrors | null {
+  const value = String(control.value ?? '');
+  if (!value) {
+    return null;
+  }
+
+  if (!/^\+?(?:[0-9\s.-]|\([0-9\s.-]*[0-9][0-9\s.-]*\))+$/.test(value)) {
+    return { phoneFormat: true };
+  }
+
+  const digitCount = value.replace(/\D/g, '').length;
+  return digitCount >= 7 && digitCount <= 15 ? null : { phoneLength: true };
+}
 
 @Component({
   selector: 'app-signup',
@@ -16,9 +30,10 @@ export class Signup {
     public authService: AuthService,
   ) {
     this.signupForm = this.fb.nonNullable.group({
-      firstName: ['', [Validators.required, Validators.minLength(2)]],
-      lastName: ['', [Validators.required, Validators.minLength(2)]],
+      first_name: ['', [Validators.required, Validators.minLength(2)]],
+      last_name: ['', [Validators.required, Validators.minLength(2)]],
       email: ['', [Validators.required, Validators.email]],
+      phone: ['', [Validators.required, phoneNumberValidator]],
       password: ['', [Validators.required, Validators.minLength(8)]],
     });
   }
@@ -37,22 +52,21 @@ export class Signup {
 
     this.isSubmitting = true;
     const registrationData = this.signupForm.getRawValue();
-    this.authService.signup(registrationData).subscribe(
-      (response) => {
+    this.authService.signup(registrationData).subscribe({
+      next: (response) => {
         console.log('Signup response:', response);
         this.submitMessage = 'Registration successful! You can now log in.';
         this.isSubmitting = false;
       },
-      (error) => {
+      error: (error) => {
         console.error('Signup error:', error);
-        this.submitMessage = 'An error occurred during registration. Please try again.';
+        if (error.status === 409 && error.error?.message) {
+          this.submitMessage = `Registration failed: ${error.error.message}`;
+        } else {
+          this.submitMessage = 'An error occurred during registration. Please try again.';
+        }
         this.isSubmitting = false;
       },
-    );
-
-    // The registration API is not available yet. Keep the payload ready for integration.
-    console.info('Signup payload ready for API integration:', registrationData);
-    this.submitMessage = 'Your account details are ready to be submitted.';
-    this.isSubmitting = false;
+    });
   }
 }

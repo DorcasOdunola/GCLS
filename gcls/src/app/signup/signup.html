@@ -44,11 +44,11 @@
               <div class="col-sm-6">
                 <mat-form-field appearance="outline" class="w-100">
                   <mat-label>First Name</mat-label>
-                  <input matInput formControlName="firstName" autocomplete="given-name" />
-                  <mat-error *ngIf="signupForm.controls.firstName.hasError('required')"
+                  <input matInput formControlName="first_name" autocomplete="given-name" />
+                  <mat-error *ngIf="signupForm.controls.first_name.hasError('required')"
                     >First name is required.</mat-error
                   >
-                  <mat-error *ngIf="signupForm.controls.firstName.hasError('minlength')"
+                  <mat-error *ngIf="signupForm.controls.first_name.hasError('minlength')"
                     >Enter at least 2 characters.</mat-error
                   >
                 </mat-form-field>
@@ -56,11 +56,11 @@
               <div class="col-sm-6">
                 <mat-form-field appearance="outline" class="w-100">
                   <mat-label>Last Name</mat-label>
-                  <input matInput formControlName="lastName" autocomplete="family-name" />
-                  <mat-error *ngIf="signupForm.controls.lastName.hasError('required')"
+                  <input matInput formControlName="last_name" autocomplete="family-name" />
+                  <mat-error *ngIf="signupForm.controls.last_name.hasError('required')"
                     >Last name is required.</mat-error
                   >
-                  <mat-error *ngIf="signupForm.controls.lastName.hasError('minlength')"
+                  <mat-error *ngIf="signupForm.controls.last_name.hasError('minlength')"
                     >Enter at least 2 characters.</mat-error
                   >
                 </mat-form-field>
@@ -75,6 +75,27 @@
               >
               <mat-error *ngIf="signupForm.controls.email.hasError('email')"
                 >Enter a valid email address.</mat-error
+              >
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Phone Number</mat-label>
+              <input
+                matInput
+                type="tel"
+                formControlName="phone"
+                autocomplete="tel"
+                inputmode="tel"
+              />
+              <mat-hint>Use 7 to 15 digits; country code is optional.</mat-hint>
+              <mat-error *ngIf="signupForm.controls.phone.hasError('required')"
+                >Phone number is required.</mat-error
+              >
+              <mat-error *ngIf="signupForm.controls.phone.hasError('phoneFormat')"
+                >Use only digits, spaces, +, parentheses, periods, or hyphens.</mat-error
+              >
+              <mat-error *ngIf="signupForm.controls.phone.hasError('phoneLength')"
+                >Enter a phone number containing 7 to 15 digits.</mat-error
               >
             </mat-form-field>
 

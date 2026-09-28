@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -24,9 +25,10 @@ class AuthController extends Controller
         }
 
         $userId = DB::table('users')->insertGetId([
-            'first_name' => $request->name,
+            'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'email' => $request->email,
+            'phone' => $request->phone,
             'password' => Hash::make($request->password),
             'user_type' => 0,
         ]);
@@ -36,10 +38,11 @@ class AuthController extends Controller
             "message" => "User registered successfully",
             "data" => [
                 "user_id" => $userId,
-                "first_name" => $request->name,
+                "first_name" => $request->first_name,
                 "last_name" => $request->last_name,
                 "email" => $request->email,
-                "user_type" => $request->user_type
+                "phone" => $request->phone,
+                "user_type" => 0
             ]
         ]);
     }
