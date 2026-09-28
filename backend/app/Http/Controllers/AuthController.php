@@ -51,7 +51,7 @@ class AuthController extends Controller
             ->where('email', $request->email)
             ->first();
 
-        if ($user && password_verify($request->password, $user->password)) {
+        if ($user && Hash::check($request->password, $user->password)) {
             session([
                 'user_id' => $user->user_id,
                 'user_type' => $user->user_type,
