@@ -54,23 +54,23 @@ class AuthController extends Controller
             ->where('email', $request->email)
             ->first();
 
-        if ($user && Hash::check($request->password, $user->password)) {
-            session([
-                'user_id' => $user->user_id,
-                'user_type' => $user->user_type,
-            ]);
-
-            return response()->json([
-                "status" => "success",
-                "message" => "Login successful",
-                "data" => $user
-            ]);
-        } else {
+        if (!$user || !Hash::check($request->password, $user->password)) {
             return response()->json([
                 "status" => "error",
                 "message" => "Invalid credentials"
             ], 401);
         }
+
+        $jwtUser = new \App\Auth\JwtUser($user->user_id);
+
+        $token = auth('api')->login($jwtUser);
+
+        return response()->json([
+            "status" => "success",
+            "message" => "Login successful",
+            "data" => $user,
+            "token" => $token
+        ]);
     }
 
     public function checkAdmin ()
